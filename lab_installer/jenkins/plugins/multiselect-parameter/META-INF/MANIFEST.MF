@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Created-By: Maven Archiver 3.6.0
+Build-Jdk-Spec: 11
+Specification-Title: Multiselect parameter
+Specification-Version: 1.8
+Implementation-Title: Multiselect parameter
+Implementation-Version: 1.8
+Group-Id: io.jenkins.plugins
+Artifact-Id: multiselect-parameter
+Short-Name: multiselect-parameter
+Long-Name: Multiselect parameter
+Url: https://github.com/jenkinsci/multiselect-parameter-plugin/blob/main
+ /README.md
+Plugin-Version: 1.8
+Hudson-Version: 2.375.4
+Jenkins-Version: 2.375.4
+Plugin-Developers: Sebastian Westemeyer:swesteme:jenkins@westemeyer.de
+Plugin-License-Name: MIT License
+Plugin-License-Url: https://opensource.org/licenses/MIT
+Plugin-ScmConnection: scm:git:https://github.com/jenkinsci/multiselect-p
+ arameter-plugin.git
+Plugin-ScmTag: multiselect-parameter-1.8
+Plugin-ScmUrl: https://github.com/jenkinsci/multiselect-parameter-plugin
+Plugin-GitHash: d2ecf7fa23532caa6285c78acf9849879314ee0d
+

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.sonyericsson.hudson.plugins.rebuild</groupId>
+  <artifactId>rebuild</artifactId>
+  <version>338.va_0a_b_50e29397</version>
+  <packaging>hpi</packaging>
+  <name>Rebuilder</name>
+  <description>The Jenkins Plugins Parent POM Project</description>
+  <url>https://github.com/jenkinsci/rebuild-plugin</url>
+  <inceptionYear>2016</inceptionYear>
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>https://www.opensource.org/licenses/mit-license.php</url>
+      <comments>Copyright 2010 Sony Ericsson Mobile Communications. All rights reserved.</comments>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>gustafl</id>
+      <name>Gustaf Lundh</name>
+      <email>gustaf.lundh@gmail.com</email>
+      <roles>
+        <role>developer</role>
+        <role>maintainer</role>
+      </roles>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:https://github.com/jenkinsci/rebuild-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:jenkinsci/rebuild-plugin.git</developerConnection>
+    <tag>a0ab50e29397c51c4a18bf52e8e02c6594283255</tag>
+    <url>https://github.com/jenkinsci/rebuild-plugin</url>
+  </scm>
+  <distributionManagement>
+    <repository>
+      <id>maven.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>maven.jenkins-ci.org</id>
+      <url>https://repo.jenkins-ci.org/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.jenkins-ci.plugins</groupId>
+      <artifactId>matrix-project</artifactId>
+      <version>840.v812f627cb_578</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jenkins-ci.tools</groupId>
+        <artifactId>maven-hpi-plugin</artifactId>
+        <version>3.61</version>
+        <extensions>true</extensions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,0 +1,6 @@
+jenkins/.cache
+jenkins/logs
+general_inventory/host_vars/helios_cs_ifmo.yml
+ansible/ansible.log
+jenkins/caches
+jobs/*/builds

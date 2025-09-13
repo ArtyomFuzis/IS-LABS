@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Created-By: Maven Archiver 3.6.0
+Build-Jdk-Spec: 17
+Specification-Title: Rebuilder
+Specification-Version: 0.0
+Implementation-Title: Rebuilder
+Implementation-Version: 338.va_0a_b_50e29397
+Group-Id: com.sonyericsson.hudson.plugins.rebuild
+Artifact-Id: rebuild
+Short-Name: rebuild
+Long-Name: Rebuilder
+Url: https://github.com/jenkinsci/rebuild-plugin
+Plugin-Version: 338.va_0a_b_50e29397
+Hudson-Version: 2.479.1
+Jenkins-Version: 2.479.1
+Plugin-Dependencies: matrix-project:840.v812f627cb_578
+Plugin-Developers: Gustaf Lundh:gustafl:gustaf.lundh@gmail.com
+Plugin-License-Name: MIT
+Plugin-License-Url: https://www.opensource.org/licenses/mit-license.php
+Plugin-ScmConnection: scm:git:https://github.com/jenkinsci/rebuild-plugi
+ n.git
+Plugin-ScmTag: a0ab50e29397c51c4a18bf52e8e02c6594283255
+Plugin-ScmUrl: https://github.com/jenkinsci/rebuild-plugin
+Implementation-Build: a0ab50e29397c51c4a18bf52e8e02c6594283255
+

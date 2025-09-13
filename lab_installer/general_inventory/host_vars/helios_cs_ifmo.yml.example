@@ -1,0 +1,4 @@
+---
+  ansible_user: sXXXXXX
+  ansible_ssh_pass: some_shit
+  

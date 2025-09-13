@@ -1,0 +1,20 @@
+---
+  - name: Predeploy tasks
+    hosts: deploy
+    tasks:
+      - name: Ensure that directory "autodeploy" exists
+        file:
+          path: "{{base_path}}/autodeploy"
+          state: directory 
+
+      - name: Ensure that directory "install_tmp" exists
+        file:
+          path: "{{base_path}}/autodeploy/install_tmp"
+          state: directory 
+      
+      - name: Fail if "project_name" is undefined
+        fail: 
+          msg: "Not able to found project name, is project inventory broken?"
+        when: project_name is undefined
+    
+    

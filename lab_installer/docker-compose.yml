@@ -1,0 +1,17 @@
+services:
+  jenkins:
+    build:
+      context: ./jenkins_image
+    container_name: jenkins
+    restart: unless-stopped
+    volumes:
+      - ../:/host_dirs:ro
+      - ./ansible:/workspace/ansible
+      - ./general_inventory:/workspace/inventory/general
+      - //var/run/docker.sock:/var/run/docker.sock
+      - ./jenkins:/var/jenkins_home
+    ports:
+      - 8080:8080
+      - 50000:50000
+    
+      

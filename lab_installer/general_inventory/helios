@@ -1,0 +1,3 @@
+[deploy]
+helios_cs_ifmo ansible_host=helios.cs.ifmo.ru ansible_port=2222
+
