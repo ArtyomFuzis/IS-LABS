@@ -1,2 +1,26 @@
 ---
-  base_path: "~"
+  # Общие параметры, то, что нужно менять 
+  nginx_main_server_port: 8019
+  tomcat_management_port: 8020
+
+  # Менять не рекомендуется.
+  base_path: "/home/{{ansible_user}}"
+  make_archive: "make-4.4.1"
+  make_tar_link: "http://ftp.gnu.org/gnu/make/{{make_archive}}.tar.gz"
+  nginx_archive: "nginx-1.28.0"
+  nginx_tar_link: "https://nginx.org/download/{{nginx_archive}}.tar.gz"
+  tomcat_archive: "apache-tomcat-9.0.109"
+  tomcat_tar_link: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.109/bin/{{tomcat_archive}}.tar.gz"
+  nginx_server_name: localhost
+  pcre_archive: "pcre-8.45"
+  pcre_tar_link: "https://sourceforge.net/projects/pcre/files/pcre/8.45/{{pcre_archive}}.tar.gz"
+  zlib_archive: "zlib-1.3.1"
+  zlib_tar_link: "http://zlib.net/{{zlib_archive}}.tar.gz"
+  nginx_configure_vars: "--with-http_v2_module \
+            --with-http_stub_status_module \
+            --without-http_autoindex_module \
+            --with-pcre={{base_path}}/autodeploy/install_tmp/{{pcre_archive}} \
+            --with-zlib={{base_path}}/autodeploy/install_tmp/{{zlib_archive}}"
+  nginx_build_env: "MAKE=\"gmake\""
+  zlib_build_env: "MAKE=\"gmake\""
+  

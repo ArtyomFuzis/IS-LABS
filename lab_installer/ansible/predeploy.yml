@@ -1,6 +1,6 @@
 ---
-  - name: Predeploy tasks
-    hosts: deploy
+  - name: Predeploy tasks on deploy-servers
+    hosts: deploy-servers
     tasks:
       - name: Ensure that directory "autodeploy" exists
         file:
@@ -12,9 +12,57 @@
           path: "{{base_path}}/autodeploy/install_tmp"
           state: directory 
       
+      - name: Ensure that directory "nginx" exists
+        file:
+          path: "{{base_path}}/autodeploy/nginx"
+          state: directory 
+      
+      - name: Ensure that directory "tomcat" exists
+        file:
+          path: "{{base_path}}/autodeploy/tomcat"
+          state: directory 
+      
       - name: Fail if "project_name" is undefined
         fail: 
           msg: "Not able to found project name, is project inventory broken?"
         when: project_name is undefined
+      
+      - name: Ensure that "project" dir exists
+        file:
+          path: "{{base_path}}/autodeploy/{{project_name}}"
+          state: directory
+
+      - name: Ensure that "frontend" dir exists
+        file:
+          path: "{{base_path}}/autodeploy/{{project_name}}/frontend"
+          state: directory
+    
+      - name: Ensure that "backend" dir exists
+        file: 
+          path: "{{base_path}}/autodeploy/{{project_name}}/backend"
+          state: directory
+      
+      - name: Ensure that "database" dir exists
+        file: 
+          path: "{{base_path}}/autodeploy/{{project_name}}/database"
+          state: directory
+
+  - name: Predeploy tasks on deploy-helpers
+    hosts: deploy-helper
+    tasks:
+      - name: Ensure that directory "autodeploy" exists
+        file:
+          path: "{{base_path}}/autodeploy"
+          state: directory 
+
+      - name: Ensure that directory "install_tmp" exists
+        file:
+          path: "{{base_path}}/autodeploy/install_tmp"
+          state: directory 
+      
+      
+      
+      
+
     
     

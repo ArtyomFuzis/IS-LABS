@@ -1,0 +1,55 @@
+---  
+  - name: Deploy nginx
+    hosts: deploy-servers
+    tasks: 
+      - name: Get nginx tar
+        get_url:
+          url:  "{{nginx_tar_link}}"
+          dest: "{{base_path}}/autodeploy/install_tmp/"
+          timeout: 60
+
+      - name: Untar nginx 
+        command: "tar -xvzf {{base_path}}/autodeploy/install_tmp/{{nginx_archive}}.tar.gz -C {{base_path}}/autodeploy/install_tmp/"
+
+      - name: Get PCRE tar
+        get_url:
+          url:  "{{pcre_tar_link}}"
+          dest: "{{base_path}}/autodeploy/install_tmp/"
+          timeout: 60
+
+      - name: Untar PCRE 
+        command: "tar -xvzf {{base_path}}/autodeploy/install_tmp/{{pcre_archive}}.tar.gz -C {{base_path}}/autodeploy/install_tmp/"
+      
+      - name: Get ZLIB tar
+        get_url:
+          url:  "{{zlib_tar_link}}"
+          dest: "{{base_path}}/autodeploy/install_tmp/"
+          timeout: 60
+
+      - name: Untar ZLIB 
+        command: "tar -xvzf {{base_path}}/autodeploy/install_tmp/{{zlib_archive}}.tar.gz -C {{base_path}}/autodeploy/install_tmp/" 
+
+      - name: Configure nginx build 
+        shell: "cd {{base_path}}/autodeploy/install_tmp/{{nginx_archive}} && {{nginx_build_env}} ./configure --prefix={{base_path}}/autodeploy/nginx \
+                  {{nginx_configure_vars}}" 
+      
+      - name: Compile zlib 
+        shell: "cd  {{base_path}}/autodeploy/install_tmp/{{zlib_archive}} && {{zlib_build_env}} ./configure && {{zlib_build_env}} gmake" 
+      - name: Compile nginx
+        shell: "cd {{base_path}}/autodeploy/install_tmp/{{nginx_archive}} && {{nginx_build_env}} gmake"
+      
+      - name: Try to stop nginx
+        shell: "cd {{base_path}}/autodeploy/nginx/sbin/ && ./nginx -s quit"
+        ignore_errors: true
+
+      - name: Install nginx
+        shell: "cd {{base_path}}/autodeploy/install_tmp/{{nginx_archive}} && {{nginx_build_env}} gmake install"
+      
+      - name: Copy nginx conf 
+        template:
+          src: "/host_dirs/lab_installer/templates/nginx/conf/nginx.j2"
+          dest: "{{base_path}}/autodeploy/nginx/conf/nginx.conf"
+      
+      - name: Start nginx
+        shell: "cd {{base_path}}/autodeploy/nginx/sbin/ && ./nginx"
+        

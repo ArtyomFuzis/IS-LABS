@@ -34,8 +34,8 @@
           <trim>true</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
-          <name>DEPLOY_NGINX</name>
-          <description>Развертывание Nginx</description>
+          <name>DEPLOY_CONTAINERS</name>
+          <description>Развертывание Nginx и Tomcat</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
@@ -46,27 +46,27 @@
         <hudson.model.BooleanParameterDefinition>
           <name>BUILD_FRONTEND</name>
           <description>Сборка фронтенда</description>
-          <defaultValue>true</defaultValue>
+          <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>DEPLOY_FRONTEND</name>
           <description>Развертывание фронтенда</description>
-          <defaultValue>true</defaultValue>
+          <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>BUILD_BACKEND</name>
           <description>Сборка бэкенда</description>
-          <defaultValue>true</defaultValue>
+          <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>DEPLOY_BACKEND</name>
           <description>Развертывание бэкенда</description>
-          <defaultValue>true</defaultValue>
+          <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>DEPLOY_DATABASE</name>
           <description>Развертывание таблиц в бд</description>
-          <defaultValue>true</defaultValue>
+          <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
@@ -76,7 +76,7 @@
     agent any
     environment {
         PREPARE_CMD = &quot;chmod o-w /workspace/ansible &amp;&amp; cd /workspace/ansible&quot;
-        BASE_ANSIBLE_PARAMS = &quot;-i ../inventory/general&quot;
+        BASE_ANSIBLE_PARAMS = &quot;-i ../inventory/general -i /host_dirs/${params.PROJECT_NAME}/inventory&quot;
         ANSIBLE_EXEC = &quot;/root/.local/bin/ansible&quot;
         ANSIBLE_EXEC_PLAYBOOK = &quot;/root/.local/bin/ansible-playbook&quot;
     }
@@ -97,6 +97,25 @@
                       sh &quot;&quot;&quot;
                         ${env.PREPARE_CMD} &amp;&amp; \
                         ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} predeploy.yml
+                        &quot;&quot;&quot;
+                }
+            }
+        }
+        stage(&apos;Containers deploy&apos;) {
+            when{
+                expression { params.DEPLOY_CONTAINERS }
+            }
+            steps {
+                script {
+                      sh &quot;&quot;&quot;
+                        ${env.PREPARE_CMD} &amp;&amp; \
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} nginx-deploy.yml
+                        &quot;&quot;&quot;
+                }
+                script {
+                      sh &quot;&quot;&quot;
+                        ${env.PREPARE_CMD} &amp;&amp; \
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} tomcat-deploy.yml
                         &quot;&quot;&quot;
                 }
             }
