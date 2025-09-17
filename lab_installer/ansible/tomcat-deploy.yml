@@ -10,8 +10,84 @@
       - name: Untar tomcat 
         command: "tar -xvzf {{base_path}}/autodeploy/install_tmp/{{tomcat_archive}}.tar.gz -C {{base_path}}/autodeploy/install_tmp/"
       
+      - name: Try to stop tomcat
+        shell: "cd {{base_path}}/autodeploy/tomcat/bin/ && ./shutdown.sh"
+        ignore_errors: true
+
       - name: Copy to tomcat dir
         copy:
           src:  "{{base_path}}/autodeploy/install_tmp/{{tomcat_archive}}/"
           dest: "{{base_path}}/autodeploy/tomcat/"
           remote_src: yes
+      
+      - name: Copy users conf
+        template:
+          src: "/host_dirs/lab_installer/templates/tomcat/tomcat-users.j2"
+          dest: "{{base_path}}/autodeploy/tomcat/conf/tomcat-users.xml"
+      
+      - name: Copy server conf
+        template:
+          src: "/host_dirs/lab_installer/templates/tomcat/server.j2"
+          dest: "{{base_path}}/autodeploy/tomcat/conf/server.xml"
+      
+      - name: Get Commons Daemon tar
+        get_url:
+          url:  "{{commons_daemon_tar_link}}"
+          dest: "{{base_path}}/autodeploy/install_tmp/"
+
+      - name: Untar Commons Daemon 
+        command: "tar -xvzf {{base_path}}/autodeploy/install_tmp/{{commons_daemon_archive}}.tar.gz -C {{base_path}}/autodeploy/install_tmp/"
+      
+      - name: Configure Commons Daemon build 
+        shell: "cd {{base_path}}/autodeploy/install_tmp/{{commons_daemon_archive}}/src/native/unix && {{commons_daemon_build_env}} ./configure --prefix={{base_path}}/autodeploy/libs/commons-daemon" 
+      
+      - name: Complie Commons Daemon  
+        shell: "cd {{base_path}}/autodeploy/install_tmp/{{commons_daemon_archive}}/src/native/unix && {{commons_daemon_build_env}} gmake"
+      
+      - name: Chmod jsvc file
+        file: 
+          dest: "{{base_path}}/autodeploy/install_tmp/{{commons_daemon_archive}}/src/native/unix/jsvc"
+          mode: "u+x"
+
+      - name: Copy jsvc file to tomcat
+        copy:
+          src: "{{base_path}}/autodeploy/install_tmp/{{commons_daemon_archive}}/src/native/unix/jsvc"
+          dest: "{{base_path}}/autodeploy/tomcat/bin/jsvc"
+          remote_src: yes
+          mode: "u+x"
+      
+      # - name: Get M4 tar
+      #   get_url:
+      #     url:  "{{m4_tar_link}}"
+      #     dest: "{{base_path}}/autodeploy/install_tmp/"
+
+      # - name: Untar M4 
+      #   command: "tar -xvzf {{base_path}}/autodeploy/install_tmp/{{m4_archive}}.tar.gz -C {{base_path}}/autodeploy/install_tmp/"
+      
+      # - name: Configure M4 build 
+      #   shell: "cd {{base_path}}/autodeploy/install_tmp/{{m4_archive}} && {{m4_build_env}} ./configure --prefix={{base_path}}/autodeploy/libs/m4" 
+      
+      # - name: Complie M4  
+      #   shell: "cd {{base_path}}/autodeploy/install_tmp/{{m4_archive}} && {{m4_build_env}} gmake"
+      
+      # - name: Install M4  
+      #   shell: "cd {{base_path}}/autodeploy/install_tmp/{{m4_archive}} && {{m4_build_env}} gmake install"
+      
+      # - name: Get Autoconf tar
+      #   get_url:
+      #     url:  "{{autoconf_tar_link}}"
+      #     dest: "{{base_path}}/autodeploy/install_tmp/"
+
+      # - name: Untar Autoconf 
+      #   command: "tar -xvzf {{base_path}}/autodeploy/install_tmp/{{autoconf_archive}}.tar.gz -C {{base_path}}/autodeploy/install_tmp/"
+      
+      # - name: Configure Autoconf build 
+      #   shell: "cd {{base_path}}/autodeploy/install_tmp/{{autoconf_archive}} && {{autoconf_build_env}} ./configure --prefix={{base_path}}/autodeploy/libs/autoconf" 
+      
+      # - name: Complie Autoconf  
+      #   shell: "cd {{base_path}}/autodeploy/install_tmp/{{autoconf_archive}} && {{autoconf_build_env}} gmake"
+      
+      # - name: Install Autoconf  
+      #   shell: "cd {{base_path}}/autodeploy/install_tmp/{{autoconf_archive}} && {{autoconf_build_env}} gmake install"
+      
+      

@@ -47,6 +47,26 @@
           path: "{{base_path}}/autodeploy/{{project_name}}/database"
           state: directory
 
+      # - name: Ensure that "libs" dir exists
+      #   file: 
+      #     path: "{{base_path}}/autodeploy/libs"
+      #     state: directory
+      
+      # - name: Ensure that "m4" dir exists
+      #   file: 
+      #     path: "{{base_path}}/autodeploy/libs/m4"
+      #     state: directory
+      
+      # - name: Ensure that "autoconf" dir exists
+      #   file: 
+      #     path: "{{base_path}}/autodeploy/libs/autoconf"
+      #     state: directory
+      
+      # - name: Ensure that "commons-daemon" dir exists
+      #   file: 
+      #     path: "{{base_path}}/autodeploy/libs/commons-daemon"
+      #     state: directory
+
   - name: Predeploy tasks on deploy-helpers
     hosts: deploy-helper
     tasks:

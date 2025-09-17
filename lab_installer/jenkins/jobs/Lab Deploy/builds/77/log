@@ -1,0 +1,490 @@
+Started by user [8mha:////4DSLSwgmyuZZaZW4ilO+CKhV7zbmMXaOvUT/EgAUBNGmAAAAmR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAz2EgZe/dLi1CL9rNS87My8YgDGtiJjwgAAAA==[0mjenkins
+Rebuilds build #[8mha:////4O6yeQdZGPEialqVJH3Zs1B0lmGiqS3zMgKpfMAT2RkxAAAAoB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgYR/az8JH2fxCRVIwOX1IKc/Ep9czMAYefuz8kAAAA=[0m76
+[8mha:////4Ep/6prHW82g+8YQNnLDsRwsjvEtugz1ex68JlFY7bBZAAAAoh+LCAAAAAAAAP9tjTEOwjAQBM8BClpKHuFItIiK1krDC0x8GCfWnbEdkooX8TX+gCESFVvtrLSa5wtWKcKBo5UdUu8otU4GP9jS5Mixv3geZcdn2TIl9igbHBs2eJyx4YwwR1SwULBGaj0nRzbDRnX6rmuvydanHMu2V1A5c4MHCFXMWcf8hSnC9jqYxPTz/BXAFEIGsfuclm8zQVqFvQAAAA==[0m[Pipeline] Start of Pipeline
+[8mha:////4PdLYLDQ6VMxTDekQyzrXUTu2wEpxSHqkvUFu6JeS6OEAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycohUghExsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jduZBmjwAAAAA==[0m[Pipeline] node
+Running on [8mha:////4HVoYFb6Bv76B51SHkDYcFa+Xw3y1DgVpLoyejOHt/gbAAAAoR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAz2EgZR/eT83ILSktQifY2k0sycEt3MPE19AHHxbH3KAAAA[0mJenkins in /var/jenkins_home/workspace/Lab Deploy
+[8mha:////4BfVaMwb84nnIu/XHI+wDjT1XMowz6bH8x6O40+wXqVXAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gA0xsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jfoP95RwAAAAA==[0m[Pipeline] {
+[8mha:////4JXC+c+W1VdLctJDrwCQCS6kY54QNbPUErEMxRnoM1cCAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gQkxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jc09154wAAAAA==[0m[Pipeline] withEnv
+[8mha:////4ETJWIFMvTSKwiGe22UaxUtpC6w8t9ZEdFgsKmh1XfKNAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0ggUxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jek7ggRwAAAAA==[0m[Pipeline] {
+[8mha:////4FVzDLb+WEmlT/wcve0XsIIVpIKqpDZxp9rXXr0QIkRZAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0gwExsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jcChmMxwAAAAA==[0m[Pipeline] stage
+[8mha:////4FQBZgePGoUuAFJsryhLy6J1//0UFypMhBr/kWiFv1LpAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0BAkxsUZZOEFIQkgb/d8mKe3EibgadyBQiQlLlmxL1nu+oE4RjhQdby12HpP2vA+jK4lPFLtroIm3dOGaMFGwXNpJkrGnpUrKFhaxClYC1hZ1oOTRZdiIVt1VExS65pxj2Q4CKm8GeAAThZxVzN8yR9jeRpMIf5y/AJj7DGxXvP/86jfpX/cvwAAAAA==[0m[Pipeline] { (Test connection)
+[8mha:////4AQX5AbKvuomSN5Ys/Y3K8GUoh5LU3ik92FlaUVqaxgsAAAApR+LCAAAAAAAAP9tjTEOwjAUQ3+KOrAycoh0BSEm1igLJwhJCGmj/9skpZ04EVfjDgQqMWHJkm3Jes8X1CnCkaLjrcXOY9Ke92F0JfGJYncNNPGWLlwTJgqWSztJMva0VEnZwiJWwUrA2qIOlDy6DBvRqrtqgkLXnHMs20FA5c0AD2CikLOK+VvmCNvbaBLhj/MXAHOfge2K959f/QbB16AVwAAAAA==[0m[Pipeline] script
+[8mha:////4HJKib8qB5reyH1wkyG2uTPAos7s9fG6Taa1d/m+uNAXAAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQDJUJUtJYbXmBiY5xYd8G+kFS8iK/xBwKRqNhqZ6XVPF9Q5gQHSl42DtuAuQ6yi72fmhwotZdIg2zoLGvCTNFJ7QZN1h1n1MQO5ogCFgqWDutIOaBnWKnG3E0VDfrqxGna9gqKYG/wAKEmM5vEXxgTrK+9zYQ/z18BjB2D2DEU283nWL4Bsam+msEAAAA=[0m[Pipeline] {
+[8mha:////4H5CgGxSySpqOSQAl0WdtQ0qIzbGoWqCllXEFt+0VnQ+AAAAox+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJCakRFa6XhBSYxxo5159gOTsWL+Bp/IBCJii1WO9vM8wXrGODIQaNV1BuKrUHvRj0vzBz6q+OMli/YMkV2ChuVG+7UacGGk4IlRQkrARtFreNoSCfYCivvsnKSdHVOYf4OAkrTDfCAQszmJEP6whRgdxu7yPTz/BXA5BOU9f5TtX8D0loxuL4AAAA=[0m[Pipeline] sh
++ chmod o-w /workspace/ansible
++ cd /workspace/ansible
++ /root/.local/bin/ansible -i ../inventory/general -i /host_dirs/lab_1/inventory -m ping deploy
+[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details
+[WARNING]: Unable to parse /host_dirs/lab_1/inventory as an inventory source
+[WARNING]: Host 'deploy_helper_localhost' is using the discovered Python interpreter at '/usr/bin/python3.12', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.19/reference_appendices/interpreter_discovery.html for more information.
+[WARNING]: Host 'helios_cs_ifmo' is using the discovered Python interpreter at '/usr/local/bin/python3.11', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.19/reference_appendices/interpreter_discovery.html for more information.
+deploy_helper_localhost | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.12"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+helios_cs_ifmo | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/local/bin/python3.11"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+[8mha:////4BPkvpu3pY/XVOdess8asxE7A7uV60M0KeQxKQnZiCTxAAAAox+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOICtIgqreWGF5jYGCfWnbEdkooX8TX+QCASFVusdraZ5wuWKcKRo8XWUOcoNQ6D7+20cODYXTwP2PIZG6bE3qA0g2Rt6hklZwNzihIWAlaGGs/Jkc2wFq26q8orstUpx+k7CCidvsEDCjGZs4r5C2OEzbXXienn+SuAMYQM5W7/qe0bsgYiW74AAAA=[0m[Pipeline] }
+[8mha:////4GxPEW4UhZvldSF8+p1Q/g/oexb9uq0CVpHwA0oLoS/2AAAAox+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMIRokKIitZKwwtMYowT6y7YF5KKF/E1/kBEJCq22plmXm8sU8SRo1ONpdZTqrzqQu+mpwaO7TXwoBq+qIopcbCqtEPJtT3NWLJYzMtyLDRWlqrAyZMTrHVjHqYIhlxxlji5g0bu6zueyPRUFhPlC2PE5tbXienX+RvA2HWCfLsTZPsP6C1U670AAAA=[0m[Pipeline] // script
+[8mha:////4KGUtZVyHgaQvfqs+otud0dR2mlzjt66vDd0ss3NYDkcAAAApB+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMIREgUSoqK10vACkxjjxLoL9oWk4kV8jT8QEYmKrXammdcbyxRx5OhUY6n1lCqvutC76amBY3sNPKiGL6piShysKu1Qcm1PM5YsFvOyHAuNlaUqcPLkBGvdmIcpgiFXnCVO7qCR+/qOJzI9lcVE+cIYsbn1dWL6df4GMHadIN/uBNn+A27Bcy69AAAA[0m[Pipeline] }
+[8mha:////4HReUevLEry14oR4My9Wr/mS7QSxgePG3V2xabxYdBpjAAAApB+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMIRBaJAVLRWGl5gEmOcWHfBvpBUvIiv8QciIlGx1c4083pjmSKOHJ1qLLWeUuVVF3o3PTVwbK+BB9XwRVVMiYNVpR1Kru1pxpLFYl6WY6GxslQFTp6cYK0b8zBFMOSKs8TJHTRyX9/xRKanspgoXxgjNre+Tky/zt8Axq4T5NudINt/AE/1rIO9AAAA[0m[Pipeline] // stage
+[8mha:////4D/6ao8JxlXjcnWXY4g8/Z6Aa/2r1lMpoM/q4EO8EqOkAAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQjmjSIitZywwtMYowT6y7YF5KKF/E1/oAhEhVb7ay0mucLyhThQNHJzmLvMTVeDmF0ucmJYn8JNMmOzrIhTBSs1HbS1NrjgprYwhJRwErB2mITKHl0DBvVmbupgkFXnTjmba+g8O0NHiBUNrOJ/IU5wvY6tonw5/krgHlgEDVDsas/x/INar4f38EAAAA=[0m[Pipeline] stage
+[8mha:////4C+v1ozpwFzqIeFq+T+9pEemfIE3rIi8G5mXRp9BfpvJAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohULDAgpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYJ8t5/tMD+LD1+IXOLCAAAA[0m[Pipeline] { (Predeploy)
+Stage "Predeploy" skipped due to when conditional
+[8mha:////4P91GLJ5mEFwMIq89O/vlhqMTvGoXVoxgSo7461OaIaRAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiKpAQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGPIUG53n9qHNxXfVKy+AAAA[0m[Pipeline] getContext
+[8mha:////4CnyGlc/ymrAJheOimjoSNwjEW49DcDeZ+lz82DeIFhYAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiKoQQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGMIGcrt/lO7N9Jjga++AAAA[0m[Pipeline] }
+[8mha:////4B0duA7JVBbZiQv8eP9qFgQVe0WitnAgiXk8mGmfV7d6AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOICFDQoFa3lhheYxBgn1l2wHZyKF/E1/oBFJCq2WO1sM683LIOHmr3BTlNvKTQWBzeavDCx76+OE3Z8wYYpsNModZLc6tOMkqOGOUUJCwErTY3jYMlEWItOPVTlFJnqHH3+jgJK297hCYXI5qh8/MLkYXMb28D08/wVwDQMEcr9Ntfu8AERGGHOvgAAAA==[0m[Pipeline] // stage
+[8mha:////4AtYwMwb08iasHM8sOyV5bpRe88kSAKKwEIDwTOEJkHEAAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYQjKGgQFa3lhheY2Bgn1l2wLyQVL+Jr/IFAJCq22llpNc8XlDnBgZKXjcM2YK6D7GLvpyYHSu0l0iAbOsuaMFN0UrtBk3XHGTWxgzmigIWCpcM6Ug7oGVaqMXdTRYO+OnGatr2CItgbPECoycwm8RfGBOtrbzPhz/NXAGPHIHYMxXbzOZZvT5Ty88EAAAA=[0m[Pipeline] stage
+[8mha:////4LNruZl7Lp21yC0xXBf4YbxyxGLHdNN0fq0UzRYcaEmMAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+DOrAycohUdEVMrFEXThCaEJJG/7dJSjpxIq7GHWipxIQHy7ZkvdcbyhjgRMFwp7GzGFvLez+aOfFMobt5ytzRlbeEkbzmjc4NKX1ea0NJw6qCwUbAVmPrKVo0CXbCyYesvERTXVKYt6MAZtUATyjETE4ypG+ZAuzvo4qEP85fAEx9AlYfFquXZ/kBAsTc3cIAAAA=[0m[Pipeline] { (Containers deploy)
+[8mha:////4NCgo8qqXZ8r0NfEhC6XoRlRrENEZMSu7+eIyRBfGAeeAAAAph+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUKiNiYo2ycILQhJA0+r9NUtKJE3E17kBLJSY8WLYl673eUMUAJwqGOY2dxdha1vvRzIllCt3NU2aOrqwljOQ1EzoLUvq8VkFJw6qihA2HrcbWU7RoEuy4kw9Ze4mmvqQwb0cOpVUDPKHgMznJkL5lCrC/jyoS/jh/ATD1CcqmWeywPKsPpnFij8IAAAA=[0m[Pipeline] script
+[8mha:////4AiPuS+UJe4ufDLPlzqJ30A8h7tgZpCIZ8QrurTcykqCAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUAjbE1DXKwglCE0La6P/yk9JOnIircQdaKjHhwbItWe/1hiIynIidaCy2HmPtRRd6NyUxELfXQINo6CJqwkjBCmUHRcZWS1WULCzKclhJWFusA0WPLsFGNvqhy6DRlefE03aUkHtzhydkciInzelbRobtrTeR8Mf5C4CxS5Dv9rMd5mfxAd6e6VPCAAAA[0m[Pipeline] {
+[8mha:////4DcAMwNW8G5BfuUsStjdvJIfe651jVJO+I8mUmN2jgwyAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiIagQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGPIUG53n9qHN38C26S+AAAA[0m[Pipeline] sh
++ chmod o-w /workspace/ansible
++ cd /workspace/ansible
++ /root/.local/bin/ansible-playbook -i ../inventory/general -i /host_dirs/lab_1/inventory nginx-deploy.yml
+[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details
+[WARNING]: Unable to parse /host_dirs/lab_1/inventory as an inventory source
+
+PLAY [Deploy nginx] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Host 'helios_cs_ifmo' is using the discovered Python interpreter at '/usr/local/bin/python3.11', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.19/reference_appendices/interpreter_discovery.html for more information.
+ok: [helios_cs_ifmo]
+
+TASK [Get nginx tar] ***********************************************************
+ok: [helios_cs_ifmo]
+
+PLAY RECAP *********************************************************************
+helios_cs_ifmo             : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+[8mha:////4Lwoh7s5waQ5X4qol3ckwHk9Dpbri4uglv+tpr3JDKYiAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiIUSDqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFBu95/avQHjyRvdvgAAAA==[0m[Pipeline] }
+[8mha:////4KtQGuzrtYLnP781xde9+BYSGZ8t7+ITHa+ddk+zlgXSAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiQUGBqNJabniBiY1xYt0Z2yGpeBFf4w8EIlGxxWpnm3m+YJkiHDlabA11jlLjMPjeTgsHjt3F84Atn7FhSuwNSjNI1qaeUXI2MKcoYSFgZajxnBzZDGvRqruqvCJbnXKcvoOA0ukbPKAQkzmrmL8wRthce52Yfp6/AhhDyFBu95/avQHljyOIvgAAAA==[0m[Pipeline] // script
+[8mha:////4Gz2MCFE6+aLmcD+vH+XiqgKBrcFAey/Rwp2N/DN/kUGAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohU6oSEmFijLJwgNCEkjf5vk5R04kRcjTvQUokJD5ZtyXqvN1QxwImCYU5jZzG2lvV+NHNimUJ385SZoytrCSN5zYTOgpQ+r1VQ0rCqKGHDYaux9RQtmgQ77uRD1l6iqS8pzNuRQ2nVAE8o+ExOMqRvmQLs76OKhD/OXwBMfYKyaRY7LM/qA2WBpeXCAAAA[0m[Pipeline] script
+[8mha:////4C6i/LCq8HV8xBMQyeZkjQKNjLtKvFfmtL8e6dHdU7/AAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycohUYgIhpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYJ8t5/tMD+LD0QKVszCAAAA[0m[Pipeline] {
+[8mha:////4HyHbr/Ro8wK6r4LDZZtMrrkSn7x83wywff6quZgGT1KAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKCoEIoFa3lhheYxBgn1l2wHZyKF/E1/oBFJCq2WO1sM683LIOHmr3BTlNvKTQWBzeavDCx76+OE3Z8wYYpsNModZLc6tOMkqOGOUUJCwErTY3jYMlEWItOPVTlFJnqHH3+jgJK297hCYXI5qh8/MLkYXMb28D08/wVwDREKHeHXPvt8AHN/bm5vgAAAA==[0m[Pipeline] sh
++ chmod o-w /workspace/ansible
++ cd /workspace/ansible
++ /root/.local/bin/ansible-playbook -i ../inventory/general -i /host_dirs/lab_1/inventory tomcat-deploy.yml
+[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details
+[WARNING]: Unable to parse /host_dirs/lab_1/inventory as an inventory source
+
+PLAY [Deploy nginx] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+[WARNING]: Host 'helios_cs_ifmo' is using the discovered Python interpreter at '/usr/local/bin/python3.11', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.19/reference_appendices/interpreter_discovery.html for more information.
+ok: [helios_cs_ifmo]
+
+TASK [Copy jsvc file to tomcat] ************************************************
+changed: [helios_cs_ifmo]
+
+PLAY RECAP *********************************************************************
+helios_cs_ifmo             : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+[8mha:////4KLzaRPOWhDekBtSQDFIWwSWqy0xotu1rmRLXaD53bgiAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIioEIoFa3lhheYxBgn1l2wHZyKF/E1/oBFJCq2WO1sM683LIOHmr3BTlNvKTQWBzeavDCx76+OE3Z8wYYpsNModZLc6tOMkqOGOUUJCwErTY3jYMlEWItOPVTlFJnqHH3+jgJK297hCYXI5qh8/MLkYXMb28D08/wVwDQMEcr9Ntfu8AFSjtgYvgAAAA==[0m[Pipeline] }
+[8mha:////4D3bn7v6IO3sulf1xymmHeoKmWldJ+ioWKuc2OsEbHcdAAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIihQYJUaW10vACExvjxLoztkNS8SK+xh+wiETFFqudbeb1hnUMcOJgsNc0WIqdRe9GkxdOHIar4wl7vmDHFNlpbPXUstLNgi0nDUuKElYCNpo6x9GSSbAVvXzIykky1TmF/B0FlFbd4QmFyOYkQ/rCHGB3G1Vk+nn+CmD2PkG5r3PVhw9qzEvpvgAAAA==[0m[Pipeline] // script
+[8mha:////4H2sejcy4oUM2o9EL8fHO1icNBh8TH11qKq1NpYkr93dAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPMKRkhJR0VppeIGJjXFi3Tn2haTiRXyNP2ARiYotVjvbzOsN2xThRNGK3uDgMHVOBD/ZvMRMcbh5mkVPV9ERJvJGtGZuSZvzii2xgTVFCRsJO4Odp+TQMuxlrx6q8gptdeGYv6OE0ukRnlDIbGYV+QtLhMN90onw5/krgCUEhrJpctX1B9H2wsK+AAAA[0m[Pipeline] }
+[8mha:////4EIFMJBnDlE6A+h7HW0ODPJT3PtUj3YwvtEZOzZPkXWgAAAApR+LCAAAAAAAAP9tjTsOwjAQRDdBFLSUHGIjPh1KRWu54QQmMcaJtRtsB6fiRFyNO2ARiYopRvOmea83LIOHmr3BTlNvKTQWBzeavDCx76+OE3Z8wYYpsNModZLc6tOMkqOGOUUJCwErTY3jYMlEWItOPVTlFJnqHH3+jgJK297hCYXI5qh8/MLkYXMb28D08/wVwDQMEcr9Iddu+wHTl85GvgAAAA==[0m[Pipeline] // stage
+[8mha:////4AEqY2k7h2kdhPHDNPWs0WN/kuA5l3KUdtdsO4Kvg6F9AAAAph+LCAAAAAAAAP9tjTEOwjAQBM9BKWgpeYRTIGgQFa3lhheY2Bgn1l2wLyQVL+Jr/IFAJCq22llpNc8XlDnBgZKXjcM2YK6D7GLvpyYHSu0l0iAbOsuaMFN0UrtBk3XHGTWxgzmigIWCpcM6Ug7oGVaqMXdTRYO+OnGatr2CItgbPECoycwm8RfGBOtrbzPhz/NXAGPHIHYMxWb7OZZv7d0UzsEAAAA=[0m[Pipeline] stage
+[8mha:////4MgN5bZ/cyF9rWHTvFqZnYPpqNvzAavojHHolYpAjjjaAAAApx+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0QLAgpq5RFk4QmhDSRv+Xn5R24kRcjTvQUokJD5ZtyXqvNxSR4UTsRGOx9RhrL7rQuymJgbi9BhpEQxdRE0YKVig7KDK2WqqiZGFRlsNKwtpiHSh6dAk2stEPXQaNrjwnnrajhNybOzwhkxM5aU7fMjJsb72JhD/OXwCMXYJ8t5/tMD+LD02yRsvCAAAA[0m[Pipeline] { (Containers restart)
+[8mha:////4NGjf6eLbjIqq4IT+hW3sjL5B2vFxHV/3SBmErGVekcYAAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0QIIBMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLku/1sh/lZfADpB/iZwgAAAA==[0m[Pipeline] script
+[8mha:////4LOGHuqrco/VA5na0y23qKHMINPWpk88bY7I+dHns3R3AAAAqB+LCAAAAAAAAP9tjTEOwjAUQ3+LOrAycoh0YAAJMXWNsnCC0ISQNvq//KS0EyfiatyBlkpMeLBsS9Z7vaGIDCdiJxqLrcdYe9GF3k1JDMTtNdAgGrqImjBSsELZQZGx1VIVJQuLshxWEtYW60DRo0uwkY1+6DJodOU58bQdJeTe3OEJmZzISXP6lpFhe+tNJPxx/gJg7BLku/1sh/lZfAD8aiCpwgAAAA==[0m[Pipeline] {
+[8mha:////4A5e95Ozavw9fdMmZZaMNWCW/hSBFgkvcOBbvBzi0CSuAAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJS0IAQVVrLDS8wsTFOrDtjOyQVL+Jr/IFAJCq2WO1sM88XLFOEI0eLraHOUWocBt/baeHAsbt4HrDlMzZMib1BaQbJ2tQzSs4G5hQlLASsDDWekyObYS1adVeVV2SrU47TdxBQOn2DBxRiMmcV8xfGCJtrrxPTz/NXAGPIUG53n9qHN65NpgK+AAAA[0m[Pipeline] sh
++ chmod o-w /workspace/ansible
++ cd /workspace/ansible
++ /root/.local/bin/ansible-playbook -i ../inventory/general -i /host_dirs/lab_1/inventory start-containers.yml -vvv
+[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details
+[WARNING]: Unable to parse /host_dirs/lab_1/inventory as an inventory source
+ansible-playbook [core 2.19.2]
+  config file = /workspace/ansible/ansible.cfg
+  configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /root/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible
+  ansible collection location = /root/.ansible/collections:/usr/share/ansible/collections
+  executable location = /root/.local/bin/ansible-playbook
+  python version = 3.12.11 (main, Jun  4 2025, 09:55:47) [GCC 14.2.0] (/root/.local/share/pipx/venvs/ansible/bin/python)
+  jinja version = 3.1.6
+  pyyaml version = 6.0.2 (with libyaml v0.2.5)
+Using /workspace/ansible/ansible.cfg as config file
+host_list declined parsing /workspace/inventory/general/helios as it did not pass its verify_file() method
+auto declined parsing /workspace/inventory/general/helios as it did not pass its verify_file() method
+Parsed /workspace/inventory/general/helios inventory source with ini plugin
+Skipping callback 'minimal', as we already have a stdout callback.
+Skipping callback 'oneline', as we already have a stdout callback.
+
+PLAYBOOK: start-containers.yml *************************************************
+1 plays in start-containers.yml
+
+PLAY [Restart containers] ******************************************************
+
+TASK [Gathering Facts] *********************************************************
+task path: /workspace/ansible/start-containers.yml:2
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'echo ~s365395 && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'/home/studs/s365395\n', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo /home/studs/s365395/.ansible/tmp `"&& mkdir "` echo /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142306.007649-9087-215422544636811 `" && echo ansible-tmp-1758142306.007649-9087-215422544636811="` echo /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142306.007649-9087-215422544636811 `" ) && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'ansible-tmp-1758142306.007649-9087-215422544636811=/home/studs/s365395/.ansible/tmp/ansible-tmp-1758142306.007649-9087-215422544636811\n', b'')
+<helios_cs_ifmo> Attempting python interpreter discovery.
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'echo FOUND; command -v '"'"'"'"'"'"'"'"'python3.13'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.12'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.11'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.10'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.9'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3.8'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'/usr/bin/python3'"'"'"'"'"'"'"'"'; command -v '"'"'"'"'"'"'"'"'python3'"'"'"'"'"'"'"'"'; echo ENDFOUND && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'FOUND\n/usr/local/bin/python3.11\nENDFOUND\n', b'')
+Using module file /root/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible/modules/setup.py
+<helios.cs.ifmo.ru> PUT /root/.ansible/tmp/ansible-local-90839iq_ta4z/tmp4mzg93oa TO /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142306.007649-9087-215422544636811/AnsiballZ_setup.py
+<helios.cs.ifmo.ru> SSH: EXEC sftp -o BatchMode=no -b - -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 '[helios.cs.ifmo.ru]'
+<helios.cs.ifmo.ru> (0, b'sftp> put /root/.ansible/tmp/ansible-local-90839iq_ta4z/tmp4mzg93oa /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142306.007649-9087-215422544636811/AnsiballZ_setup.py\n', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'chmod u+rwx /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142306.007649-9087-215422544636811/ /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142306.007649-9087-215422544636811/AnsiballZ_setup.py && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 -tt helios.cs.ifmo.ru '/bin/sh -c '"'"'/usr/local/bin/python3.11 /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142306.007649-9087-215422544636811/AnsiballZ_setup.py && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'\r\n{"ansible_facts": {"ansible_system": "FreeBSD", "ansible_kernel": "14.3-STABLE", "ansible_kernel_version": "FreeBSD 14.3-STABLE 5c37f7d22fa7 amd64", "ansible_machine": "amd64", "ansible_python_version": "3.11.9", "ansible_fqdn": "helios.cs.ifmo.ru", "ansible_hostname": "helios", "ansible_nodename": "helios.cs.ifmo.ru", "ansible_domain": "cs.ifmo.ru", "ansible_userspace_bits": "64", "ansible_architecture": "amd64", "ansible_machine_id": "7d3ff794d0d04663806650d40df8773a", "ansible_iscsi_iqn": "", "ansible_loadavg": {"1m": 0.5625, "5m": 0.4375, "15m": 0.40087890625}, "ansible_ssh_host_key_rsa_public": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCfeKZ7eGq2JCjNZhD0P8hzE2AfURbYEwbIMA/v1g9W0QLISNcrgpvBhV8W10TMwOGoVKdsPPodgT0AaTbLWYug05E1Eo+7U08q49k0bhkh8yLScxLN9D+83wRRYyx+2xmBjzs4gfQNgVgMWh/K3nooqIbe4z7iRcWxy7xBl1EgT3LKd42GSlTb9V4Dd9DNUk5jU+its2SW0oDbt0SpaBsOJBU325fD3fWr1A/aFPlyybshf10wJREMk6aeQZMcIVNv9n6hQ9IXSEMMG+4TWlzP3/SxO3jKB7Fj5Yt/wdOf1h7anCiGP/pUMAJ99y8dvHYMm5ga4PeaYWmHVorCZmz1", "ansible_ssh_host_key_rsa_public_keytype": "ssh-rsa", "ansible_ssh_host_key_ecdsa_public": "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMRumjLUtAip7HbgXj53VebTwOAjXkaMqnQysXPi+3jJf0wWygl/Ruo8gto+cgT38UyMTl+i7CQ7io9HrRPvnd0=", "ansible_ssh_host_key_ecdsa_public_keytype": "ecdsa-sha2-nistp256", "ansible_ssh_host_key_ed25519_public": "AAAAC3NzaC1lZDI1NTE5AAAAILr5dsbF6eEBT5UFKGo1Qe3ina64YppvFELt8Wu+cZM1", "ansible_ssh_host_key_ed25519_public_keytype": "ssh-ed25519", "ansible_selinux": {"status": "Missing selinux Python library"}, "ansible_selinux_python_present": false, "ansible_processor": [], "ansible_processor_count": "16", "ansible_memtotal_mb": 127623, "ansible_memfree_mb": 89555, "ansible_swaptotal_mb": 65536, "ansible_swapfree_mb": 65536, "ansible_uptime_seconds": 541953, "ansible_bios_date": "NA", "ansible_bios_vendor": "NA", "ansible_bios_version": "NA", "ansible_board_asset_tag": "NA", "ansible_board_name": "NA", "ansible_board_serial": "NA", "ansible_board_vendor": "NA", "ansible_board_version": "NA", "ansible_chassis_asset_tag": "NA", "ansible_chassis_serial": "NA", "ansible_chassis_vendor": "NA", "ansible_chassis_version": "NA", "ansible_form_factor": "NA", "ansible_product_name": "NA", "ansible_product_serial": "NA", "ansible_product_uuid": "NA", "ansible_product_version": "NA", "ansible_system_vendor": "NA", "ansible_devices": {"ada0": ["ada0p1", "ada0p2"], "ada1": ["ada1p1", "ada1p2"], "ada2": ["ada2p1", "ada2p2"], "ada3": ["ada3p1", "ada3p2"], "da0": ["da0p1", "da0p2", "da0p3"], "da1": ["da1p1", "da1p2", "da1p3"]}, "ansible_mounts": [{"mount": "/", "device": "rpool/root", "fstype": "zfs", "options": "rw", "size_total": 490786783232, "size_available": 486908911616, "block_size": 131072, "block_total": 958567936, "block_available": 950993968, "block_used": 7573968, "inode_total": 951080861, "inode_available": 950993968, "inode_used": 86893}, {"mount": "/tmp", "device": "tmpfs", "fstype": "tmpfs", "options": "rw,nosuid,size=1024m", "size_total": 1073741824, "size_available": 1073061888, "block_size": 4096, "block_total": 262144, "block_available": 261978, "block_used": 166, "inode_total": 3670016, "inode_available": 3669880, "inode_used": 136}, {"mount": "/dev/fd", "device": "fdesc", "fstype": "fdescfs", "options": "rw", "size_total": 1024, "size_available": 1024, "block_size": 512, "block_total": 2, "block_available": 2, "block_used": 0, "inode_total": 3773296, "inode_available": 3773289, "inode_used": 7}, {"mount": "/proc", "device": "proc", "fstype": "procfs", "options": "rw", "size_total": 8192, "size_available": 8192, "block_size": 4096, "block_total": 2, "block_available": 2, "block_used": 0, "inode_total": 0, "inode_available": 0, "inode_used": 0}], "ansible_user_id": "s365395", "ansible_user_uid": 365395, "ansible_user_gid": 600, "ansible_user_gecos": "Artem Arkadevich Nazin", "ansible_user_dir": "/home/studs/s365395", "ansible_user_shell": "/usr/bin/bash", "ansible_real_user_id": 365395, "ansible_effective_user_id": 365395, "ansible_real_group_id": 600, "ansible_effective_group_id": 600, "ansible_virtualization_type": "", "ansible_virtualization_role": "", "ansible_virtualization_tech_guest": [], "ansible_virtualization_tech_host": [], "ansible_apparmor": {"status": "disabled"}, "ansible_local": {}, "ansible_fips": false, "ansible_interfaces": ["cs10", "cs11", "igb0", "igb1", "ixl0", "ixl1", "lagg0", "lagg0.11", "lo0"], "ansible_ixl0": {"device": "ixl0", "ipv4": [], "ipv6": [], "type": "ether", "flags": ["UP", "BROADCAST", "RUNNING", "PROMISC", "SIMPLEX", "MULTICAST", "LOWER_UP"], "macaddress": "18:56:44:d6:74:ec", "metric": "0", "mtu": "1500", "options": ["PERFORMNUD", "IFDISABLED", "AUTO_LINKLOCAL"], "media": "Ethernet", "media_select": "autoselect", "media_type": "10Gbase-Twinax", "media_options": ["full-duplex"], "status": "active"}, "ansible_ixl1": {"device": "ixl1", "ipv4": [], "ipv6": [], "type": "ether", "flags": ["UP", "BROADCAST", "RUNNING", "PROMISC", "SIMPLEX", "MULTICAST", "LOWER_UP"], "macaddress": "18:56:44:d6:74:ec", "metric": "0", "mtu": "1500", "options": ["PERFORMNUD", "IFDISABLED", "AUTO_LINKLOCAL"], "media": "Ethernet", "media_select": "autoselect", "media_type": "10Gbase-Twinax", "media_options": ["full-duplex"], "status": "active"}, "ansible_lo0": {"device": "lo0", "ipv4": [{"address": "127.0.0.1", "netmask": "255.0.0.0", "network": "127.0.0.0", "broadcast": "127.255.255.255"}], "ipv6": [{"address": "::1", "prefix": "128"}, {"address": "fe80::1%lo0", "prefix": "64", "scope": "0x3"}], "type": "loopback", "flags": ["UP", "LOOPBACK", "RUNNING", "MULTICAST", "LOWER_UP"], "macaddress": "unknown", "metric": "0", "mtu": "16384", "options": ["PERFORMNUD", "AUTO_LINKLOCAL"]}, "ansible_igb0": {"device": "igb0", "ipv4": [], "ipv6": [], "type": "ether", "flags": ["BROADCAST", "SIMPLEX", "MULTICAST"], "macaddress": "00:25:90:98:33:be", "metric": "0", "mtu": "1500", "options": ["PERFORMNUD", "IFDISABLED", "AUTO_LINKLOCAL"], "media": "Ethernet", "media_select": "autoselect", "status": "no"}, "ansible_igb1": {"device": "igb1", "ipv4": [], "ipv6": [], "type": "ether", "flags": ["BROADCAST", "SIMPLEX", "MULTICAST"], "macaddress": "00:25:90:98:33:bf", "metric": "0", "mtu": "1500", "options": ["PERFORMNUD", "IFDISABLED", "AUTO_LINKLOCAL"], "media": "Ethernet", "media_select": "autoselect", "status": "no"}, "ansible_lagg0": {"device": "lagg0", "ipv4": [], "ipv6": [], "type": "ether", "flags": ["UP", "BROADCAST", "RUNNING", "PROMISC", "SIMPLEX", "MULTICAST", "LOWER_UP"], "macaddress": "18:56:44:d6:74:ec", "metric": "0", "mtu": "1500", "options": ["PERFORMNUD", "IFDISABLED", "AUTO_LINKLOCAL"], "media": "Ethernet", "media_select": "autoselect", "status": "active"}, "ansible_cs10": {"device": "cs10", "ipv4": [{"address": "192.168.10.80", "netmask": "255.255.255.0", "network": "192.168.10.0", "broadcast": "192.168.10.255"}], "ipv6": [], "type": "ether", "flags": ["UP", "BROADCAST", "RUNNING", "SIMPLEX", "MULTICAST", "LOWER_UP"], "macaddress": "18:56:44:d6:74:ec", "metric": "0", "mtu": "1500", "options": ["PERFORMNUD", "IFDISABLED", "AUTO_LINKLOCAL"], "media": "Ethernet", "media_select": "autoselect", "status": "active"}, "ansible_lagg0.11": {"device": "lagg0.11", "ipv4": [], "ipv6": [], "type": "ether", "flags": ["UP", "BROADCAST", "RUNNING", "PROMISC", "SIMPLEX", "MULTICAST", "LOWER_UP"], "macaddress": "18:56:44:d6:74:ec", "metric": "0", "mtu": "1500", "options": ["PERFORMNUD", "IFDISABLED", "AUTO_LINKLOCAL"], "media": "Ethernet", "media_select": "autoselect", "status": "active"}, "ansible_cs11": {"device": "cs11", "ipv4": [], "ipv6": [], "type": "ether", "flags": ["UP", "BROADCAST", "RUNNING", "SIMPLEX", "MULTICAST", "LOWER_UP"], "macaddress": "58:9c:fc:10:33:7a", "metric": "0", "mtu": "1500", "options": ["PERFORMNUD", "IFDISABLED"]}, "ansible_default_ipv4": {"gateway": "192.168.10.1", "interface": "cs10", "device": "cs10", "type": "ether", "flags": ["UP", "BROADCAST", "RUNNING", "SIMPLEX", "MULTICAST", "LOWER_UP"], "macaddress": "18:56:44:d6:74:ec", "metric": "0", "mtu": "1500", "options": ["PERFORMNUD", "IFDISABLED", "AUTO_LINKLOCAL"], "media": "Ethernet", "media_select": "autoselect", "status": "active", "address": "192.168.10.80", "netmask": "255.255.255.0", "network": "192.168.10.0", "broadcast": "192.168.10.255"}, "ansible_default_ipv6": {}, "ansible_all_ipv4_addresses": ["192.168.10.80"], "ansible_all_ipv6_addresses": [], "ansible_is_chroot": true, "ansible_dns": {"search": ["cs.ifmo.ru"], "nameservers": ["192.168.10.81", "192.168.10.82"]}, "ansible_distribution": "FreeBSD", "ansible_distribution_release": "14.3-STABLE", "ansible_distribution_version": "14.3", "ansible_distribution_major_version": "14", "ansible_os_family": "FreeBSD", "ansible_env": {"SSH_CLIENT": "178.66.18.176 49212 22", "LOGNAME": "s365395", "LANG": "ru_RU.UTF-8", "MAIL": "/var/mail/s365395", "PATH": "/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin:/home/studs/s365395/bin", "PWD": "/home/studs/s365395", "_": "/bin/sh", "TERM": "su", "SSH_TTY": "/dev/pts/21", "USER": "s365395", "HOME": "/home/studs/s365395", "SSH_CONNECTION": "178.66.18.176 49212 192.168.10.80 22", "SHELL": "/usr/bin/bash", "MM_CHARSET": "UTF-8", "BLOCKSIZE": "K", "SHLVL": "0"}, "ansible_lsb": {}, "ansible_hostnqn": "", "ansible_date_time": {"year": "2025", "month": "09", "weekday": "\\u0441\\u0440\\u0435\\u0434\\u0430", "weekday_number": "3", "weeknumber": "37", "day": "17", "hour": "23", "minute": "51", "second": "49", "epoch": "1758153109", "epoch_int": "1758153109", "date": "2025-09-17", "time": "23:51:49", "iso8601_micro": "2025-09-17T20:51:49.610534Z", "iso8601": "2025-09-17T20:51:49Z", "iso8601_basic": "20250917T235149610534", "iso8601_basic_short": "20250917T235149", "tz": "MSK", "tz_dst": "MSK", "tz_offset": "+0300"}, "ansible_system_capabilities_enforced": "N/A", "ansible_system_capabilities": "N/A", "ansible_service_mgr": "bsdinit", "ansible_python": {"version": {"major": 3, "minor": 11, "micro": 9, "releaselevel": "final", "serial": 0}, "version_info": [3, 11, 9, "final", 0], "executable": "/usr/local/bin/python3.11", "has_sslcontext": true, "type": "cpython"}, "ansible_fibre_channel_wwn": [], "ansible_pkg_mgr": "pkgng", "gather_subset": ["all"], "module_setup": true}, "invocation": {"module_args": {"gather_subset": ["all"], "gather_timeout": 10, "filter": [], "fact_path": "/etc/ansible/facts.d"}}}\r\n', b'Shared connection to helios.cs.ifmo.ru closed.\r\n')
+[WARNING]: Host 'helios_cs_ifmo' is using the discovered Python interpreter at '/usr/local/bin/python3.11', but future installation of another Python interpreter could cause a different interpreter to be discovered. See https://docs.ansible.com/ansible-core/2.19/reference_appendices/interpreter_discovery.html for more information.
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'rm -f -r /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142306.007649-9087-215422544636811/ > /dev/null 2>&1 && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'', b'')
+ok: [helios_cs_ifmo]
+
+TASK [Try to stop nginx] *******************************************************
+task path: /workspace/ansible/start-containers.yml:5
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'echo ~s365395 && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'/home/studs/s365395\n', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo /home/studs/s365395/.ansible/tmp `"&& mkdir "` echo /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142309.9065802-9103-256500424283002 `" && echo ansible-tmp-1758142309.9065802-9103-256500424283002="` echo /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142309.9065802-9103-256500424283002 `" ) && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'ansible-tmp-1758142309.9065802-9103-256500424283002=/home/studs/s365395/.ansible/tmp/ansible-tmp-1758142309.9065802-9103-256500424283002\n', b'')
+Using module file /root/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible/modules/command.py
+<helios.cs.ifmo.ru> PUT /root/.ansible/tmp/ansible-local-90839iq_ta4z/tmpi9rpf2lt TO /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142309.9065802-9103-256500424283002/AnsiballZ_command.py
+<helios.cs.ifmo.ru> SSH: EXEC sftp -o BatchMode=no -b - -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 '[helios.cs.ifmo.ru]'
+<helios.cs.ifmo.ru> (0, b'sftp> put /root/.ansible/tmp/ansible-local-90839iq_ta4z/tmpi9rpf2lt /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142309.9065802-9103-256500424283002/AnsiballZ_command.py\n', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'chmod u+rwx /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142309.9065802-9103-256500424283002/ /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142309.9065802-9103-256500424283002/AnsiballZ_command.py && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 -tt helios.cs.ifmo.ru '/bin/sh -c '"'"'/usr/local/bin/python3.11 /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142309.9065802-9103-256500424283002/AnsiballZ_command.py && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'\r\n{"changed": true, "stdout": "", "stderr": "", "rc": 0, "cmd": "cd /home/studs/s365395/autodeploy/nginx/sbin/ && ./nginx -s quit", "start": "2025-09-17 23:51:52.756902", "end": "2025-09-17 23:51:52.764127", "delta": "0:00:00.007225", "msg": "", "invocation": {"module_args": {"_raw_params": "cd /home/studs/s365395/autodeploy/nginx/sbin/ && ./nginx -s quit", "_uses_shell": true, "expand_argument_vars": true, "stdin_add_newline": true, "strip_empty_ends": true, "cmd": null, "argv": null, "chdir": null, "executable": null, "creates": null, "removes": null, "stdin": null}}}\r\n', b'Shared connection to helios.cs.ifmo.ru closed.\r\n')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'rm -f -r /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142309.9065802-9103-256500424283002/ > /dev/null 2>&1 && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'', b'')
+changed: [helios_cs_ifmo] => {
+    "changed": true,
+    "cmd": "cd /home/studs/s365395/autodeploy/nginx/sbin/ && ./nginx -s quit",
+    "delta": "0:00:00.007225",
+    "end": "2025-09-17 23:51:52.764127",
+    "invocation": {
+        "module_args": {
+            "_raw_params": "cd /home/studs/s365395/autodeploy/nginx/sbin/ && ./nginx -s quit",
+            "_uses_shell": true,
+            "argv": null,
+            "chdir": null,
+            "cmd": null,
+            "creates": null,
+            "executable": null,
+            "expand_argument_vars": true,
+            "removes": null,
+            "stdin": null,
+            "stdin_add_newline": true,
+            "strip_empty_ends": true
+        }
+    },
+    "msg": "",
+    "rc": 0,
+    "start": "2025-09-17 23:51:52.756902",
+    "stderr": "",
+    "stderr_lines": [],
+    "stdout": "",
+    "stdout_lines": []
+}
+
+TASK [Start nginx] *************************************************************
+task path: /workspace/ansible/start-containers.yml:9
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'echo ~s365395 && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'/home/studs/s365395\n', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo /home/studs/s365395/.ansible/tmp `"&& mkdir "` echo /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142313.024999-9114-156867254989024 `" && echo ansible-tmp-1758142313.024999-9114-156867254989024="` echo /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142313.024999-9114-156867254989024 `" ) && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'ansible-tmp-1758142313.024999-9114-156867254989024=/home/studs/s365395/.ansible/tmp/ansible-tmp-1758142313.024999-9114-156867254989024\n', b'')
+Using module file /root/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible/modules/command.py
+<helios.cs.ifmo.ru> PUT /root/.ansible/tmp/ansible-local-90839iq_ta4z/tmpe_thlq8j TO /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142313.024999-9114-156867254989024/AnsiballZ_command.py
+<helios.cs.ifmo.ru> SSH: EXEC sftp -o BatchMode=no -b - -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 '[helios.cs.ifmo.ru]'
+<helios.cs.ifmo.ru> (0, b'sftp> put /root/.ansible/tmp/ansible-local-90839iq_ta4z/tmpe_thlq8j /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142313.024999-9114-156867254989024/AnsiballZ_command.py\n', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'chmod u+rwx /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142313.024999-9114-156867254989024/ /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142313.024999-9114-156867254989024/AnsiballZ_command.py && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 -tt helios.cs.ifmo.ru '/bin/sh -c '"'"'/usr/local/bin/python3.11 /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142313.024999-9114-156867254989024/AnsiballZ_command.py && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'\r\n{"changed": true, "stdout": "", "stderr": "", "rc": 0, "cmd": "cd /home/studs/s365395/autodeploy/nginx/sbin/ && ./nginx", "start": "2025-09-17 23:51:53.575164", "end": "2025-09-17 23:51:55.623098", "delta": "0:00:02.047934", "msg": "", "invocation": {"module_args": {"_raw_params": "cd /home/studs/s365395/autodeploy/nginx/sbin/ && ./nginx", "_uses_shell": true, "expand_argument_vars": true, "stdin_add_newline": true, "strip_empty_ends": true, "cmd": null, "argv": null, "chdir": null, "executable": null, "creates": null, "removes": null, "stdin": null}}}\r\n', b'Shared connection to helios.cs.ifmo.ru closed.\r\n')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'rm -f -r /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142313.024999-9114-156867254989024/ > /dev/null 2>&1 && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'', b'')
+changed: [helios_cs_ifmo] => {
+    "changed": true,
+    "cmd": "cd /home/studs/s365395/autodeploy/nginx/sbin/ && ./nginx",
+    "delta": "0:00:02.047934",
+    "end": "2025-09-17 23:51:55.623098",
+    "invocation": {
+        "module_args": {
+            "_raw_params": "cd /home/studs/s365395/autodeploy/nginx/sbin/ && ./nginx",
+            "_uses_shell": true,
+            "argv": null,
+            "chdir": null,
+            "cmd": null,
+            "creates": null,
+            "executable": null,
+            "expand_argument_vars": true,
+            "removes": null,
+            "stdin": null,
+            "stdin_add_newline": true,
+            "strip_empty_ends": true
+        }
+    },
+    "msg": "",
+    "rc": 0,
+    "start": "2025-09-17 23:51:53.575164",
+    "stderr": "",
+    "stderr_lines": [],
+    "stdout": "",
+    "stdout_lines": []
+}
+
+TASK [Wait some time] **********************************************************
+task path: /workspace/ansible/start-containers.yml:12
+Pausing for 5 seconds
+ok: [helios_cs_ifmo] => {
+    "changed": false,
+    "delta": 5,
+    "echo": true,
+    "rc": 0,
+    "start": "2025-09-17 20:51:55.861288",
+    "stderr": "",
+    "stdout": "Paused for 5.0 seconds",
+    "stop": "2025-09-17 20:52:00.864289",
+    "user_input": ""
+}
+
+TASK [Get PID file content] ****************************************************
+task path: /workspace/ansible/start-containers.yml:16
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'echo ~s365395 && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'/home/studs/s365395\n', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo /home/studs/s365395/.ansible/tmp `"&& mkdir "` echo /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142320.9559438-9131-162233865050435 `" && echo ansible-tmp-1758142320.9559438-9131-162233865050435="` echo /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142320.9559438-9131-162233865050435 `" ) && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'ansible-tmp-1758142320.9559438-9131-162233865050435=/home/studs/s365395/.ansible/tmp/ansible-tmp-1758142320.9559438-9131-162233865050435\n', b'')
+Using module file /root/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible/modules/slurp.py
+<helios.cs.ifmo.ru> PUT /root/.ansible/tmp/ansible-local-90839iq_ta4z/tmpoh37x6xr TO /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142320.9559438-9131-162233865050435/AnsiballZ_slurp.py
+<helios.cs.ifmo.ru> SSH: EXEC sftp -o BatchMode=no -b - -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 '[helios.cs.ifmo.ru]'
+<helios.cs.ifmo.ru> (0, b'sftp> put /root/.ansible/tmp/ansible-local-90839iq_ta4z/tmpoh37x6xr /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142320.9559438-9131-162233865050435/AnsiballZ_slurp.py\n', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'chmod u+rwx /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142320.9559438-9131-162233865050435/ /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142320.9559438-9131-162233865050435/AnsiballZ_slurp.py && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 -tt helios.cs.ifmo.ru '/bin/sh -c '"'"'/usr/local/bin/python3.11 /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142320.9559438-9131-162233865050435/AnsiballZ_slurp.py && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'\r\n{"content": "ODAyNzAK", "source": "/home/studs/s365395/autodeploy/nginx/logs/nginx.pid", "encoding": "base64", "invocation": {"module_args": {"src": "/home/studs/s365395/autodeploy/nginx/logs/nginx.pid"}}}\r\n', b'Shared connection to helios.cs.ifmo.ru closed.\r\n')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'rm -f -r /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142320.9559438-9131-162233865050435/ > /dev/null 2>&1 && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'', b'')
+ok: [helios_cs_ifmo] => {
+    "changed": false,
+    "content": "ODAyNzAK",
+    "encoding": "base64",
+    "invocation": {
+        "module_args": {
+            "src": "/home/studs/s365395/autodeploy/nginx/logs/nginx.pid"
+        }
+    },
+    "source": "/home/studs/s365395/autodeploy/nginx/logs/nginx.pid"
+}
+
+TASK [Check if nginx alive] ****************************************************
+task path: /workspace/ansible/start-containers.yml:21
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'echo ~s365395 && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'/home/studs/s365395\n', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo /home/studs/s365395/.ansible/tmp `"&& mkdir "` echo /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142323.044998-9140-147214574970940 `" && echo ansible-tmp-1758142323.044998-9140-147214574970940="` echo /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142323.044998-9140-147214574970940 `" ) && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'ansible-tmp-1758142323.044998-9140-147214574970940=/home/studs/s365395/.ansible/tmp/ansible-tmp-1758142323.044998-9140-147214574970940\n', b'')
+Using module file /root/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible/modules/command.py
+<helios.cs.ifmo.ru> PUT /root/.ansible/tmp/ansible-local-90839iq_ta4z/tmp2600x4ke TO /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142323.044998-9140-147214574970940/AnsiballZ_command.py
+<helios.cs.ifmo.ru> SSH: EXEC sftp -o BatchMode=no -b - -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 '[helios.cs.ifmo.ru]'
+<helios.cs.ifmo.ru> (0, b'sftp> put /root/.ansible/tmp/ansible-local-90839iq_ta4z/tmp2600x4ke /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142323.044998-9140-147214574970940/AnsiballZ_command.py\n', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'chmod u+rwx /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142323.044998-9140-147214574970940/ /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142323.044998-9140-147214574970940/AnsiballZ_command.py && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 -tt helios.cs.ifmo.ru '/bin/sh -c '"'"'/usr/local/bin/python3.11 /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142323.044998-9140-147214574970940/AnsiballZ_command.py && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'\r\n{"changed": true, "stdout": "s365395 80270  0,8  0,0 15060  3572  -  Ss   23:51   0:00,00 nginx: master process ./nginx", "stderr": "", "rc": 0, "cmd": "ps aux | grep 80270 | grep -v grep", "start": "2025-09-17 23:52:03.588719", "end": "2025-09-17 23:52:03.600606", "delta": "0:00:00.011887", "msg": "", "invocation": {"module_args": {"_raw_params": "ps aux | grep 80270 | grep -v grep", "_uses_shell": true, "expand_argument_vars": true, "stdin_add_newline": true, "strip_empty_ends": true, "cmd": null, "argv": null, "chdir": null, "executable": null, "creates": null, "removes": null, "stdin": null}}}\r\n', b'Shared connection to helios.cs.ifmo.ru closed.\r\n')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'rm -f -r /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142323.044998-9140-147214574970940/ > /dev/null 2>&1 && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'', b'')
+changed: [helios_cs_ifmo] => {
+    "changed": true,
+    "cmd": "ps aux | grep 80270 | grep -v grep",
+    "delta": "0:00:00.011887",
+    "end": "2025-09-17 23:52:03.600606",
+    "invocation": {
+        "module_args": {
+            "_raw_params": "ps aux | grep 80270 | grep -v grep",
+            "_uses_shell": true,
+            "argv": null,
+            "chdir": null,
+            "cmd": null,
+            "creates": null,
+            "executable": null,
+            "expand_argument_vars": true,
+            "removes": null,
+            "stdin": null,
+            "stdin_add_newline": true,
+            "strip_empty_ends": true
+        }
+    },
+    "msg": "",
+    "rc": 0,
+    "start": "2025-09-17 23:52:03.588719",
+    "stderr": "",
+    "stderr_lines": [],
+    "stdout": "s365395 80270  0,8  0,0 15060  3572  -  Ss   23:51   0:00,00 nginx: master process ./nginx",
+    "stdout_lines": [
+        "s365395 80270  0,8  0,0 15060  3572  -  Ss   23:51   0:00,00 nginx: master process ./nginx"
+    ]
+}
+
+TASK [Try to stop tomcat] ******************************************************
+task path: /workspace/ansible/start-containers.yml:24
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'echo ~s365395 && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'/home/studs/s365395\n', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo /home/studs/s365395/.ansible/tmp `"&& mkdir "` echo /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142325.881886-9151-162032841273705 `" && echo ansible-tmp-1758142325.881886-9151-162032841273705="` echo /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142325.881886-9151-162032841273705 `" ) && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'ansible-tmp-1758142325.881886-9151-162032841273705=/home/studs/s365395/.ansible/tmp/ansible-tmp-1758142325.881886-9151-162032841273705\n', b'')
+Using module file /root/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible/modules/command.py
+<helios.cs.ifmo.ru> PUT /root/.ansible/tmp/ansible-local-90839iq_ta4z/tmp3ioxne0w TO /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142325.881886-9151-162032841273705/AnsiballZ_command.py
+<helios.cs.ifmo.ru> SSH: EXEC sftp -o BatchMode=no -b - -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 '[helios.cs.ifmo.ru]'
+<helios.cs.ifmo.ru> (0, b'sftp> put /root/.ansible/tmp/ansible-local-90839iq_ta4z/tmp3ioxne0w /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142325.881886-9151-162032841273705/AnsiballZ_command.py\n', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'chmod u+rwx /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142325.881886-9151-162032841273705/ /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142325.881886-9151-162032841273705/AnsiballZ_command.py && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 -tt helios.cs.ifmo.ru '/bin/sh -c '"'"'/usr/local/bin/python3.11 /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142325.881886-9151-162032841273705/AnsiballZ_command.py && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'\r\n{"changed": true, "stdout": "Using CATALINA_BASE:   /home/studs/s365395/autodeploy/tomcat\\nUsing CATALINA_HOME:   /home/studs/s365395/autodeploy/tomcat\\nUsing CATALINA_TMPDIR: /home/studs/s365395/autodeploy/tomcat/temp\\nUsing JRE_HOME:        /usr/local\\nUsing CLASSPATH:       /home/studs/s365395/autodeploy/tomcat/bin/bootstrap.jar:/home/studs/s365395/autodeploy/tomcat/bin/tomcat-juli.jar\\nUsing CATALINA_OPTS:   \\nError occurred during initialization of VM\\nCould not reserve enough space for 30932992KB object heap", "stderr": "", "rc": 0, "cmd": "cd /home/studs/s365395/autodeploy/tomcat/bin/ && ./shutdown.sh", "start": "2025-09-17 23:52:06.433035", "end": "2025-09-17 23:52:09.850074", "delta": "0:00:03.417039", "msg": "", "invocation": {"module_args": {"_raw_params": "cd /home/studs/s365395/autodeploy/tomcat/bin/ && ./shutdown.sh", "_uses_shell": true, "expand_argument_vars": true, "stdin_add_newline": true, "strip_empty_ends": true, "cmd": null, "argv": null, "chdir": null, "executable": null, "creates": null, "removes": null, "stdin": null}}}\r\n', b'Shared connection to helios.cs.ifmo.ru closed.\r\n')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'rm -f -r /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142325.881886-9151-162032841273705/ > /dev/null 2>&1 && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'', b'')
+changed: [helios_cs_ifmo] => {
+    "changed": true,
+    "cmd": "cd /home/studs/s365395/autodeploy/tomcat/bin/ && ./shutdown.sh",
+    "delta": "0:00:03.417039",
+    "end": "2025-09-17 23:52:09.850074",
+    "invocation": {
+        "module_args": {
+            "_raw_params": "cd /home/studs/s365395/autodeploy/tomcat/bin/ && ./shutdown.sh",
+            "_uses_shell": true,
+            "argv": null,
+            "chdir": null,
+            "cmd": null,
+            "creates": null,
+            "executable": null,
+            "expand_argument_vars": true,
+            "removes": null,
+            "stdin": null,
+            "stdin_add_newline": true,
+            "strip_empty_ends": true
+        }
+    },
+    "msg": "",
+    "rc": 0,
+    "start": "2025-09-17 23:52:06.433035",
+    "stderr": "",
+    "stderr_lines": [],
+    "stdout": "Using CATALINA_BASE:   /home/studs/s365395/autodeploy/tomcat\nUsing CATALINA_HOME:   /home/studs/s365395/autodeploy/tomcat\nUsing CATALINA_TMPDIR: /home/studs/s365395/autodeploy/tomcat/temp\nUsing JRE_HOME:        /usr/local\nUsing CLASSPATH:       /home/studs/s365395/autodeploy/tomcat/bin/bootstrap.jar:/home/studs/s365395/autodeploy/tomcat/bin/tomcat-juli.jar\nUsing CATALINA_OPTS:   \nError occurred during initialization of VM\nCould not reserve enough space for 30932992KB object heap",
+    "stdout_lines": [
+        "Using CATALINA_BASE:   /home/studs/s365395/autodeploy/tomcat",
+        "Using CATALINA_HOME:   /home/studs/s365395/autodeploy/tomcat",
+        "Using CATALINA_TMPDIR: /home/studs/s365395/autodeploy/tomcat/temp",
+        "Using JRE_HOME:        /usr/local",
+        "Using CLASSPATH:       /home/studs/s365395/autodeploy/tomcat/bin/bootstrap.jar:/home/studs/s365395/autodeploy/tomcat/bin/tomcat-juli.jar",
+        "Using CATALINA_OPTS:   ",
+        "Error occurred during initialization of VM",
+        "Could not reserve enough space for 30932992KB object heap"
+    ]
+}
+
+TASK [Start tomcat] ************************************************************
+task path: /workspace/ansible/start-containers.yml:28
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'echo ~s365395 && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'/home/studs/s365395\n', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'( umask 77 && mkdir -p "` echo /home/studs/s365395/.ansible/tmp `"&& mkdir "` echo /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142330.1134274-9164-250206877359457 `" && echo ansible-tmp-1758142330.1134274-9164-250206877359457="` echo /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142330.1134274-9164-250206877359457 `" ) && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'ansible-tmp-1758142330.1134274-9164-250206877359457=/home/studs/s365395/.ansible/tmp/ansible-tmp-1758142330.1134274-9164-250206877359457\n', b'')
+Using module file /root/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible/modules/command.py
+<helios.cs.ifmo.ru> PUT /root/.ansible/tmp/ansible-local-90839iq_ta4z/tmpmmt9fvrq TO /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142330.1134274-9164-250206877359457/AnsiballZ_command.py
+<helios.cs.ifmo.ru> SSH: EXEC sftp -o BatchMode=no -b - -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 '[helios.cs.ifmo.ru]'
+<helios.cs.ifmo.ru> (0, b'sftp> put /root/.ansible/tmp/ansible-local-90839iq_ta4z/tmpmmt9fvrq /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142330.1134274-9164-250206877359457/AnsiballZ_command.py\n', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'chmod u+rwx /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142330.1134274-9164-250206877359457/ /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142330.1134274-9164-250206877359457/AnsiballZ_command.py && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'', b'')
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 -tt helios.cs.ifmo.ru '/bin/sh -c '"'"'/usr/local/bin/python3.11 /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142330.1134274-9164-250206877359457/AnsiballZ_command.py && sleep 0'"'"''
+<helios.cs.ifmo.ru> (1, b'\r\n{"changed": true, "stdout": "", "stderr": "", "rc": 1, "cmd": "cd /home/studs/s365395/autodeploy/tomcat/bin && JAVA_HOME=/usr/local/openjdk17 CATALINA_PID=./catalina.pid ./daemon.sh --tomcat-user s365395 start", "start": "2025-09-17 23:52:10.659424", "end": "2025-09-17 23:52:12.895546", "delta": "0:00:02.236122", "failed": true, "msg": "non-zero return code", "invocation": {"module_args": {"_raw_params": "cd /home/studs/s365395/autodeploy/tomcat/bin && JAVA_HOME=/usr/local/openjdk17 CATALINA_PID=./catalina.pid ./daemon.sh --tomcat-user s365395 start", "_uses_shell": true, "expand_argument_vars": true, "stdin_add_newline": true, "strip_empty_ends": true, "cmd": null, "argv": null, "chdir": null, "executable": null, "creates": null, "removes": null, "stdin": null}}}\r\n', b'Shared connection to helios.cs.ifmo.ru closed.\r\n')
+<helios.cs.ifmo.ru> Failed to connect to the host via ssh: Shared connection to helios.cs.ifmo.ru closed.
+<helios.cs.ifmo.ru> ESTABLISH SSH CONNECTION FOR USER: s365395
+<helios.cs.ifmo.ru> SSH: EXEC ssh -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o Port=2222 -o 'User="s365395"' -o ConnectTimeout=10 -o 'ControlPath="/root/.ansible/cp/271cfd8b69"' -o NumberOfPasswordPrompts=1 helios.cs.ifmo.ru '/bin/sh -c '"'"'rm -f -r /home/studs/s365395/.ansible/tmp/ansible-tmp-1758142330.1134274-9164-250206877359457/ > /dev/null 2>&1 && sleep 0'"'"''
+<helios.cs.ifmo.ru> (0, b'', b'')
+[ERROR]: Task failed: Module failed: non-zero return code
+Origin: /workspace/ansible/start-containers.yml:28:9
+
+26         ignore_errors: true
+27
+28       - name: Start tomcat
+           ^ column 9
+
+fatal: [helios_cs_ifmo]: FAILED! => {
+    "changed": true,
+    "cmd": "cd /home/studs/s365395/autodeploy/tomcat/bin && JAVA_HOME=/usr/local/openjdk17 CATALINA_PID=./catalina.pid ./daemon.sh --tomcat-user s365395 start",
+    "delta": "0:00:02.236122",
+    "end": "2025-09-17 23:52:12.895546",
+    "invocation": {
+        "module_args": {
+            "_raw_params": "cd /home/studs/s365395/autodeploy/tomcat/bin && JAVA_HOME=/usr/local/openjdk17 CATALINA_PID=./catalina.pid ./daemon.sh --tomcat-user s365395 start",
+            "_uses_shell": true,
+            "argv": null,
+            "chdir": null,
+            "cmd": null,
+            "creates": null,
+            "executable": null,
+            "expand_argument_vars": true,
+            "removes": null,
+            "stdin": null,
+            "stdin_add_newline": true,
+            "strip_empty_ends": true
+        }
+    },
+    "msg": "non-zero return code",
+    "rc": 1,
+    "start": "2025-09-17 23:52:10.659424",
+    "stderr": "",
+    "stderr_lines": [],
+    "stdout": "",
+    "stdout_lines": []
+}
+
+PLAY RECAP *********************************************************************
+helios_cs_ifmo             : ok=7    changed=4    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+
+[8mha:////4DXIDet/+d/NtNEpcwGT5wYPvVNpLSY/fBBuuB7KAdPYAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOKCBAUSSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4Ryv821O3wArmI/eL4AAAA=[0m[Pipeline] }
+[8mha:////4KCM9ftiRy4E8klbzuLJmaLuWYVnHDeGp0ZMDFV7918SAAAAph+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiBBIFSkVrueEFJjHGiXUXbAen4kV8jT9gEYmKLVY728zrDcvgoWZvsNPUWwqNxcGNJi9M7Pur44QdX7BhCuw0Sp0kt/o0o+SoYU5RwkLASlPjOFgyEdaiUw9VOUWmOkefv6OA0rZ3eEIhsjkqH78wedjcxjYw/Tx/BTANQ4Ryv821O3wAmqzcI74AAAA=[0m[Pipeline] // script
+[8mha:////4L/t+XfmiP/xKh0zd0pTeMIi5n2MLL1HYRtvEpmaETz6AAAApR+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOIiAaJBqWgtN7zAJMY4se6C7eBUvIiv8QcsIlGxxWpnm3m9YRk81OwNdpp6S6GxOLjR5IWJfX91nLDjCzZMgZ1GqZPkVp9mlBw1zClKWAhYaWocB0smwlp06qEqp8hU5+jzdxRQ2vYOTyhENkfl4xcmD5vb2Aamn+evAKZhiFDut7l2hw+i7k/SvgAAAA==[0m[Pipeline] }
+[8mha:////4C3KITBKMR5Z3yZBzHOVpQ/6lKpFv4fzqU3BFf/6J3t4AAAApB+LCAAAAAAAAP9tjTEOwjAQBC9BFLSUPOJSBCpEldZKwwtMbIwT687YDknFi/gaf8AiEhVbrHa2mdcb1jHAiYPBXtNgKXYWvRtNXjhxGK6OJ+z5gh1TZKex1VPLSjcLtpw0LClKWAnYaOocR0smwVb08iErJ8lU5xTydxRQWnWHJxQim5MM6QtzgN1tVJHp5/krgNn7BOW+zlUfPr1sGoC+AAAA[0m[Pipeline] // stage
+[8mha:////4DKgSNmh7XTEHZn0xEzDLszcI/1wWSpoigHKjPu/2MilAAAAox+LCAAAAAAAAP9tjTESgjAQRT84FraWHiI0jI1jZZuh8QQRYgxkdjFZhMoTeTXvICMzVv7qv9e81xvrFHHk6FRrqfOUaq/6MLj5qZFjdw08qpYvqmZKHKyq7FhxY08LViwWy7IcK42NpTpw8uQEW92ahymCIVecJc7uoJH75o4nMj2XxUT5whSxuw1NYvp1/gYw9b0gL0tBtv8A2n0Gmb0AAAA=[0m[Pipeline] }
+[8mha:////4HmNBdmzUujzc7Zh8omj7SqaTYoyHnfdqA6tXyxkfxUHAAAAoh+LCAAAAAAAAP9tjTESgjAQRT84FraWHiI0UjlWthkaTxAhxkBmF5NFqDyRV/MOMjJj5a/+e817vbFOEUeOTrWWOk+p9qoPg5ufGjl218CjavmiaqbEwarKjhU39rRgxWKxLMux0thYqgMnT06w1a15mCIYcsVZ4uwOGrlv7ngi03NZTJQvTBG729Akpl/nbwBT3wvyfSnIyg/QBW89vQAAAA==[0m[Pipeline] // withEnv
+[8mha:////4Efbsr9jCcWS/6s+VDChzDnzWKnTzCdNF4/RDfVEr+OoAAAAox+LCAAAAAAAAP9tjTESgjAQRT84FraWHiI0jI1jZZuh8QQRYgxkdjFZhMoTeTXvICMzVv7qv9e81xvrFHHk6FRrqfOUaq/6MLj5qZFjdw08qpYvqmZKHKyq7FhxY08LViwWy7IcK42NpTpw8uQEW92ahymCIVecJc7uoJH75o4nMj2XxUT5whSxuw1NYvp1/gYw9b0gL/eCrPwAlk/IDb0AAAA=[0m[Pipeline] }
+[8mha:////4D4hlevSBVpd0oL3afbRu7fzr5/CHrO2jTA8SJTqAAjOAAAApB+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMIpQKJAVLRWGl5gEmOcWHfBvpBUvIiv8QciIlGx1c4083pjmSKOHJ1qLLWeUuVVF3o3PTVwbK+BB9XwRVVMiYNVpR1Kru1pxpLFYl6WY6GxslQFTp6cYK0b8zBFMOSKs8TJHTRyX9/xRKanspgoXxgjNre+Tky/zt8Axq4T5Lu9INt+AIXzzK69AAAA[0m[Pipeline] // node
+[8mha:////4B0FU+zh87Anw6QaPtOAKc2AuxkxwXJcFmCqBpoXmKQ3AAAApB+LCAAAAAAAAP9tjTEOwjAQBDdBFLSUPMKREAUSoqK10vACkxjjxLoL9oWk4kV8jT8QEYmKrXammdcbyxRx5OhUY6n1lCqvutC76amBY3sNPKiGL6piShysKu1Qcm1PM5YsFvOyHAuNlaUqcPLkBGvdmIcpgiFXnCVO7qCR+/qOJzI9lcVE+cIYsbn1dWL6df4GMHadIN/tBdn2A8JUm1u9AAAA[0m[Pipeline] End of Pipeline
+ERROR: script returned exit code 2
+Finished: FAILURE

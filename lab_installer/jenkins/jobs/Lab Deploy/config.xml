@@ -34,13 +34,18 @@
           <trim>true</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
-          <name>DEPLOY_CONTAINERS</name>
-          <description>Развертывание Nginx и Tomcat</description>
+          <name>PREDEPLOY</name>
+          <description>Обязательно к запуску при установке с нуля</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
-          <name>DEPLOY_NGINX_CONF</name>
-          <description>Отправка конфигурации в nginx</description>
+          <name>RESTART_CONTAINERS</name>
+          <description>Запуск/перезапуск nginx и tomcat и проверка их состояния</description>
+          <defaultValue>true</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>DEPLOY_CONTAINERS</name>
+          <description>Развертывание Nginx и Tomcat</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
@@ -92,6 +97,9 @@
             }
         }
         stage(&apos;Predeploy&apos;) {
+            when{
+                expression { params.PREDEPLOY }
+            }
             steps {
                 script {
                       sh &quot;&quot;&quot;
@@ -116,6 +124,19 @@
                       sh &quot;&quot;&quot;
                         ${env.PREPARE_CMD} &amp;&amp; \
                         ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} tomcat-deploy.yml
+                        &quot;&quot;&quot;
+                }
+            }
+        }
+        stage(&apos;Containers restart&apos;) {
+            when{
+                expression { params.RESTART_CONTAINERS }
+            }
+            steps {
+                script {
+                      sh &quot;&quot;&quot;
+                        ${env.PREPARE_CMD} &amp;&amp; \
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} start-containers.yml -vvv
                         &quot;&quot;&quot;
                 }
             }

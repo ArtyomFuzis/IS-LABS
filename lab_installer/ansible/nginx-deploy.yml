@@ -7,7 +7,7 @@
           url:  "{{nginx_tar_link}}"
           dest: "{{base_path}}/autodeploy/install_tmp/"
           timeout: 60
-
+          
       - name: Untar nginx 
         command: "tar -xvzf {{base_path}}/autodeploy/install_tmp/{{nginx_archive}}.tar.gz -C {{base_path}}/autodeploy/install_tmp/"
 
@@ -35,6 +35,7 @@
       
       - name: Compile zlib 
         shell: "cd  {{base_path}}/autodeploy/install_tmp/{{zlib_archive}} && {{zlib_build_env}} ./configure && {{zlib_build_env}} gmake" 
+        
       - name: Compile nginx
         shell: "cd {{base_path}}/autodeploy/install_tmp/{{nginx_archive}} && {{nginx_build_env}} gmake"
       
@@ -50,6 +51,5 @@
           src: "/host_dirs/lab_installer/templates/nginx/conf/nginx.j2"
           dest: "{{base_path}}/autodeploy/nginx/conf/nginx.conf"
       
-      - name: Start nginx
-        shell: "cd {{base_path}}/autodeploy/nginx/sbin/ && ./nginx"
+
         

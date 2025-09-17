@@ -1,17 +1,18 @@
 ---
   # Общие параметры, то, что нужно менять 
   nginx_main_server_port: 8019
-  tomcat_management_port: 8020
+  tomcat_server_port: 8020
 
-  # Менять не рекомендуется.
-  base_path: "/home/{{ansible_user}}"
+  # Менять не рекомендуется.  
+  java_home: "/usr/local/openjdk17"
+  base_path: "/home/{{ansible_user}}" # данная переменная переопределяется именно для гелиоса в general_inventory/host_vars/helios_cs_ifmo.yml
   make_archive: "make-4.4.1"
   make_tar_link: "http://ftp.gnu.org/gnu/make/{{make_archive}}.tar.gz"
   nginx_archive: "nginx-1.28.0"
   nginx_tar_link: "https://nginx.org/download/{{nginx_archive}}.tar.gz"
-  tomcat_archive: "apache-tomcat-9.0.109"
-  tomcat_tar_link: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.109/bin/{{tomcat_archive}}.tar.gz"
-  nginx_server_name: localhost
+  tomcat_archive: "apache-tomcat-10.1.46"
+  tomcat_tar_link: "https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.46/bin/{{tomcat_archive}}.tar.gz"
+  nginx_server_name: helios.cs.ifmo.ru
   pcre_archive: "pcre-8.45"
   pcre_tar_link: "https://sourceforge.net/projects/pcre/files/pcre/8.45/{{pcre_archive}}.tar.gz"
   zlib_archive: "zlib-1.3.1"
@@ -23,4 +24,21 @@
             --with-zlib={{base_path}}/autodeploy/install_tmp/{{zlib_archive}}"
   nginx_build_env: "MAKE=\"gmake\""
   zlib_build_env: "MAKE=\"gmake\""
+  commons_daemon_build_env: "JAVA_HOME={{java_home}} MAKE=\"gmake\" PATH={{base_path}}/autodeploy/libs/autoconf/bin:$PATH"
+  tomcat_admin_username: "tomcat"
+  tomcat_admin_pass: "tomcat"
+  tomcat_memory_limit: "128m"
+  tomcat_pid_file: "./catalina.pid"
+  tomcat_start_command: "JAVA_HOME={{java_home}}  CATALINA_OPTS=\"-Xmx128m\" CATALINA_PID={{base_path}}/autodeploy/tomcat/bin/catalina.pid ./daemon.sh --tomcat-user {{ansible_user}} start"
+  commons_daemon_archive: "commons-daemon-1.4.1-src"
+  commons_daemon_tar_link: "https://dlcdn.apache.org//commons/daemon/source/{{commons_daemon_archive}}.tar.gz"
+  wait_from_startup: 5
+  # m4_build_env: "MAKE=\"gmake\""
+  # autoconf_build_env: "MAKE=\"gmake\" PATH={{base_path}}/autodeploy/libs/m4/bin:$PATH"
+  # m4_archive: "m4-1.4.20"
+  # m4_tar_link: "https://ftp.gnu.org/gnu/m4/{{m4_archive}}.tar.gz"
+  # autoconf_archive: "autoconf-2.72"
+  # autoconf_tar_link: "https://ftp.gnu.org/gnu/autoconf/{{autoconf_archive}}.tar.gz"
+  
+
   

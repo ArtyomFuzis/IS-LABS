@@ -1,0 +1,41 @@
+---  
+  - name: Restart containers
+    hosts: deploy-servers
+    tasks: 
+      - name: Try to stop nginx
+        shell: "cd {{base_path}}/autodeploy/nginx/sbin/ && ./nginx -s quit"
+        ignore_errors: true
+
+      - name: Start nginx
+        shell: "cd {{base_path}}/autodeploy/nginx/sbin/ && ./nginx"
+      
+      - name: Wait some time
+        ansible.builtin.pause:
+          seconds: "{{wait_from_startup}}"
+      
+      - name: Get PID file content
+        slurp:
+          src: "{{base_path}}/autodeploy/nginx/logs/nginx.pid"
+        register: nginx_pid
+      
+      - name: Check if nginx alive
+        shell: "ps aux | grep {{ nginx_pid.content | b64decode | trim }} | grep -v grep"
+
+      - name: Try to stop tomcat
+        shell: "cd {{base_path}}/autodeploy/tomcat/bin/ && ./shutdown.sh"
+        ignore_errors: true
+
+      - name: Start tomcat
+        shell: "cd {{base_path}}/autodeploy/tomcat/bin && {{tomcat_start_command}}"
+      
+      - name: Wait some time
+        ansible.builtin.pause:
+          seconds: "{{wait_from_startup}}"
+      
+      - name: Get PID file content
+        slurp:
+          src: "{{base_path}}/autodeploy/tomcat/bin/{{tomcat_pid_file}}"
+        register: tomcat_pid
+      
+      - name: Check if tomcat alive
+        shell: "ps aux | grep {{ tomcat_pid.content | b64decode | trim }} | grep -v grep"
