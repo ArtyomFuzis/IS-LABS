@@ -22,7 +22,7 @@
         shell: "ps aux | grep {{ nginx_pid.content | b64decode | trim }} | grep -v grep"
 
       - name: Try to stop tomcat
-        shell: "cd {{base_path}}/autodeploy/tomcat/bin/ && ./shutdown.sh"
+        shell: "cd {{base_path}}/autodeploy/tomcat/bin/ && {{tomcat_stop_command}}"
         ignore_errors: true
 
       - name: Start tomcat

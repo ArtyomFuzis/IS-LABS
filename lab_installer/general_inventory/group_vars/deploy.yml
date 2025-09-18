@@ -4,7 +4,7 @@
   tomcat_server_port: 8020
 
   # Менять не рекомендуется.  
-  java_home: "/usr/local/openjdk17"
+  java_home: "/usr/local/openjdk17" # Путь жабы на гелиосе
   base_path: "/home/{{ansible_user}}" # данная переменная переопределяется именно для гелиоса в general_inventory/host_vars/helios_cs_ifmo.yml
   make_archive: "make-4.4.1"
   make_tar_link: "http://ftp.gnu.org/gnu/make/{{make_archive}}.tar.gz"
@@ -29,10 +29,15 @@
   tomcat_admin_pass: "tomcat"
   tomcat_memory_limit: "128m"
   tomcat_pid_file: "./catalina.pid"
+  tomcat_stop_command: "JAVA_HOME={{java_home}} CATALINA_PID=catalina.pid ./daemon.sh --tomcat-user {{ansible_user}} stop"
   tomcat_start_command: "JAVA_HOME={{java_home}}  CATALINA_OPTS=\"-Xmx128m\" CATALINA_PID={{base_path}}/autodeploy/tomcat/bin/catalina.pid ./daemon.sh --tomcat-user {{ansible_user}} start"
   commons_daemon_archive: "commons-daemon-1.4.1-src"
   commons_daemon_tar_link: "https://dlcdn.apache.org//commons/daemon/source/{{commons_daemon_archive}}.tar.gz"
   wait_from_startup: 5
+  forwarding_container_name: "forwarding"
+  forwarding_image_name: "forwarding"
+  host_binded_port_for_nginx: "{{nginx_main_server_port}}"
+  host_binded_port_for_tomcat: "{{tomcat_server_port}}"
   # m4_build_env: "MAKE=\"gmake\""
   # autoconf_build_env: "MAKE=\"gmake\" PATH={{base_path}}/autodeploy/libs/m4/bin:$PATH"
   # m4_archive: "m4-1.4.20"

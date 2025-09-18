@@ -1,5 +1,5 @@
 ---  
-  - name: Deploy nginx
+  - name: Deploy tomcat
     hosts: deploy-servers
     tasks: 
       - name: Get tomcat tar

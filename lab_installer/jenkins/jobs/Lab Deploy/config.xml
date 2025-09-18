@@ -35,17 +35,22 @@
         </hudson.model.StringParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>PREDEPLOY</name>
-          <description>Обязательно к запуску при установке с нуля</description>
+          <description>Обязательно к запуску при установке с нуля (или установке новой лабы)</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>DEPLOY_CONTAINERS</name>
+          <description>Развертывание Nginx и Tomcat</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>RESTART_CONTAINERS</name>
           <description>Запуск/перезапуск nginx и tomcat и проверка их состояния</description>
-          <defaultValue>true</defaultValue>
+          <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
-          <name>DEPLOY_CONTAINERS</name>
-          <description>Развертывание Nginx и Tomcat</description>
+          <name>FORWARD_PORTS</name>
+          <description>Пробросить порты с гелиуса на локалхост </description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
@@ -136,7 +141,20 @@
                 script {
                       sh &quot;&quot;&quot;
                         ${env.PREPARE_CMD} &amp;&amp; \
-                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} start-containers.yml -vvv
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} start-containers.yml
+                        &quot;&quot;&quot;
+                }
+            }
+        }
+        stage(&apos;Forward ports&apos;) {
+            when{
+                expression { params.FORWARD_PORTS }
+            }
+            steps {
+                script {
+                      sh &quot;&quot;&quot;
+                        ${env.PREPARE_CMD} &amp;&amp; \
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} port-forward.yml -vvv
                         &quot;&quot;&quot;
                 }
             }

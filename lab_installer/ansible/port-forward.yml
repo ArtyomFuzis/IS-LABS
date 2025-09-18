@@ -1,0 +1,23 @@
+---  
+  - name: Forward the ports
+    hosts: deploy-helper
+    tasks: 
+      - name: Try to stop previous one 
+        command: "docker stop {{forwarding_container_name}}"
+        ignore_errors: true
+      
+      - name: Build forwarding image 
+        shell: "cd /host_dirs/lab_installer/forwarder_image && docker build -t {{forwarding_image_name}} ."
+      
+      - name: Start forwarding container
+        command: "docker run -d -p {{host_binded_port_for_nginx}}:{{nginx_main_server_port}} \
+         -p {{host_binded_port_for_tomcat}}:{{tomcat_server_port}} \
+         -e SSH_USER={{hostvars[groups['deploy-servers'][0]]['ansible_user']}} \
+         -e SSH_PASS={{hostvars[groups['deploy-servers'][0]]['ansible_ssh_pass']}} \
+         -e SSH_PORT={{hostvars[groups['deploy-servers'][0]]['ansible_port']}} \
+         -e SSH_HOST={{hostvars[groups['deploy-servers'][0]]['ansible_host']}} \
+         -e LOCAL_PORT_NGINX={{nginx_main_server_port}} \
+         -e LOCAL_PORT_TOMCAT={{tomcat_server_port}} \
+         -e REMOTE_PORT_NGINX={{nginx_main_server_port}} \
+         -e REMOTE_PORT_TOMCAT={{tomcat_server_port}} \
+         --name {{forwarding_container_name}} {{forwarding_image_name}}"
