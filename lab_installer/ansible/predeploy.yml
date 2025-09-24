@@ -32,15 +32,15 @@
           path: "{{base_path}}/autodeploy/{{project_name}}"
           state: directory
 
-      - name: Ensure that "frontend" dir exists
-        file:
-          path: "{{base_path}}/autodeploy/{{project_name}}/frontend"
-          state: directory
+      # - name: Ensure that "frontend" dir exists
+      #   file:
+      #     path: "{{base_path}}/autodeploy/{{project_name}}/frontend"
+      #     state: directory
     
-      - name: Ensure that "backend" dir exists
-        file: 
-          path: "{{base_path}}/autodeploy/{{project_name}}/backend"
-          state: directory
+      # - name: Ensure that "backend" dir exists
+      #   file: 
+      #     path: "{{base_path}}/autodeploy/{{project_name}}/backend"
+      #     state: directory
       
       - name: Ensure that "database" dir exists
         file: 

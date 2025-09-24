@@ -1,0 +1,5 @@
+location /{{project_name}}/api/ {  
+    proxy_pass http://api_{{project_name}}/;
+    proxy_set_header Host $host;  
+}  
+

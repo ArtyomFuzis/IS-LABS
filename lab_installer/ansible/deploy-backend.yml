@@ -1,0 +1,80 @@
+---  
+  - name: Check the artifacts
+    hosts: deploy-helper
+    tasks: 
+      - name: Determine is it standalone
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_artifacts/ \ 
+          && ls | grep backend_{{project_name}}.jar"
+        register: jar_search_result
+        failed_when: jar_search_result.rc not in [0,1]
+
+      - name: Determine is it web archive
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_artifacts/ \ 
+          && ls | grep backend_{{project_name}}.war"
+        register: war_search_result
+        failed_when: war_search_result.rc not in [0,1]
+      
+      - name: Fail if not found
+        fail:
+          msg: Unable to find backend artifact, run build first.
+        when: war_search_result.rc == 1 and war_search_result.rc == 1
+      
+      - name: Set fact
+        set_fact:
+          war_deploy: war_search_result
+
+  - name: Deploy webarchive backend
+    hosts: deploy-servers
+    tasks: 
+      - name: Skip tasks if backend isn't a webarchive
+        meta: end_play
+        when: hostvars[groups['deploy-helper'][0]]['war_deploy'] == 1
+
+      - name: Get current deployment status
+        uri:
+          url: "http://{{ tomcat_host }}:{{tomcat_server_port}}/manager/text/list"
+          method: GET
+          user: "{{ tomcat_admin_username }}"
+          password: "{{ tomcat_admin_pass }}"
+          status_code: 200
+          return_content: true
+        register: app_status
+      
+      - name: Stop application if running
+        uri:
+          url: "http://{{ tomcat_host }}:{{tomcat_server_port}}/manager/text/stop?path=/{{ tomcat_backend_war_name }}"
+          method: GET
+          user: "{{ tomcat_admin_username }}"
+          password: "{{ tomcat_admin_pass }}"
+          status_code: 200
+        when: "'/{{ tomcat_backend_war_name }}:running' in app_status.content"
+      
+      - name: Copy war to host
+        copy:
+          src:  "{{hostvars[groups['deploy-helper'][0]]['base_path']}}/autodeploy/install_tmp/build_artifacts/backend_{{project_name}}.war"
+          dest: "{{base_path}}/autodeploy/install_tmp/{{tomcat_backend_war_name}}.war"
+      
+      - name: Deploy new version using curl
+        command: >
+          curl -X PUT
+          --user "{{ tomcat_admin_username }}:{{ tomcat_admin_pass }}"
+          --header "Content-Type: application/octet-stream"
+          --data-binary "@{{base_path}}/autodeploy/install_tmp/{{tomcat_backend_war_name}}.war"
+          "http://{{ tomcat_host }}:{{ tomcat_server_port }}/manager/text/deploy?path=/{{ tomcat_backend_war_name }}&update=true"
+          --max-time 600
+      
+      - name: Copy nginx backend conf
+        template:
+          src: "/host_dirs/lab_installer/templates/nginx/conf/backend_tomcat.j2"
+          dest: "{{base_path}}/autodeploy/nginx/conf/conf.d/backend_{{project_name}}.conf"
+      
+      - name: Copy nginx upstream conf
+        template:
+          src: "/host_dirs/lab_installer/templates/nginx/conf/upstream_tomcat.j2"
+          dest: "{{base_path}}/autodeploy/nginx/conf/conf.d/upstream_{{project_name}}.conf"
+      
+      - name: Reload nginx 
+        shell: "cd {{base_path}}/autodeploy/nginx/sbin/ && ./nginx -s reload"
+       
+      
+      

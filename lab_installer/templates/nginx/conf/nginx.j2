@@ -28,11 +28,15 @@ http {
 
     gzip  on;
 
+    include {{base_path}}/autodeploy/nginx/conf/conf.d/upstream_*.conf;
+
     server {
         listen       {{nginx_main_server_port}};
         server_name  {{nginx_server_name}};
 
         #charset koi8-r;
+
+        include {{base_path}}/autodeploy/nginx/conf/conf.d/backend_*.conf;
 
         location / {
             root   html;
@@ -47,7 +51,11 @@ http {
         location = /50x.html {
             root   html;
         }
-
+        
+        location /nginx_status {
+            stub_status on;
+            allow all; 
+        }
         # proxy the PHP scripts to Apache listening on 127.0.0.1:80
         #
         #location ~ \.php$ {
@@ -72,5 +80,6 @@ http {
         #}
     }
 
-
 }
+
+

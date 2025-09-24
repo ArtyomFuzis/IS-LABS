@@ -1,5 +1,4 @@
 BEGIN;
-
 CREATE TYPE LAB1_DIFFICULTY as enum (
     'VERY_EASY',
     'EASY',

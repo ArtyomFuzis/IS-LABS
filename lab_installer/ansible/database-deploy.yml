@@ -1,0 +1,13 @@
+---  
+  - name: Deploy the database
+    hosts: deploy-servers
+    tasks: 
+      - name: Copy db scripts
+        copy:
+          src: "/host_dirs/{{project_name}}/database/"
+          dest: "{{base_path}}/autodeploy/{{project_name}}/database/"
+
+      - name: Deploy data schema to database
+        shell: "cd {{base_path}}/autodeploy/{{project_name}}/database/ && PGPASSWORD={{db_pass}} psql -h {{db_host}} -d {{db_database}} -U {{db_user}} -f install.sql"
+
+      

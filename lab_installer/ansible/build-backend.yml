@@ -1,0 +1,60 @@
+---  
+  - name: Build backend
+    hosts: deploy-helper
+    tasks: 
+      - name: Copy backend src
+        synchronize:
+          src: "/host_dirs/{{project_name}}/backend/"
+          dest: "{{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/"
+      
+      - name: Determine is it maven or gradle
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/ && ls | grep pom.xml"
+        register: pom_xml_search_result
+        failed_when: pom_xml_search_result.rc not in [0,1]
+
+      - name: Maven clean
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/ && mvn clean package"
+        when: pom_xml_search_result.rc == 0
+      
+      - name: Maven build
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/ && mvn package"
+        when: pom_xml_search_result.rc == 0
+      
+      - name: Gradle build
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/ && gradle build"
+        when: pom_xml_search_result.rc == 1
+      
+      - name: Determine is it standalone or web archive
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/target && ls | grep .jar"
+        register: jar_search_result
+        failed_when: jar_search_result.rc not in [0,1]
+      
+      - name: Ensure that build_artifacts dir existst
+        file:  
+          path: "{{base_path}}/autodeploy/install_tmp/build_artifacts"
+          state: directory
+
+      - name: Copy jar artifacts
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/target && \
+          cp *.jar {{base_path}}/autodeploy/install_tmp/build_artifacts/backend_{{project_name}}.jar"
+        when: jar_search_result.rc == 0
+      
+      - name: Remove misleading war files
+        file:  
+          path: "{{base_path}}/autodeploy/install_tmp/build_artifacts/backend_{{project_name}}.war"
+          state: absent 
+        when: jar_search_result.rc == 0
+      
+      - name: Copy war artifacts
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/target && \
+          cp *.war {{base_path}}/autodeploy/install_tmp/build_artifacts/backend_{{project_name}}.war"
+        when: jar_search_result.rc == 1
+      
+      - name: Remove misleading jar files
+        file:  
+          path: "{{base_path}}/autodeploy/install_tmp/build_artifacts/backend_{{project_name}}.jar"
+          state: absent 
+        when: jar_search_result.rc == 1
+
+      
+      

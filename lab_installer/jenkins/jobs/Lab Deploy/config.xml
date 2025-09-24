@@ -54,13 +54,8 @@
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
-          <name>BUILD_FRONTEND</name>
-          <description>Сборка фронтенда</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>DEPLOY_FRONTEND</name>
-          <description>Развертывание фронтенда</description>
+          <name>DEPLOY_DATABASE</name>
+          <description>Развертывание таблиц в бд</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
@@ -74,8 +69,13 @@
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
-          <name>DEPLOY_DATABASE</name>
-          <description>Развертывание таблиц в бд</description>
+          <name>BUILD_FRONTEND</name>
+          <description>Сборка фронтенда</description>
+          <defaultValue>false</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>DEPLOY_FRONTEND</name>
+          <description>Развертывание фронтенда</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
@@ -154,7 +154,46 @@
                 script {
                       sh &quot;&quot;&quot;
                         ${env.PREPARE_CMD} &amp;&amp; \
-                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} port-forward.yml -vvv
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} port-forward.yml
+                        &quot;&quot;&quot;
+                }
+            }
+        }
+        stage(&apos;Deploy database&apos;) {
+            when{
+                expression { params.DEPLOY_DATABASE }
+            }
+            steps {
+                script {
+                      sh &quot;&quot;&quot;
+                        ${env.PREPARE_CMD} &amp;&amp; \
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} database-deploy.yml
+                        &quot;&quot;&quot;
+                }
+            }
+        }
+        stage(&apos;Build backend&apos;) {
+            when{
+                expression { params.BUILD_BACKEND }
+            }
+            steps {
+                script {
+                      sh &quot;&quot;&quot;
+                        ${env.PREPARE_CMD} &amp;&amp; \
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} build-backend.yml
+                        &quot;&quot;&quot;
+                }
+            }
+        }
+        stage(&apos;Deploy backend&apos;) {
+            when{
+                expression { params.DEPLOY_BACKEND }
+            }
+            steps {
+                script {
+                      sh &quot;&quot;&quot;
+                        ${env.PREPARE_CMD} &amp;&amp; \
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} deploy-backend.yml
                         &quot;&quot;&quot;
                 }
             }
