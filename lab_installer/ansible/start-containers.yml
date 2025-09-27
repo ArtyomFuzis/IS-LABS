@@ -21,21 +21,38 @@
       - name: Check if nginx alive
         shell: "ps aux | grep {{ nginx_pid.content | b64decode | trim }} | grep -v grep"
 
-      - name: Try to stop tomcat
-        shell: "cd {{base_path}}/autodeploy/tomcat/bin/ && {{tomcat_stop_command}}"
+      - name: Try to stop wildfly screen session
+        shell: "screen -X -S {{wildfly_screen_session_name}} quit"
+        ignore_errors: true
+      
+      - name: Try to stop wildfly 
+        shell: "kill $(jps -lv | grep {{base_path}}/autodeploy/wildfly/jboss-modules.jar | awk '{print $1}')"
         ignore_errors: true
 
-      - name: Start tomcat
-        shell: "cd {{base_path}}/autodeploy/tomcat/bin && {{tomcat_start_command}}"
+      - name: Start wildfly
+        shell: "cd {{base_path}}/autodeploy/wildfly/bin && screen -dmS {{wildfly_screen_session_name}} ./standalone.sh {{wildfly_start_params}}"
       
       - name: Wait some time
         ansible.builtin.pause:
           seconds: "{{wait_from_startup}}"
       
-      - name: Get PID file content
-        slurp:
-          src: "{{base_path}}/autodeploy/tomcat/bin/{{tomcat_pid_file}}"
-        register: tomcat_pid
+      - name: Check if wildfly alive
+        shell: "ps -eww | grep  {{base_path}}/autodeploy/wildfly/jboss-modules.jar | grep -v grep"
       
-      - name: Check if tomcat alive
-        shell: "ps aux | grep {{ tomcat_pid.content | b64decode | trim }} | grep -v grep"
+      - name: Try to stop wildfly legacy screen session
+        shell: "screen -X -S {{wildfly_legacy_screen_session_name}} quit"
+        ignore_errors: true
+      
+      - name: Try to stop wildfly legacy
+        shell: "kill $(jps -lv | grep {{base_path}}/autodeploy/wildfly-legacy/jboss-modules.jar | awk '{print $1}')"
+        ignore_errors: true
+
+      - name: Start wildfly legacy
+        shell: "cd {{base_path}}/autodeploy/wildfly-legacy/bin && screen -dmS {{wildfly_legacy_screen_session_name}} ./standalone.sh {{wildfly_legacy_start_params}}"
+      
+      - name: Wait some time
+        ansible.builtin.pause:
+          seconds: "{{wait_from_startup}}"
+      
+      - name: Check if wildfly legacy alive
+        shell: "ps -eww | grep  {{base_path}}/autodeploy/wildfly-legacy/jboss-modules.jar | grep -v grep"

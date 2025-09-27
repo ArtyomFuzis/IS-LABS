@@ -14,14 +14,24 @@
         shell: "cd /host_dirs/lab_installer/forwarder_image && docker build -t {{forwarding_image_name}} ."
       
       - name: Start forwarding container
-        command: "docker run --rm -d -p {{host_binded_port_for_nginx}}:{{nginx_main_server_port}} \
-         -p {{host_binded_port_for_tomcat}}:{{tomcat_server_port}} \
+        command: "docker run --rm -d \
+         -p {{host_binded_port_for_nginx}}:{{nginx_main_server_port}} \
+         -p {{host_binded_port_for_wildfly}}:{{wildfly_http_server_port}} \
+         -p {{host_binded_port_for_wildfly_management}}:{{wildfly_management_http_server_port}} \
+         -p {{host_binded_port_for_wildfly_legacy}}:{{wildfly_legacy_http_server_port}} \
+         -p {{host_binded_port_for_wildfly_legacy_management}}:{{wildfly_legacy_management_http_server_port}} \
          -e SSH_USER={{hostvars[groups['deploy-servers'][0]]['ansible_user']}} \
          -e SSH_PASS={{hostvars[groups['deploy-servers'][0]]['ansible_ssh_pass']}} \
          -e SSH_PORT={{hostvars[groups['deploy-servers'][0]]['ansible_port']}} \
          -e SSH_HOST={{hostvars[groups['deploy-servers'][0]]['ansible_host']}} \
          -e LOCAL_PORT_NGINX={{nginx_main_server_port}} \
-         -e LOCAL_PORT_TOMCAT={{tomcat_server_port}} \
+         -e LOCAL_PORT_WILDFLY={{wildfly_http_server_port}} \
+         -e LOCAL_PORT_WILDFLY_MANAGEMENT={{wildfly_management_http_server_port}} \
+         -e LOCAL_PORT_WILDFLY_LEGACY={{wildfly_legacy_http_server_port}} \
+         -e LOCAL_PORT_WILDFLY_MANAGEMENT_LEGACY={{wildfly_legacy_management_http_server_port}} \
          -e REMOTE_PORT_NGINX={{nginx_main_server_port}} \
-         -e REMOTE_PORT_TOMCAT={{tomcat_server_port}} \
+         -e REMOTE_PORT_WILDFLY={{wildfly_http_server_port}} \
+         -e REMOTE_PORT_WILDFLY_MANAGEMENT={{wildfly_management_http_server_port}} \
+         -e REMOTE_PORT_WILDFLY_LEGACY={{wildfly_legacy_http_server_port}} \
+         -e REMOTE_PORT_WILDFLY_MANAGEMENT_LEGACY={{wildfly_legacy_management_http_server_port}} \
          --name {{forwarding_container_name}} {{forwarding_image_name}}"

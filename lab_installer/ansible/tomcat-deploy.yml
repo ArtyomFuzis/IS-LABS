@@ -16,7 +16,7 @@
 
       - name: Copy to tomcat dir
         copy:
-          src:  "{{base_path}}/autodeploy/install_tmp/{{tomcat_archive}}/"
+          src:  "{{base_path}}/autodeploy/install_tmp/{{tomcat_unarchive_dir}}/"
           dest: "{{base_path}}/autodeploy/tomcat/"
           remote_src: yes
       

@@ -40,12 +40,12 @@
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>DEPLOY_CONTAINERS</name>
-          <description>Развертывание Nginx и Tomcat</description>
+          <description>Развертывание Nginx и WildFly для Jakarta EE </description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>RESTART_CONTAINERS</name>
-          <description>Запуск/перезапуск nginx и tomcat и проверка их состояния</description>
+          <description>Запуск/перезапуск nginx и wildfly и проверка их состояния</description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
@@ -128,7 +128,31 @@
                 script {
                       sh &quot;&quot;&quot;
                         ${env.PREPARE_CMD} &amp;&amp; \
-                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} tomcat-deploy.yml
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} clean-install-tmp.yml
+                        &quot;&quot;&quot;
+                }
+                script {
+                      sh &quot;&quot;&quot;
+                        ${env.PREPARE_CMD} &amp;&amp; \
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} wildfly-deploy.yml
+                        &quot;&quot;&quot;
+                }
+                script {
+                      sh &quot;&quot;&quot;
+                        ${env.PREPARE_CMD} &amp;&amp; \
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} clean-install-tmp.yml
+                        &quot;&quot;&quot;
+                }
+                script {
+                      sh &quot;&quot;&quot;
+                        ${env.PREPARE_CMD} &amp;&amp; \
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} wildfly-deploy-legacy.yml
+                        &quot;&quot;&quot;
+                }
+                script {
+                      sh &quot;&quot;&quot;
+                        ${env.PREPARE_CMD} &amp;&amp; \
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} clean-install-tmp.yml
                         &quot;&quot;&quot;
                 }
             }

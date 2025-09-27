@@ -1,0 +1,6 @@
+---  
+  - name: Clean install_tmp dir
+    hosts: deploy-servers
+    tasks: 
+      - name: Clean tmp dir
+        shell: "cd {{base_path}}/autodeploy/install_tmp/ && rm -rf *"

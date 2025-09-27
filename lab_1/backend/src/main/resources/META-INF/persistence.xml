@@ -3,7 +3,7 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-    <persistence-unit name="default" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="default" transaction-type="JTA">
         <class>com.fuzis.Entities.Discipline</class>
         <properties>
             <property name="hibernate.show_sql" value="true"/>
@@ -11,11 +11,8 @@
             <property name="hibernate.connection.url" value="jdbc:postgresql://pg:5432/studs"/>
             <property name="hibernate.connection.username" value="s365395"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-            <property name="jakarta.persistence.transactionType" value="JTA"/>
-            <property name="hibernate.transaction.jta.platform"
-                      value="com.atomikos.icatch.jta.hibernate4.AtomikosPlatform"/>
-            <property name="jakarta.persistence.jta.platform"
-                      value="com.atomikos.icatch.jta.hibernate4.AtomikosPlatform"/>
+
         </properties>
     </persistence-unit>
 </persistence>
+

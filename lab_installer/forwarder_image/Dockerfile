@@ -3,5 +3,10 @@ USER root
 RUN apk update
 RUN apk add --no-cache openssh-client
 RUN apk add sshpass
-CMD sshpass -p $SSH_PASS ssh -N -g -p $SSH_PORT -L $LOCAL_PORT_NGINX:localhost:$REMOTE_PORT_NGINX \
-    -L $LOCAL_PORT_TOMCAT:localhost:$REMOTE_PORT_TOMCAT -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST
+CMD sshpass -p $SSH_PASS ssh -N -g -p $SSH_PORT \
+    -L $LOCAL_PORT_NGINX:localhost:$REMOTE_PORT_NGINX \
+    -L $LOCAL_PORT_WILDFLY:localhost:$REMOTE_PORT_WILDFLY \
+    -L $LOCAL_PORT_WILDFLY_MANAGEMENT:localhost:$REMOTE_PORT_WILDFLY_MANAGEMENT \
+    -L $LOCAL_PORT_WILDFLY_LEGACY:localhost:$REMOTE_PORT_WILDFLY_LEGACY \
+    -L $LOCAL_PORT_WILDFLY_MANAGEMENT_LEGACY:localhost:$REMOTE_PORT_WILDFLY_MANAGEMENT_LEGACY \
+    -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST

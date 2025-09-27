@@ -8,6 +8,6 @@
           dest: "{{base_path}}/autodeploy/{{project_name}}/database/"
 
       - name: Deploy data schema to database
-        shell: "cd {{base_path}}/autodeploy/{{project_name}}/database/ && PGPASSWORD={{db_pass}} psql -h {{db_host}} -d {{db_database}} -U {{db_user}} -f install.sql"
+        shell: "cd {{base_path}}/autodeploy/{{project_name}}/database/ && ON_ERROR_STOP=1 PGPASSWORD={{db_pass}} psql -h {{db_host}} -d {{db_database}} -U {{db_user}} -f install.sql"
 
       

@@ -40,15 +40,15 @@ public class DisciplineCRUDController {
     @Path("/discipline/get/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public SelectDTO<Discipline> getDisciplineById(@PathParam("id") Integer id) {
-        try{
+        //try{
             Discipline discipline = dbService.disciplineGet(id);
             return new SelectDTO<>(true, Collections.singletonList(discipline));
-        }
+        /*}
         catch(Exception e){
             logger.error(e.getMessage());
             logger.error(Arrays.toString(e.getStackTrace()));
             return new SelectDTO<>(false,null);
-        }
+        }*/
     }
 
     @DELETE

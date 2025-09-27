@@ -1,17 +1,21 @@
 ---
   # Общие параметры, то, что нужно менять 
   nginx_main_server_port: 8019
-  tomcat_server_port: 8020
+  #tomcat_server_port: 8020
+  wildfly_http_server_port: 8020
+  wildfly_management_http_server_port: 8021
+  wildfly_legacy_http_server_port: 8022
+  wildfly_legacy_management_http_server_port: 8023
 
   # Менять не рекомендуется.  
   java_home: "/usr/local/openjdk17" # Путь жабы на гелиосе
+  java_home_legacy: "/usr/local/openjdk11" # Путь жабы на гелиосе для java ee
   base_path: "/home/{{ansible_user}}" # данная переменная переопределяется именно для гелиоса в general_inventory/host_vars/helios_cs_ifmo.yml
   make_archive: "make-4.4.1"
   make_tar_link: "http://ftp.gnu.org/gnu/make/{{make_archive}}.tar.gz"
   nginx_archive: "nginx-1.28.0"
   nginx_tar_link: "https://nginx.org/download/{{nginx_archive}}.tar.gz"
-  tomcat_archive: "apache-tomcat-10.1.46"
-  tomcat_tar_link: "https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.46/bin/{{tomcat_archive}}.tar.gz"
+  
   nginx_server_name: helios.cs.ifmo.ru
   pcre_archive: "pcre-8.45"
   pcre_tar_link: "https://sourceforge.net/projects/pcre/files/pcre/8.45/{{pcre_archive}}.tar.gz"
@@ -25,26 +29,51 @@
   nginx_build_env: "MAKE=\"gmake\""
   zlib_build_env: "MAKE=\"gmake\""
   commons_daemon_build_env: "JAVA_HOME={{java_home}} MAKE=\"gmake\" PATH={{base_path}}/autodeploy/libs/autoconf/bin:$PATH"
-  tomcat_admin_username: "tomcat"
-  tomcat_admin_pass: "tomcat"
-  tomcat_memory_limit: "128m"
-  tomcat_pid_file: "./catalina.pid"
-  tomcat_stop_command: "JAVA_HOME={{java_home}} CATALINA_PID=catalina.pid ./daemon.sh --tomcat-user {{ansible_user}} stop"
-  tomcat_start_command: "JAVA_HOME={{java_home}}  CATALINA_OPTS=\"-Xmx128m\" CATALINA_PID={{base_path}}/autodeploy/tomcat/bin/catalina.pid ./daemon.sh --tomcat-user {{ansible_user}} start"
-  commons_daemon_archive: "commons-daemon-1.4.1-src"
-  commons_daemon_tar_link: "https://dlcdn.apache.org//commons/daemon/source/{{commons_daemon_archive}}.tar.gz"
   wait_from_startup: 5
   forwarding_container_name: "forwarding"
   forwarding_image_name: "forwarding"
   host_binded_port_for_nginx: "{{nginx_main_server_port}}"
-  host_binded_port_for_tomcat: "{{tomcat_server_port}}"
+  host_binded_port_for_wildfly: "{{wildfly_http_server_port}}"
+  host_binded_port_for_wildfly_management: "{{wildfly_management_http_server_port}}"
+  host_binded_port_for_wildfly_legacy: "{{wildfly_legacy_http_server_port}}"
+  host_binded_port_for_wildfly_legacy_management: "{{wildfly_legacy_management_http_server_port}}"
   db_host: "pg"
   db_user: "{{ansible_user}}"
   db_database: "studs"
   db_pass: ""
-  tomcat_backend_war_name: "backend_{{project_name}}"
-  tomcat_host: "localhost"
   build_war_path: "{{hostvars[groups['deploy-helper'][0]]['base_path']}}/autodeploy/install_tmp/build_artifacts/backend_{{project_name}}.war"
+  wildfly_archive: "wildfly-37.0.1.Final"
+  wildfly_tar_link: "https://github.com/wildfly/wildfly/releases/download/37.0.1.Final/{{wildfly_archive}}.tar.gz"
+  wildfly_legacy_archive: "wildfly-20.0.1.Final"
+  wildfly_legacy_tar_link: "https://download.jboss.org/wildfly/20.0.1.Final/{{wildfly_legacy_archive}}.tar.gz"
+  wildfly_screen_session_name: "wildfly"
+  wildfly_legacy_screen_session_name: "wildfly-legacy"
+  wildfly_start_params: "
+    -Djboss.http.port={{wildfly_http_server_port}} \
+    -Djboss.management.http.port={{wildfly_management_http_server_port}} \
+    "
+  wildfly_legacy_start_params: "
+    -Djboss.http.port={{wildfly_legacy_http_server_port}} \
+    -Djboss.management.http.port={{wildfly_legacy_management_http_server_port}} \
+    "
+  wildfly_user: "wildfly"
+  wildfly_password: "wildfly"
+  wildfly_legacy_user: "{{wildfly_user}}"
+  wildfly_legacy_password: "{{wildfly_password}}"
+  # tomcat_archive: "apache-tomee-10.1.2-webprofile"
+  # tomcat_unarchive_dir: "apache-tomee-webprofile-10.1.2"
+  # tomcat_tar_link: "https://dlcdn.apache.org/tomee/tomee-10.1.2/{{tomcat_archive}}.tar.gz"
+  # tomcat_admin_username: "tomcat"
+  # tomcat_admin_pass: "tomcat"
+  # tomcat_memory_limit: "128m"
+  # tomcat_pid_file: "./catalina.pid"
+  # tomcat_stop_command: "JAVA_HOME={{java_home}} CATALINA_PID=catalina.pid ./daemon.sh --tomcat-user {{ansible_user}} stop"
+  # tomcat_start_command: "JAVA_HOME={{java_home}}  CATALINA_OPTS=\"-Xmx128m\" CATALINA_PID={{base_path}}/autodeploy/tomcat/bin/catalina.pid ./daemon.sh --tomcat-user {{ansible_user}} start"
+  # commons_daemon_archive: "commons-daemon-1.4.1-src"
+  # commons_daemon_tar_link: "https://dlcdn.apache.org//commons/daemon/source/{{commons_daemon_archive}}.tar.gz"
+  # host_binded_port_for_tomcat: "{{tomcat_server_port}}"
+  # tomcat_backend_war_name: "backend_{{project_name}}"
+  # tomcat_host: "localhost"
   # m4_build_env: "MAKE=\"gmake\""
   # autoconf_build_env: "MAKE=\"gmake\" PATH={{base_path}}/autodeploy/libs/m4/bin:$PATH"
   # m4_archive: "m4-1.4.20"
