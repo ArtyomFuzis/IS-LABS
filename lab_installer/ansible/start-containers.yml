@@ -39,20 +39,3 @@
       - name: Check if wildfly alive
         shell: "ps -eww | grep  {{base_path}}/autodeploy/wildfly/jboss-modules.jar | grep -v grep"
       
-      - name: Try to stop wildfly legacy screen session
-        shell: "screen -X -S {{wildfly_legacy_screen_session_name}} quit"
-        ignore_errors: true
-      
-      - name: Try to stop wildfly legacy
-        shell: "kill $(jps -lv | grep {{base_path}}/autodeploy/wildfly-legacy/jboss-modules.jar | awk '{print $1}')"
-        ignore_errors: true
-
-      # - name: Start wildfly legacy
-      #   shell: "cd {{base_path}}/autodeploy/wildfly-legacy/bin && {{wildfly_legacy_start_env}} screen -dmS {{wildfly_legacy_screen_session_name}} ./standalone.sh {{wildfly_legacy_start_params}}"
-      
-      # - name: Wait some time
-      #   ansible.builtin.pause:
-      #     seconds: "{{wait_from_startup}}"
-      
-      # - name: Check if wildfly legacy alive
-      #   shell: "ps -eww | grep  {{base_path}}/autodeploy/wildfly-legacy/jboss-modules.jar | grep -v grep"

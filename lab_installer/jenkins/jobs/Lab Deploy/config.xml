@@ -143,18 +143,6 @@
                         ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} clean-install-tmp.yml
                         &quot;&quot;&quot;
                 }
-                script {
-                      sh &quot;&quot;&quot;
-                        ${env.PREPARE_CMD} &amp;&amp; \
-                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} wildfly-deploy-legacy.yml
-                        &quot;&quot;&quot;
-                }
-                script {
-                      sh &quot;&quot;&quot;
-                        ${env.PREPARE_CMD} &amp;&amp; \
-                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} clean-install-tmp.yml
-                        &quot;&quot;&quot;
-                }
             }
         }
         stage(&apos;Containers restart&apos;) {

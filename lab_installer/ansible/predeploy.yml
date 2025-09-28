@@ -27,11 +27,6 @@
           path: "{{base_path}}/autodeploy/wildfly"
           state: directory 
       
-      - name: Ensure that directory "wildfly-legacy" exists
-        file:
-          path: "{{base_path}}/autodeploy/wildfly-legacy"
-          state: directory 
-      
       - name: Fail if "project_name" is undefined
         fail: 
           msg: "Not able to found project name, is project inventory broken?"
