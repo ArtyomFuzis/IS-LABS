@@ -2,14 +2,6 @@
   - name: Deploy wildfly Jakarta EE
     hosts: deploy-servers
     tasks: 
-      - name: Get wildfly legacy tar
-        get_url:
-          url:  "{{wildfly_legacy_tar_link}}"
-          dest: "{{base_path}}/autodeploy/install_tmp/"
-
-      - name: Untar wildfly 
-        command: "tar -xvzf {{base_path}}/autodeploy/install_tmp/{{wildfly_legacy_archive}}.tar.gz -C {{base_path}}/autodeploy/install_tmp/"
-      
       - name: Try to stop wildfly legacy screen session
         shell: "screen -X -S {{wildfly_legacy_screen_session_name}} quit"
         ignore_errors: true
@@ -17,15 +9,26 @@
       - name: Try to stop wildfly legacy
         shell: "kill $(jps -lv | grep {{base_path}}/autodeploy/wildfly-legacy/jboss-modules.jar | awk '{print $1}')"
         ignore_errors: true
-
-      - name: Copy to wildfly legacy dir
-        copy:
-          src:  "{{base_path}}/autodeploy/install_tmp/{{wildfly_legacy_archive}}/"
-          dest: "{{base_path}}/autodeploy/wildfly-legacy/"
-          remote_src: yes
       
-      - name: Create WildFly legacy management user
-        shell: "cd {{base_path}}/autodeploy/wildfly/bin/ && JAVA_OPTS=\"-Xmx128m -Xms32m\" ./add-user.sh {{wildfly_legacy_user}} {{wildfly_legacy_password}}"
+      - name: Clean wildfly legacy dir
+        shell: "cd {{base_path}}/autodeploy/wildfly-legacy && rm -rf *"
+
+      # - name: Get wildfly legacy tar
+      #   get_url:
+      #     url:  "{{wildfly_legacy_tar_link}}"
+      #     dest: "{{base_path}}/autodeploy/install_tmp/"
+
+      # - name: Untar wildfly 
+      #   command: "tar -xvzf {{base_path}}/autodeploy/install_tmp/{{wildfly_legacy_archive}}.tar.gz -C {{base_path}}/autodeploy/install_tmp/"
+
+      # - name: Copy to wildfly legacy dir
+      #   copy:
+      #     src:  "{{base_path}}/autodeploy/install_tmp/{{wildfly_legacy_archive}}/"
+      #     dest: "{{base_path}}/autodeploy/wildfly-legacy/"
+      #     remote_src: yes
+      
+      # - name: Create WildFly legacy management user
+      #   shell: "cd {{base_path}}/autodeploy/wildfly-legacy/bin/ && JAVA_OPTS=\"-Xmx128m -Xms32m\" ./add-user.sh {{wildfly_legacy_user}} {{wildfly_legacy_password}}"
 
 
       

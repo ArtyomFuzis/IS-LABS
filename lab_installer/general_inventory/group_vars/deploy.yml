@@ -29,7 +29,7 @@
   nginx_build_env: "MAKE=\"gmake\""
   zlib_build_env: "MAKE=\"gmake\""
   commons_daemon_build_env: "JAVA_HOME={{java_home}} MAKE=\"gmake\" PATH={{base_path}}/autodeploy/libs/autoconf/bin:$PATH"
-  wait_from_startup: 5
+  wait_from_startup: 8
   forwarding_container_name: "forwarding"
   forwarding_image_name: "forwarding"
   host_binded_port_for_nginx: "{{nginx_main_server_port}}"
@@ -56,6 +56,8 @@
     -Djboss.http.port={{wildfly_legacy_http_server_port}} \
     -Djboss.management.http.port={{wildfly_legacy_management_http_server_port}} \
     "
+  wildfly_start_env: "JAVA_OPTS=\"-Xmx128m -Xms64m\""
+  wildfly_legacy_start_env: "JAVA_OPTS=\"-Xmx128m -Xms64m\""
   wildfly_user: "wildfly"
   wildfly_password: "wildfly"
   wildfly_legacy_user: "{{wildfly_user}}"
