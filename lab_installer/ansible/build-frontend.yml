@@ -1,0 +1,50 @@
+---  
+  - name: Build frontend
+    hosts: deploy-helper
+    tasks: 
+      - name: Ensure that directory "build_src_frontend" exists
+        file:
+          path: "{{base_path}}/autodeploy/install_tmp/build_src_frontend/"
+          state: directory 
+      
+      - name: Ensure that build directory for lab exists
+        file:
+          path: "{{base_path}}/autodeploy/install_tmp/build_src_frontend/{{project_name}}/"
+          state: directory 
+
+      - name: Copy frontend src
+        synchronize:
+          src: "/host_dirs/{{project_name}}/frontend/"
+          dest: "{{base_path}}/autodeploy/install_tmp/build_src_frontend/{{project_name}}/"
+      
+
+      - name: Install deps
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src_frontend/{{project_name}}/ && npm install"
+      
+      - name: Build frontend
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src_frontend/{{project_name}}/ && npm run build"
+      
+      - name: Ensure that build_artifacts dir existst
+        file:  
+          path: "{{base_path}}/autodeploy/install_tmp/build_artifacts"
+          state: directory
+
+      - name: Ensure that artifact dir exists
+        file:
+          path: "{{base_path}}/autodeploy/install_tmp/build_artifacts/{{project_name}}"
+          state: directory
+      
+      - name: Remove old files
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_artifacts/{{project_name}} && rm -rf * "
+      
+      - name: Copy to artifact dir
+        copy:
+          src: "{{base_path}}/autodeploy/install_tmp/build_src_frontend/{{project_name}}/dist/"
+          dest: "{{base_path}}/autodeploy/install_tmp/build_artifacts/{{project_name}}/"
+          remote_src: yes
+        
+      
+      
+
+      
+      

@@ -32,24 +32,24 @@ public class DBService implements Serializable {
 
 
     @Transactional
-    public void disciplineSave(Discipline point) {
-        this.getEntityManager().persist(point);
+    public void save(Object obj) {
+        this.getEntityManager().persist(obj);
     }
 
     @Transactional
-    public void disciplineRemove(Discipline point) {
-        this.getEntityManager().remove(point);
+    public void remove(Object obj) {
+        this.getEntityManager().remove(obj);
     }
 
     @Transactional
-    public Discipline disciplineGet(Integer id) {
-        return this.getEntityManager().find(Discipline.class, id);
+    public  <T> T get(Integer id,  Class<T> cls) {
+        return this.getEntityManager().find(cls, id);
     }
 
     @Transactional
-    public List<Discipline> disciplineGetAll(){
-        String jpql = "SELECT a FROM Discipline a";
-        TypedQuery<Discipline> query = this.getEntityManager().createQuery(jpql, Discipline.class);
+    public <T> List<T> getAll(Class<T> cls){
+        String jpql = "SELECT a FROM "+cls.getName()+" a";
+        TypedQuery<T> query = this.getEntityManager().createQuery(jpql, cls);
         return query.getResultList();
     }
 

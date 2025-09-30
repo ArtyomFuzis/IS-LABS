@@ -40,7 +40,7 @@
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>DEPLOY_CONTAINERS</name>
-          <description>Развертывание Nginx и WildFly для Jakarta EE </description>
+          <description>Развертывание Nginx и WildFly </description>
           <defaultValue>false</defaultValue>
         </hudson.model.BooleanParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
@@ -206,6 +206,32 @@
                       sh &quot;&quot;&quot;
                         ${env.PREPARE_CMD} &amp;&amp; \
                         ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} deploy-backend.yml
+                        &quot;&quot;&quot;
+                }
+            }
+        }
+        stage(&apos;Build frontend&apos;) {
+            when{
+                expression { params.BUILD_FRONTEND }
+            }
+            steps {
+                script {
+                      sh &quot;&quot;&quot;
+                        ${env.PREPARE_CMD} &amp;&amp; \
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} build-frontend.yml
+                        &quot;&quot;&quot;
+                }
+            }
+        }
+        stage(&apos;Deploy frontend&apos;) {
+            when{
+                expression { params.DEPLOY_FRONTEND }
+            }
+            steps {
+                script {
+                      sh &quot;&quot;&quot;
+                        ${env.PREPARE_CMD} &amp;&amp; \
+                        ${env.ANSIBLE_EXEC_PLAYBOOK} ${env.BASE_ANSIBLE_PARAMS} deploy-frontend.yml
                         &quot;&quot;&quot;
                 }
             }

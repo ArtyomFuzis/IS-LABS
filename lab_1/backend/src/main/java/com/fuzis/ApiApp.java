@@ -9,10 +9,5 @@ import java.util.Set;
 
 @ApplicationPath("/")
 public class ApiApp extends Application {
-    @Override
-    public Set<Class<?>> getClasses() {
-        Set<Class<?>> classes = new HashSet<>();
-        classes.add(DisciplineCRUDController.class);
-        return classes;
-    }
+
 }

@@ -5,6 +5,9 @@
              version="3.0">
     <persistence-unit name="default" transaction-type="JTA">
         <class>com.fuzis.Entities.Discipline</class>
+        <class>com.fuzis.Entities.Coordinate</class>
+        <class>com.fuzis.Entities.Location</class>
+        <class>com.fuzis.Entities.Person</class>
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>

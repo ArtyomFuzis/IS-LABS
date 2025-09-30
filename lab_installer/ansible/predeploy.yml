@@ -83,7 +83,7 @@
       - name: Ensure that directory "install_tmp" exists
         file:
           path: "{{base_path}}/autodeploy/install_tmp"
-          state: directory 
+          state: directory
       
       
       

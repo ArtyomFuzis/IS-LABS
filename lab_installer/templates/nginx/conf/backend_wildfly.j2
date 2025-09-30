@@ -1,5 +1,5 @@
 location /{{project_name}}/api/ {  
-    proxy_pass http://api_{{project_name}}/{{tomcat_backend_war_name}}/;
+    proxy_pass http://api_{{project_name}}/{{wildfly_deployment_name}}/;
     proxy_set_header Host $host;  
 }  
 

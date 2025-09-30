@@ -44,9 +44,11 @@
     -Djboss.http.port={{wildfly_http_server_port}} \
     -Djboss.management.http.port={{wildfly_management_http_server_port}} \
     "
-  wildfly_start_env: "JAVA_OPTS=\"-Xmx128m -Xms64m\""
+  wildfly_start_env: "JAVA_OPTS=\"-Xmx1g -Xms256m -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m\""
+  wildfly_cli_env: "JAVA_OPTS=\"-Xmx64m -Xms32m\""
   wildfly_user: "wildfly"
   wildfly_password: "wildfly"
+  wildfly_deployment_name: "backend_{{project_name}}"
   
 
   

@@ -2,6 +2,16 @@
   - name: Build backend
     hosts: deploy-helper
     tasks: 
+      - name: Ensure that directory "build_src" exists
+        file:
+          path: "{{base_path}}/autodeploy/install_tmp/build_src/"
+          state: directory 
+      
+      - name: Ensure that build directory for lab exists
+        file:
+          path: "{{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/"
+          state: directory 
+
       - name: Copy backend src
         synchronize:
           src: "/host_dirs/{{project_name}}/backend/"
@@ -24,8 +34,12 @@
         shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/ && gradle build"
         when: pom_xml_search_result.rc == 1
       
+      - name: Set artifact path
+        set_fact:
+          artifact_path: "{{'target' if pom_xml_search_result.rc == 0 else 'build/libs'}}"
+
       - name: Determine is it standalone or web archive
-        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/target && ls | grep .jar"
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/{{artifact_path}} && ls | grep .jar"
         register: jar_search_result
         failed_when: jar_search_result.rc not in [0,1]
       
@@ -35,7 +49,7 @@
           state: directory
 
       - name: Copy jar artifacts
-        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/target && \
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/{{artifact_path}} && \
           cp *.jar {{base_path}}/autodeploy/install_tmp/build_artifacts/backend_{{project_name}}.jar"
         when: jar_search_result.rc == 0
       
@@ -46,7 +60,7 @@
         when: jar_search_result.rc == 0
       
       - name: Copy war artifacts
-        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/target && \
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/{{artifact_path}} && \
           cp *.war {{base_path}}/autodeploy/install_tmp/build_artifacts/backend_{{project_name}}.war"
         when: jar_search_result.rc == 1
       

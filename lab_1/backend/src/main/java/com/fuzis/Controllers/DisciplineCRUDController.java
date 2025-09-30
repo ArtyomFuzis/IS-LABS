@@ -7,78 +7,49 @@ import com.fuzis.Services.DBService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@Path("/operations")
+@Slf4j
+@Path("/operations/discipline")
 public class DisciplineCRUDController {
-    private static final Logger logger = LoggerFactory.getLogger(DisciplineCRUDController.class);
 
     @Inject
     DBService dbService;
 
     @GET
-    @Path("/discipline/get")
+    @Path("/get")
     @Produces(MediaType.APPLICATION_JSON)
     public SelectDTO<Discipline> getAllDisciplines() {
-       try{
-           List<Discipline> allDisciplines = dbService.disciplineGetAll();
-           return new SelectDTO<>(true, allDisciplines);
-       }
-       catch(Exception e){
-           logger.error(e.getMessage());
-           logger.error(Arrays.toString(e.getStackTrace()));
-           return new SelectDTO<>(false, null);
-       }
+       var allObjects = dbService.getAll(Discipline.class);
+       return new SelectDTO<>(true, allObjects);
     }
 
     @GET
-    @Path("/discipline/get/{id}")
+    @Path("/get/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public SelectDTO<Discipline> getDisciplineById(@PathParam("id") Integer id) {
-        //try{
-            Discipline discipline = dbService.disciplineGet(id);
-            return new SelectDTO<>(true, Collections.singletonList(discipline));
-        /*}
-        catch(Exception e){
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
-            return new SelectDTO<>(false,null);
-        }*/
+        var obj = dbService.get(id, Discipline.class);
+        return new SelectDTO<>(true, Collections.singletonList(obj));
     }
 
     @DELETE
-    @Path("/discipline/delete/{id}")
+    @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public ChangeDTO deleteDisciplineById(@PathParam("id") Integer id) {
-        try{
-            dbService.disciplineRemove(dbService.disciplineGet(id));
-            return new ChangeDTO(true);
-        }
-        catch(Exception e){
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
-            return new ChangeDTO(false);
-        }
+        dbService.remove(dbService.get(id, Discipline.class));
+        return new ChangeDTO(true);
     }
 
     @POST
-    @Path("/discipline/create/")
+    @Path("/create/")
     @Produces(MediaType.APPLICATION_JSON)
     public ChangeDTO createDiscipline(@FormParam("name") String name,
                                       @FormParam("labs_count") Integer labs_count) {
-        try{
-            dbService.disciplineSave(new Discipline(name,labs_count));
-            return new ChangeDTO(true);
-        }
-        catch(Exception e){
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
-            return new ChangeDTO(false);
-        }
+        dbService.save(new Discipline(name,labs_count));
+        return new ChangeDTO(true);
     }
 }
