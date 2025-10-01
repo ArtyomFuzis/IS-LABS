@@ -53,4 +53,49 @@ public class DBService implements Serializable {
         return query.getResultList();
     }
 
+    @Transactional
+    public <T> List<T> getPage(int page, int count, Class<T> cls) {
+        int offset = (page - 1) * count;
+
+        return this.getEntityManager().createQuery(
+                        "SELECT u FROM "+cls.getName()+" u ORDER BY u.id", cls)
+                .setFirstResult(offset)
+                .setMaxResults(count)
+                .getResultList();
+    }
+
+    @Transactional
+    public <T> List<T> getPage(int page, Class<T> cls) {
+        return this.getPage(page, 5, cls);
+    }
+
+    @Transactional
+    public <T> List<T> getFilteredPage(int page, int count, String field, String filter, Class<T> cls) {
+        int offset = (page - 1) * count;
+
+        return this.getEntityManager().createQuery(
+                        "SELECT e FROM "+cls.getName()+" e WHERE e."+field+" ILIKE :filter", cls)
+                .setParameter("filter", "%" + filter + "%")
+                .setFirstResult(offset)
+                .setMaxResults(count)
+                .getResultList();
+    }
+
+    public <T> List<T> getSortedPage(int page, int count, String field, boolean reversed, Class<T> cls) {
+        int offset = (page - 1) * count;
+
+        return this.getEntityManager().createQuery(
+                        "SELECT e FROM "+cls.getName()+" e ORDER BY e."+field+" "+(reversed ? "DESC" : "ASC"), cls)
+                .setFirstResult(offset)
+                .setMaxResults(count)
+                .getResultList();
+    }
+
+    public <T> List<T> getFilteredPage(int page, String field, String filter, Class<T> cls) {
+        return this.getFilteredPage(page, 5, field, filter, cls);
+    }
+
+    public <T> List<T> getSortedPage(int page, String field, boolean reversed, Class<T> cls) {
+        return this.getSortedPage(page,5,field, reversed, cls);
+    }
 }

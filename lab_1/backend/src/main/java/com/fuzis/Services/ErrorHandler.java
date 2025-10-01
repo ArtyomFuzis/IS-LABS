@@ -20,7 +20,7 @@ public class ErrorHandler implements ExceptionMapper<ConstraintViolationExceptio
                 false,
                 "ConstrainViolation"
         );
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+        return Response.status(Response.Status.BAD_REQUEST)
                 .entity(error)
                 .build();
     }

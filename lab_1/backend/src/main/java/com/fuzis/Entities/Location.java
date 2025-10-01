@@ -36,7 +36,7 @@ public class Location {
 
     @JsonIgnore
     @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Person> people = new ArrayList<>();
+    private List<Person> people;
 
     public Location(String name, Double x, Double y, Double z){
         this.x = x;

@@ -1,5 +1,6 @@
 package com.fuzis.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Setter
 @Getter
@@ -25,6 +27,10 @@ public class Discipline implements Serializable {
 
     @Column(name = "LABS_COUNT")
     private Integer labsCount;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "discipline", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<LabWork> labs;
 
     public Discipline(String name, Integer labsCount) {
         this.name = name;

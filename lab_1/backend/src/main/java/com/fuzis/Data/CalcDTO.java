@@ -2,14 +2,12 @@ package com.fuzis.Data;
 
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class SelectDTO<T>{
+public class CalcDTO<T> {
     private boolean success;
-    private List<T> result;
+    private T result;
 }

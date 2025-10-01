@@ -3,6 +3,7 @@ package com.fuzis.Controllers;
 import com.fuzis.Data.ChangeDTO;
 import com.fuzis.Data.SelectDTO;
 import com.fuzis.Entities.Coordinate;
+import com.fuzis.Entities.LabWork;
 import com.fuzis.Services.DBService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -48,5 +49,22 @@ public class CoordinateCRUDController {
                                       @FormParam("y") Double y) {
         dbService.save(new Coordinate(x,y));
         return new ChangeDTO(true);
+    }
+
+    @GET
+    @Path("/get/page/{page}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public SelectDTO<Coordinate> getPage(@PathParam("page") Integer page) {
+        var obj = dbService.getPage(page, Coordinate.class);
+        return new SelectDTO<>(true, obj);
+    }
+
+    @GET
+    @Path("/get/{id}/labs")
+    @Produces(MediaType.APPLICATION_JSON)
+    public SelectDTO<LabWork> getLabs(@PathParam("id") Integer id) {
+        var obj = dbService.get(id, Coordinate.class);
+        var res = obj.getLabs();
+        return new SelectDTO<>(true, res);
     }
 }
