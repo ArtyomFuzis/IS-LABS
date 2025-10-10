@@ -1,41 +1,58 @@
 import { useState, useEffect } from 'react'
-import './App.css'
-import {fetchData} from '../utils/apiQueries'
+import {fetchData} from '../Utils/apiQueries'
+import {makeQuery } from '../Utils/baseMaps';
+import "../Styles/Table.css"
+import type { SelectDTO } from '../interfaces/DTO/SelectDTO';
+import LocationTable from './Tables/LocationTable';
+import type { TableData } from '../interfaces/TableData';
+import type { Location } from "../interfaces/Entities/Location";
 
-function Table({object : object}) {  
+function Table(params : {objectName: string}) {  
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({success: false});
+  const [filterColumn, setFilterColumn] = useState("");
+  const [filterData,   setFilterData]   = useState("");
+  const [sortColumn, setSortColumn] = useState("");
+  const [page, setPage] = useState(1);
+  const [reversedSorting, setReversedSorting] = useState(false);
+  const [nextPageExists,  setNextPageExists] = useState(false);
 
   const loadData = async () => {
-      const result = await fetchData();
+      const result = await fetchData(makeQuery(params.objectName,filterColumn,filterData,sortColumn,page,reversedSorting) );
       setData(result);
-  };
+      const result_next : SelectDTO<any> = await fetchData(makeQuery(params.objectName,filterColumn,filterData,sortColumn,page+1,reversedSorting) );
+      setNextPageExists(result_next.result.length !== 0);
+      transfered_data = {data: (data as SelectDTO<any>), filterColumn, filterData, sortColumn, reversedSorting, setFilterColumn, setFilterData, setSortColumn, setReversedSorting}
+    };
+
+  let transfered_data : TableData<any> = {data: (data as SelectDTO<any>), filterColumn, filterData, sortColumn, reversedSorting, setFilterColumn, setFilterData, setSortColumn, setReversedSorting}
 
   useEffect(() => {
-    loadData();
+    loadData();    
     const interval = setInterval(loadData, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [page, filterColumn, filterData, sortColumn, reversedSorting]);
 
   return (
-    <table cellPadding="8" cellSpacing="0">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Имя</th>
-          <th>Значение</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map(item => (
-          <tr key={item.id}>
-            <td>{item.id}</td>
-            <td>{item.name}</td>
-            <td>{item.value}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div className='table-container'>
+      <div className='table-controllers'>
+        <div className='menu-button-container table-previous-button'>
+          <button className={`menu-button ${page === 1 ? "table-button-inactive" : ""}`} onClick={()=>setPage(page-1)}>
+              Прошлая страница
+          </button>
+        </div>
+        <div className='menu-button-container table-next-button'>
+          <button className={`menu-button ${!nextPageExists ? "table-button-inactive" : ""}`} onClick={()=>{setPage(page+1)}}>
+             Следующая страница
+          </button>
+        </div>
+      </div>
+      {transfered_data !== null && data.success &&
+        <div className='table-body'>
+          {params.objectName == 'Location' && <LocationTable tableData={{...transfered_data, data: (data as SelectDTO<Location>)}} />}
+        </div>
+      }
+    </div>
   );
 };
 

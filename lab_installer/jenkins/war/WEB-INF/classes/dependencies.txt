@@ -1,10 +1,10 @@
 
 The following files have been resolved:
-   org.jenkins-ci.main:cli:jar:2.529:compile -- module cli (auto)
-   org.jenkins-ci.main:remoting:jar:3341.v0766d82b_dec0:compile -- module remoting (auto)
-   org.jenkins-ci.main:jenkins-core:jar:2.529:compile -- module jenkins.core (auto)
+   org.jenkins-ci.main:cli:jar:2.531:compile -- module cli (auto)
+   org.jenkins-ci.main:remoting:jar:3345.v03dee9b_f88fc:compile -- module remoting (auto)
+   org.jenkins-ci.main:jenkins-core:jar:2.531:compile -- module jenkins.core (auto)
    args4j:args4j:jar:2.37:compile -- module args4j [auto]
-   com.github.spotbugs:spotbugs-annotations:jar:4.9.4:compile -- module com.github.spotbugs.annotations [auto]
+   com.github.spotbugs:spotbugs-annotations:jar:4.9.6:compile -- module com.github.spotbugs.annotations [auto]
    com.google.guava:guava:jar:33.5.0-jre:compile -- module com.google.common
    com.google.guava:failureaccess:jar:1.0.3:compile -- module com.google.common.util.concurrent.internal
    com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile -- module listenablefuture (auto)
@@ -26,7 +26,7 @@ The following files have been resolved:
    jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:jar:2.0.0:compile -- module jakarta.servlet.jsp.jstl [auto]
    jaxen:jaxen:jar:2.0.0:compile -- module org.jaxen [auto]
    jline:jline:jar:2.14.6:compile -- module jline (auto)
-   net.java.dev.jna:jna:jar:5.17.0:compile -- module com.sun.jna [auto]
+   net.java.dev.jna:jna:jar:5.18.1:compile -- module com.sun.jna [auto]
    net.java.sezpoz:sezpoz:jar:1.13:compile -- module sezpoz (auto)
    net.jcip:jcip-annotations:jar:1.0:compile -- module jcip.annotations (auto)
    org.antlr:antlr4-runtime:jar:4.13.2:compile -- module org.antlr.antlr4.runtime [auto]
@@ -46,7 +46,7 @@ The following files have been resolved:
    org.jenkins-ci:symbol-annotation:jar:1.25:compile -- module symbol.annotation (auto)
    org.jenkins-ci:task-reactor:jar:1.9:compile -- module task.reactor (auto)
    org.jenkins-ci:version-number:jar:1.12:compile -- module version.number (auto)
-   org.jenkins-ci.main:websocket-spi:jar:2.529:compile -- module websocket.spi (auto)
+   org.jenkins-ci.main:websocket-spi:jar:2.531:compile -- module websocket.spi (auto)
    org.jfree:jfreechart:jar:1.0.19:compile -- module jfreechart (auto)
    org.jfree:jcommon:jar:1.0.23:compile -- module jcommon (auto)
    org.jvnet.hudson:commons-jelly-tags-define:jar:1.1-jenkins-20250731:compile -- module commons.jelly.tags.define (auto)
@@ -76,7 +76,7 @@ The following files have been resolved:
    org.springframework:spring-expression:jar:6.2.11:compile -- module spring.expression [auto]
    org.springframework:spring-web:jar:6.2.11:compile -- module spring.web [auto]
    xpp3:xpp3:jar:1.1.4c:compile -- module xpp3 (auto)
-   org.jenkins-ci.main:websocket-jetty12-ee9:jar:2.529:compile -- module websocket.jetty12.ee9 (auto)
+   org.jenkins-ci.main:websocket-jetty12-ee9:jar:2.531:compile -- module websocket.jetty12.ee9 (auto)
    org.slf4j:slf4j-jdk14:jar:2.0.17:compile -- module org.slf4j.jul
    org.slf4j:slf4j-api:jar:2.0.17:compile -- module org.slf4j
    org.jenkins-ci:winstone:jar:8.13.1:test -- module winstone (auto)

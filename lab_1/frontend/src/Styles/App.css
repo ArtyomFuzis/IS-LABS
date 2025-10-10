@@ -90,7 +90,7 @@ button{
   text-align: center;
   background-color: #690000;
   width: 120px;
-  height: 40px;
+  height: 50px;
   margin-left: 50px
 }
 
@@ -128,4 +128,8 @@ button{
 
 .menu-button-chosen{
   border: #00CC00 3px solid;
+}
+
+body{
+  background-color: #00FF7F;
 }

@@ -2032,6 +2032,9 @@ Dialog.prototype.show = function () {
     this.dialog.showModal();
     this.dialog.addEventListener("cancel", e => {
       e.preventDefault();
+
+      // Clear any hash
+      history.pushState("", document.title, window.location.pathname + window.location.search);
       this.dialog.setAttribute("closing", "");
       this.dialog.addEventListener("animationend", () => {
         this.dialog.removeAttribute("closing");
@@ -2065,6 +2068,28 @@ Dialog.prototype.show = function () {
     }
   });
 };
+function renderOnDemandDialog(dialogId) {
+  const templateId = "dialog-" + dialogId + "-template";
+  function render() {
+    const template = document.querySelector("#" + templateId);
+    const title = template.dataset.title;
+    const hash = template.dataset.dialogHash;
+    const content = template.content.firstElementChild.cloneNode(true);
+    if (hash) {
+      window.location.hash = hash;
+    }
+    behavior_shim.applySubtree(content, false);
+    dialog.modal(content, {
+      maxWidth: "550px",
+      title: title
+    });
+  }
+  if (document.querySelector("#" + templateId)) {
+    render();
+    return;
+  }
+  renderOnDemand(document.querySelector("." + templateId), render);
+}
 function dialogs_init() {
   window.dialog = {
     modal: function (content, options) {
@@ -2114,6 +2139,19 @@ function dialogs_init() {
       return dialog.show();
     }
   };
+  behavior_shim.specify("[data-type='dialog-opener']", "-dialog-", 1000, element => {
+    element.addEventListener("click", () => {
+      renderOnDemandDialog(element.dataset.dialogId);
+    });
+  });
+
+  // Open the relevant dialog if the hash is set
+  if (window.location.hash) {
+    const element = document.querySelector(".dialog-" + window.location.hash.substring(1) + "-hash");
+    if (element) {
+      renderOnDemandDialog(element.className.match(/dialog-(id\d+)-template/)[1]);
+    }
+  }
 }
 /* harmony default export */ var dialogs = ({
   init: dialogs_init

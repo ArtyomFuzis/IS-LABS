@@ -1,11 +1,9 @@
 import { useState } from 'react'
-import './App.css'
+import '../Styles/App.css'
 import Table from './Table.tsx'
 
 function App() {
-  const [state, setState] = useState({
-    entity: "LabWork"
-  })
+  const [entity, setEntity] = useState("LabWork")
 
   return (
     <>
@@ -17,45 +15,48 @@ function App() {
       </header>
       <div className='menu-level'>
         <div className='menu-container'>
-          <div className={`menu-button-container ${state.entity === "LabWork" ? "menu-button-chosen" : ""}`}>
-            <button className='menu-button' onClick={() => {setState({...state, entity: "LabWork"})}}>
+          <div className={`menu-button-container ${entity === "LabWork" ? "menu-button-chosen" : ""}`}>
+            <button className='menu-button' onClick={() => {setEntity("LabWork")}}>
               LabWork
             </button>
           </div>
-           <div className={`menu-button-container ${state.entity === "Person" ? "menu-button-chosen" : ""}`}>
-            <button className='menu-button' onClick={() => {setState({...state, entity: "Person"})}}>
+           <div className={`menu-button-container ${entity === "Person" ? "menu-button-chosen" : ""}`}>
+            <button className='menu-button' onClick={() => {setEntity("Person")}}>
               Person
             </button>
           </div>
-         <div className={`menu-button-container ${state.entity === "Location" ? "menu-button-chosen" : ""}`}>
-            <button className='menu-button' onClick={() => {setState({...state, entity: "Location"})}}>
+         <div className={`menu-button-container ${entity === "Location" ? "menu-button-chosen" : ""}`}>
+            <button className='menu-button' onClick={() => {setEntity("Location")}}>
               Location
             </button>
           </div>
-          <div className={`menu-button-container ${state.entity === "Discipline" ? "menu-button-chosen" : ""}`}>
-            <button className='menu-button' onClick={() => {setState({...state, entity: "Discipline"})}}>
+          <div className={`menu-button-container ${entity === "Discipline" ? "menu-button-chosen" : ""}`}>
+            <button className='menu-button' onClick={() => {setEntity("Discipline")}}>
               Discipline
             </button>
           </div>
-          <div className={`menu-button-container ${state.entity === "Coordinate" ? "menu-button-chosen" : ""}`}>
-            <button className='menu-button' onClick={() => {setState({...state, entity: "Coordinate"})}}>
+          <div className={`menu-button-container ${entity === "Coordinate" ? "menu-button-chosen" : ""}`}>
+            <button className='menu-button' onClick={() => {setEntity("Coordinate")}}>
               Coordinate
             </button>
           </div>
         </div>
         <div className='menu-extras'>
-          <div className={`menu-button-container ${state.entity === "Additional" ? "menu-button-chosen" : ""}`}>
-            <button className='menu-button' onClick={() => {setState({...state, entity: "Additional"})}}>
+          <div className={`menu-button-container ${entity === "Additional" ? "menu-button-chosen" : ""}`}>
+            <button className='menu-button' onClick={() => {setEntity("Additional")}}>
               Доп. функции
             </button>
           </div>
         </div>
       </div>
-      <div className='table-space'>
-        <Table object={state.entity}>
-
-        </Table>
-      </div>
+      {entity=="Additional" ? (
+        <div></div>
+      ) : (
+        <div className='table-space'>
+          <Table key={entity} objectName={entity}/>
+        </div>
+      )}
+      
     </>
   )
 }
