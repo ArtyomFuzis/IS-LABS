@@ -1,9 +1,22 @@
-function ParameterField({required, type, field}: {required: boolean, type:string, field: string}){
-    <div className="modal-parameter">
-        <div className="modal-parameter-label">{field}
-            {required && <span className="modal-parameter-obligatory-mark">*</span>}</div>
-        {type == "text" && <input type="text" className="modal-parameter-input"></input>}
-    </div>
+import { validateFloat } from "../../../Utils/validations";
+
+
+function ParameterField({required, type, field, value, setValue}: 
+    {required: boolean, type:string, field: string, value:any, setValue: React.Dispatch<React.SetStateAction<any>>}){
+    const handleChangeFloat = (inputValue : string) => {        
+        if (validateFloat(inputValue)) {
+            setValue(inputValue);
+        }
+    };
+    return(
+        <div className="modal-parameter">
+            <div className="modal-parameter-label">{field}
+                {required && <span className="modal-parameter-obligatory-mark">*</span>}</div>
+            {type == "text" && <input type="text" className="modal-parameter-input" value={value} onChange={(e)=>{setValue(e.target.value)}}></input>}
+            {type == "floatNum" && <input type="text" className="modal-parameter-input" value={value} onChange={(e)=>{handleChangeFloat(e.target.value)}}></input>}
+
+        </div>
+    )
 }
 
 export default ParameterField

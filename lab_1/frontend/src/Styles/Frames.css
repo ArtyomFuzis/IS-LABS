@@ -9,7 +9,7 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-   backdrop-filter: blur(1px); 
+backdrop-filter: blur(1px); 
 }
 
 .modal-content{
@@ -41,7 +41,7 @@
     border-top: 3px solid #993030;
     border-bottom: 3px solid #993030;
     margin: auto;
-    margin-top: 15px;
+    margin-top: 35px;
     border-radius: 5px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -54,31 +54,95 @@
     width: 98%;
     border: 3px solid #993030;
     background-color: #690000;
-    margin-top: 15px;
     margin: auto;
     border-radius: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .modal-parameter-label{
-    margin-right: 10px;
+    margin-left: 20%;
 }
+
 .modal-parameter-input{
     background-color: white;
     display: block;
     width: 30%;
-    margin: 0;
+    margin-left: auto;
+    margin-right: 35%;
     border-radius: 3px;
     border-color: #FF7575;
     color: #005400;
     font-size: large;
     text-align: center;
-    margin-left: 5px;
 }
 
 .modal-parameter-obligatory-mark{
     color: crimson;
     font-size: 25px;
     font-weight: 700;
+}
+
+.modal-params-error-pane{
+    width: 90%;
+    border: 3px solid #993030;
+    background-color: #690000;
+    margin: auto;
+    margin-top: 30px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.modal-params-error-pane-header{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-params-error-pane-header-img{
+    height: 60px;
+}
+
+.modal-params-error-pane-header-title{
+    margin-left: 15px;
+    font-size: 30px;
+}
+
+.modal-params-error-pane-body{
+    margin-left: 40px;
+    margin-right: 40px;
+    padding: 20px;
+    border-radius: 15px;
+    font-size: large;
+    text-align: left;
+}
+
+.modal-params-error-pane-row{
+    font-weight: 700;
+    margin-left: 10%;
+    margin-bottom: 10px;
+}
+
+.modal-main-content{
+    overflow: auto;
+}
+
+.modal-buttons{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 4px;
+    width: 98%;
+    border: 3px solid #993030;
+    background-color: #690000;
+    border-radius: 15px;
+    margin-top: auto;
+    height: 40px;
+}
+
+.modal-content{
+    display: flex;
+    flex-direction: column;
 }
