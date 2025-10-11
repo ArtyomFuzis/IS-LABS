@@ -4,6 +4,7 @@ import com.fuzis.Data.ChangeDTO;
 import com.fuzis.Data.SelectDTO;
 import com.fuzis.Entities.*;
 import com.fuzis.Services.DBService;
+import com.fuzis.Services.UtilityService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -18,6 +19,9 @@ public class LabWorkCRUDController {
 
     @Inject
     DBService dbService;
+
+    @Inject
+    UtilityService utilsService;
 
     @GET
     @Path("/get")
@@ -73,34 +77,28 @@ public class LabWorkCRUDController {
     }
 
     @GET
-    @Path("/get/filtered/name/{page}")
+    @Path("/get/sorted/{field}/{page}")
     @Produces(MediaType.APPLICATION_JSON)
-    public SelectDTO<LabWork> getFilteredName(@PathParam("page") Integer page, @QueryParam("filter") @DefaultValue("") String filter) {
-        var obj = dbService.getFilteredPage(page,"name", filter, LabWork.class);
-        return new SelectDTO<>(true, obj);
+    public SelectDTO<LabWork> getSorted(@PathParam("page") Integer page, @PathParam("field") String field, @QueryParam("reversed") @DefaultValue("false") Boolean reversed) {
+        if (utilsService.getFilterableFields(LabWork.class).contains(field)) {
+            var obj = dbService.getSortedPage(page,field, reversed, LabWork.class);
+            return new SelectDTO<>(true, obj);
+        }
+        else{
+            return new SelectDTO<>(false, null);
+        }
     }
 
     @GET
-    @Path("/get/sorted/name/{page}")
+    @Path("/get/filtered/{field}/{page}")
     @Produces(MediaType.APPLICATION_JSON)
-    public SelectDTO<LabWork> getSortedName(@PathParam("page") Integer page, @QueryParam("reversed") @DefaultValue("false") Boolean reversed) {
-        var obj = dbService.getSortedPage(page,"name", reversed, LabWork.class);
-        return new SelectDTO<>(true, obj);
-    }
-
-    @GET
-    @Path("/get/filtered/description/{page}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public SelectDTO<LabWork> getFilteredDescription(@PathParam("page") Integer page, @QueryParam("filter") @DefaultValue("") String filter) {
-        var obj = dbService.getFilteredPage(page,"description", filter, LabWork.class);
-        return new SelectDTO<>(true, obj);
-    }
-
-    @GET
-    @Path("/get/sorted/description/{page}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public SelectDTO<LabWork> getSortedDescription(@PathParam("page") Integer page, @QueryParam("reversed") @DefaultValue("false") Boolean reversed) {
-        var obj = dbService.getSortedPage(page,"description", reversed, LabWork.class);
-        return new SelectDTO<>(true, obj);
+    public SelectDTO<LabWork> getFiltered(@PathParam("page") Integer page, @PathParam("field") String field, @QueryParam("filter") @DefaultValue("") String filter) {
+        if (utilsService.getFilterableFields(LabWork.class).contains(field)) {
+            var obj = dbService.getFilteredPage(page, field, filter, LabWork.class);
+            return new SelectDTO<>(true, obj);
+        }
+        else{
+            return new SelectDTO<>(false, null);
+        }
     }
 }

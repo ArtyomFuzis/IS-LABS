@@ -1,7 +1,6 @@
-import type { Location } from "../interfaces/Entities/Location"
 import type { TableData } from "../interfaces/TableData"
 
-function TableHeadControl(params : {element:string, enabled: boolean, tableData: TableData<Location>}) 
+function TableHeadControl(params : {element:string, enabled: boolean, tableData: TableData<any>}) 
 {
     const sortClick = () => {
         params.tableData.setFilterColumn("")
@@ -24,6 +23,9 @@ function TableHeadControl(params : {element:string, enabled: boolean, tableData:
     const filterChanged = (e: any) => {
         params.tableData.setFilterColumn(params.element)
         params.tableData.setFilterData(e.target.value)
+        if(e.target.value == ""){
+            params.tableData.setFilterColumn("")
+        }
     }
 
     return(

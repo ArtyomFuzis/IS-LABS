@@ -4,6 +4,7 @@ import com.fuzis.Data.ChangeDTO;
 import com.fuzis.Data.SelectDTO;
 import com.fuzis.Entities.*;
 import com.fuzis.Services.DBService;
+import com.fuzis.Services.UtilityService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,6 +18,9 @@ public class LocationCRUDController {
 
     @Inject
     DBService dbService;
+
+    @Inject
+    UtilityService utilsService;
 
     @GET
     @Path("/get")
@@ -71,18 +75,28 @@ public class LocationCRUDController {
     }
 
     @GET
-    @Path("/get/filtered/name/{page}")
+    @Path("/get/sorted/{field}/{page}")
     @Produces(MediaType.APPLICATION_JSON)
-    public SelectDTO<Location> getFiltered(@PathParam("page") Integer page, @QueryParam("filter") @DefaultValue("") String filter) {
-        var obj = dbService.getFilteredPage(page,"name", filter, Location.class);
-        return new SelectDTO<>(true, obj);
+    public SelectDTO<Location> getSorted(@PathParam("page") Integer page, @PathParam("field") String field, @QueryParam("reversed") @DefaultValue("false") Boolean reversed) {
+        if (utilsService.getFilterableFields(Location.class).contains(field)) {
+            var obj = dbService.getSortedPage(page,field, reversed, Location.class);
+            return new SelectDTO<>(true, obj);
+        }
+        else{
+            return new SelectDTO<>(false, null);
+        }
     }
 
     @GET
-    @Path("/get/sorted/name/{page}")
+    @Path("/get/filtered/{field}/{page}")
     @Produces(MediaType.APPLICATION_JSON)
-    public SelectDTO<Location> getSorted(@PathParam("page") Integer page, @QueryParam("reversed") @DefaultValue("false") Boolean reversed) {
-        var obj = dbService.getSortedPage(page,"name", reversed, Location.class);
-        return new SelectDTO<>(true, obj);
+    public SelectDTO<Location> getFiltered(@PathParam("page") Integer page, @PathParam("field") String field, @QueryParam("filter") @DefaultValue("") String filter) {
+        if (utilsService.getFilterableFields(Location.class).contains(field)) {
+            var obj = dbService.getFilteredPage(page, field, filter, Location.class);
+            return new SelectDTO<>(true, obj);
+        }
+        else{
+            return new SelectDTO<>(false, null);
+        }
     }
 }

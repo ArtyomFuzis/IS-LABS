@@ -1,6 +1,5 @@
 package com.fuzis.Services;
 
-import com.fuzis.Entities.Discipline;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
@@ -74,7 +73,7 @@ public class DBService implements Serializable {
         int offset = (page - 1) * count;
 
         return this.getEntityManager().createQuery(
-                        "SELECT e FROM "+cls.getName()+" e WHERE e."+field+" ILIKE :filter", cls)
+                        "SELECT e FROM "+cls.getName()+" e WHERE CAST(e."+field+" as string) ILIKE :filter", cls)
                 .setParameter("filter", "%" + filter + "%")
                 .setFirstResult(offset)
                 .setMaxResults(count)

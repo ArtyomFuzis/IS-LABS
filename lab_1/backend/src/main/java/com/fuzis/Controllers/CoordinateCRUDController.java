@@ -3,8 +3,10 @@ package com.fuzis.Controllers;
 import com.fuzis.Data.ChangeDTO;
 import com.fuzis.Data.SelectDTO;
 import com.fuzis.Entities.Coordinate;
+import com.fuzis.Entities.Discipline;
 import com.fuzis.Entities.LabWork;
 import com.fuzis.Services.DBService;
+import com.fuzis.Services.UtilityService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,6 +19,9 @@ import java.util.Collections;
 public class CoordinateCRUDController {
     @Inject
     DBService dbService;
+
+    @Inject
+    UtilityService utilsService;
 
     @GET
     @Path("/get")
@@ -66,5 +71,31 @@ public class CoordinateCRUDController {
         var obj = dbService.get(id, Coordinate.class);
         var res = obj.getLabs();
         return new SelectDTO<>(true, res);
+    }
+
+    @GET
+    @Path("/get/sorted/{field}/{page}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public SelectDTO<Coordinate> getSorted(@PathParam("page") Integer page, @PathParam("field") String field, @QueryParam("reversed") @DefaultValue("false") Boolean reversed) {
+        if (utilsService.getFilterableFields(Coordinate.class).contains(field)) {
+            var obj = dbService.getSortedPage(page,field, reversed, Coordinate.class);
+            return new SelectDTO<>(true, obj);
+        }
+        else{
+            return new SelectDTO<>(false, null);
+        }
+    }
+
+    @GET
+    @Path("/get/filtered/{field}/{page}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public SelectDTO<Coordinate> getFiltered(@PathParam("page") Integer page, @PathParam("field") String field, @QueryParam("filter") @DefaultValue("") String filter) {
+        if (utilsService.getFilterableFields(Coordinate.class).contains(field)) {
+            var obj = dbService.getFilteredPage(page, field, filter, Coordinate.class);
+            return new SelectDTO<>(true, obj);
+        }
+        else{
+            return new SelectDTO<>(false, null);
+        }
     }
 }

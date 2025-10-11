@@ -1,6 +1,7 @@
 package com.fuzis.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fuzis.Annotations.Filterable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,12 +21,15 @@ public class Discipline implements Serializable {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Filterable
     private Integer id;
 
     @Column(name = "NAME")
+    @Filterable
     private String name;
 
     @Column(name = "LABS_COUNT")
+    @Filterable
     private Integer labsCount;
 
     @JsonIgnore

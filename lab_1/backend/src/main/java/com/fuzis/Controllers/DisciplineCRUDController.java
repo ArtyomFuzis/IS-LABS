@@ -2,18 +2,16 @@ package com.fuzis.Controllers;
 
 import com.fuzis.Data.ChangeDTO;
 import com.fuzis.Data.SelectDTO;
-import com.fuzis.Entities.Coordinate;
 import com.fuzis.Entities.Discipline;
 import com.fuzis.Entities.LabWork;
 import com.fuzis.Services.DBService;
+import com.fuzis.Services.UtilityService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 @Slf4j
 @Path("/operations/discipline")
@@ -21,6 +19,9 @@ public class DisciplineCRUDController {
 
     @Inject
     DBService dbService;
+
+    @Inject
+    UtilityService utilsService;
 
     @GET
     @Path("/get")
@@ -73,18 +74,28 @@ public class DisciplineCRUDController {
     }
 
     @GET
-    @Path("/get/filtered/name/{page}")
+    @Path("/get/sorted/{field}/{page}")
     @Produces(MediaType.APPLICATION_JSON)
-    public SelectDTO<Discipline> getFiltered(@PathParam("page") Integer page, @QueryParam("filter") @DefaultValue("") String filter) {
-        var obj = dbService.getFilteredPage(page,"name", filter, Discipline.class);
-        return new SelectDTO<>(true, obj);
+    public SelectDTO<Discipline> getSorted(@PathParam("page") Integer page, @PathParam("field") String field, @QueryParam("reversed") @DefaultValue("false") Boolean reversed) {
+        if (utilsService.getFilterableFields(Discipline.class).contains(field)) {
+            var obj = dbService.getSortedPage(page,field, reversed, Discipline.class);
+            return new SelectDTO<>(true, obj);
+        }
+        else{
+            return new SelectDTO<>(false, null);
+        }
     }
 
     @GET
-    @Path("/get/sorted/name/{page}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public SelectDTO<Discipline> getSorted(@PathParam("page") Integer page, @QueryParam("reversed") @DefaultValue("false") Boolean reversed) {
-        var obj = dbService.getSortedPage(page,"name", reversed, Discipline.class);
-        return new SelectDTO<>(true, obj);
-    }
+     @Path("/get/filtered/{field}/{page}")
+     @Produces(MediaType.APPLICATION_JSON)
+     public SelectDTO<Discipline> getFiltered(@PathParam("page") Integer page, @PathParam("field") String field, @QueryParam("filter") @DefaultValue("") String filter) {
+        if (utilsService.getFilterableFields(Discipline.class).contains(field)) {
+            var obj = dbService.getFilteredPage(page, field, filter, Discipline.class);
+            return new SelectDTO<>(true, obj);
+        }
+        else{
+            return new SelectDTO<>(false, null);
+        }
+     }
 }

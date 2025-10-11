@@ -1,6 +1,7 @@
 package com.fuzis.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fuzis.Annotations.Filterable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,28 +21,35 @@ public class Person {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Filterable
     private Integer id;
 
     @Column(name="NAME")
+    @Filterable
     private String name;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "EYE_COLOR")
+    @Filterable(addition = ".val")
     private Color eyeColor;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "HAIR_COLOR")
+    @Filterable(addition = ".val")
     private Color hairColor;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "LOCATION_ID")
+    @Filterable(addition = ".id")
     private Location location;
 
     @Column(name="PASSPORT_ID")
+    @Filterable
     private String passportId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "NATIONALITY_ID")
+    @Filterable(addition = ".val")
     private Country nationality;
 
     @JsonIgnore

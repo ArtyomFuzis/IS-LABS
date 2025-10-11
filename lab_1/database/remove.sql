@@ -1,4 +1,7 @@
 \set ON_ERROR_STOP on
+SET database.deployname = 'lab1';
+\i common.sql
+
 BEGIN;
 
 DROP TABLE IF EXISTS LAB1_LABWORK;

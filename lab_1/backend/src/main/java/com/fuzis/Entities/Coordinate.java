@@ -1,6 +1,7 @@
 package com.fuzis.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fuzis.Annotations.Filterable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,12 +20,15 @@ public class Coordinate {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Filterable
     private Integer id;
 
     @Column(name="X")
+    @Filterable
     private Double x;
 
     @Column(name="Y")
+    @Filterable
     private Double y;
 
     @JsonIgnore

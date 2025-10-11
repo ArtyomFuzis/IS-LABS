@@ -7,26 +7,40 @@ export const getBaseUrl = (objectName: string): string => {
     "Location":   "/operations/location",
     "Discipline": "/operations/discipline",
     "Coordinate": "/operations/coordinate",
-
   } [objectName] || ""
 };
 
-export const getFilterUrl = (filteredName: string, pageNum: number, filter:string): string => {
-  return ("/get/filtered" + {
-    "name":       "/name/"+pageNum,
-    "labwork":    "/lab/"+pageNum
+const getBaseMapping = (objectName: string): string => {
+  return ({
+    "name":         "/name/",
+    "id":           "/id/",
+    "x":            "/x/",
+    "y":            "/y/",
+    "z":            "/z/",
+    "labsCount":    "/labsCount/",
+    "eyeColor":     "/eyeColor.val/",
+    "hairColor":    "/hairColor.val/",
+    "locationId":   "/location.id/",
+    "passport":     "/passportId/",
+    "nationality":  "/nationality.val/",
+    "coordinateId": "/coordinate.id/",
+    "creationDate": "/creationDate/",
+    "description":  "/description/",
+    "difficulty":   "/difficulty.val/",
+    "disciplineId": "/discipline.id/",
+    "minimalPoint": "/minimalPoint/",
+    "maximalPoint": "/maximalPoint/",
+    "authorId":     "/author.id/"
+  } [objectName] || "")
+}
 
-  } [filteredName] || "") + "/?filter="+filter
+export const getFilterUrl = (objectName: string, pageNum: number, filter:string): string => {
+   return "/get/filtered" + getBaseMapping(objectName) + pageNum + "/?filter="+filter
 };
 
 export const getSortUrl = (objectName: string, pageNum: number, reversed: boolean): string => {
-  return ("/get/sorted" + {
-    "name":       "/name/"+pageNum,
-    "labwork":    "/lab/"+pageNum
-
-  } [objectName] || "")+"/?reversed="+reversed
+  return "/get/sorted" + getBaseMapping(objectName) + pageNum + "/?reversed=" + reversed
 };
-
 
 export const makeQuery = (objectName : string, filterColumn: string, filterData: string, sortColumn: string, page: number, reversedSorting: boolean) => {
   return getBaseUrl(objectName) + 

@@ -6,6 +6,14 @@ import type { SelectDTO } from '../interfaces/DTO/SelectDTO';
 import LocationTable from './Tables/LocationTable';
 import type { TableData } from '../interfaces/TableData';
 import type { Location } from "../interfaces/Entities/Location";
+import DisciplineTable from './Tables/DisciplineTable';
+import type { Discipline } from '../interfaces/Entities/Discipline';
+import CoordinateTable from './Tables/CoordinateTable';
+import type { Coordinate } from '../interfaces/Entities/Coordinate';
+import type { Person } from '../interfaces/Entities/Person';
+import PersonTable from './Tables/PersonTable';
+import LabWorkTable from './Tables/LabWorkTable';
+import type { LabWork } from '../interfaces/Entities/LabWork';
 
 function Table(params : {objectName: string}) {  
 
@@ -50,6 +58,11 @@ function Table(params : {objectName: string}) {
       {transfered_data !== null && data.success &&
         <div className='table-body'>
           {params.objectName == 'Location' && <LocationTable tableData={{...transfered_data, data: (data as SelectDTO<Location>)}} />}
+          {params.objectName == 'Discipline' && <DisciplineTable tableData={{...transfered_data, data: (data as SelectDTO<Discipline>)}} />}
+          {params.objectName == 'Coordinate' && <CoordinateTable tableData={{...transfered_data, data: (data as SelectDTO<Coordinate>)}} />}
+          {params.objectName == 'Person' && <PersonTable tableData={{...transfered_data, data: (data as SelectDTO<Person>)}} />}
+          {params.objectName == 'LabWork' && <LabWorkTable tableData={{...transfered_data, data: (data as SelectDTO<LabWork>)}} />}
+          <div className='main-table-add-button'>Добавить объект</div>
         </div>
       }
     </div>
