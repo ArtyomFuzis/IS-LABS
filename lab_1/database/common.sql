@@ -7,38 +7,39 @@ CREATE TABLE IF NOT EXISTS DEPLOYMENTS (
     SUCCESSFUL BOOLEAN 
 );
 
-CREATE OR REPLACE PROCEDURE check_current_deployment
+CREATE OR REPLACE FUNCTION check_last_deployment()
 RETURNS BOOLEAN AS $$
 DECLARE
     deploy_id NUMERIC;
 BEGIN
     SELECT ID INTO deploy_id FROM DEPLOYMENTS WHERE DEPLOY_NAME = CURRENT_SETTING('database.deployname');
-    RETURN (deploy_id IS NULL);
+    RETURN NOT (deploy_id IS NULL);
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE PROCEDURE start_deployment AS $$
+CREATE OR REPLACE PROCEDURE start_deployment() AS $$
 BEGIN
     INSERT INTO DEPLOYMENTS (DEPLOY_NAME, SUCCESSFUL) VALUES (CURRENT_SETTING('database.deployname'), false);
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE PROCEDURE end_deployment AS $$
+CREATE OR REPLACE PROCEDURE end_deployment() AS $$
 DECLARE
     deploy_id NUMERIC;
 BEGIN
     SELECT ID INTO deploy_id FROM DEPLOYMENTS WHERE DEPLOY_NAME = CURRENT_SETTING('database.deployname');
     UPDATE DEPLOYMENTS 
     SET SUCCESSFUL = true
-    WHERE id = deploy_id;
+    WHERE ID = deploy_id;
 END;
+$$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE PROCEDURE delete_deployment AS $$
+CREATE OR REPLACE PROCEDURE delete_deployment() AS $$
 DECLARE
     deploy_id NUMERIC;
 BEGIN
     SELECT ID INTO deploy_id FROM DEPLOYMENTS WHERE DEPLOY_NAME = CURRENT_SETTING('database.deployname');
-    DELETE FROM DEPLOYMENTS 
+    DELETE FROM DEPLOYMENTS WHERE ID = deploy_id;
 END;
 $$ LANGUAGE plpgsql;
 

@@ -1,0 +1,12 @@
+---  
+  - name: Undeploy the database
+    hosts: deploy-servers
+    tasks: 
+      - name: Undeploy data schema from database
+        shell: "cd {{base_path}}/autodeploy/{{project_name}}/database/ && ON_ERROR_STOP=1 PGPASSWORD={{db_pass}} psql -h {{db_host}} -d {{db_database}} -U {{db_user}} -f remove.sql"
+
+      - name: Remove db scripts
+        shell: "cd {{base_path}}/autodeploy/{{project_name}}/database/ && rm -rf *"
+
+      
+      

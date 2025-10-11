@@ -1,9 +1,9 @@
 \set ON_ERROR_STOP on
 SET database.deployname = 'lab1';
-\i common.sql
+\i remove.sql
 
 BEGIN;
-CALL start_deployment;
+CALL start_deployment();
 COMMIT;
 
 BEGIN;
@@ -75,9 +75,5 @@ CREATE TABLE LAB1_LABWORK(
     FOREIGN KEY (AUTHOR_ID) REFERENCES LAB1_PERSON(ID),
     FOREIGN KEY (DIFFICULTY_ID) REFERENCES LAB1_PERSON(ID)
 );
-
-COMMIT;
-
-BEGIN;
-CALL end_deployment;
+CALL end_deployment();
 COMMIT;

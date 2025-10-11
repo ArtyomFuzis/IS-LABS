@@ -1,0 +1,16 @@
+---  
+  - name: Stop containers
+    hosts: deploy-servers
+    tasks: 
+      - name: Try to stop nginx
+        shell: "cd {{base_path}}/autodeploy/nginx/sbin/ && ./nginx -s quit"
+        ignore_errors: true
+
+      - name: Try to stop wildfly screen session
+        shell: "screen -X -S {{wildfly_screen_session_name}} quit"
+        ignore_errors: true
+      
+      - name: Try to stop wildfly 
+        shell: "kill $(jps -lv | grep {{base_path}}/autodeploy/wildfly/jboss-modules.jar | awk '{print $1}')"
+        ignore_errors: true
+      

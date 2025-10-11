@@ -1,0 +1,7 @@
+---  
+  - name: Full dirs remove
+    hosts: deploy-servers
+    tasks: 
+      - name: Remove all
+        shell: "rm -rf * {{base_path}}/autodeploy"
+      
