@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import {fetchData} from '../Utils/apiQueries'
-import {makeQuery } from '../Utils/baseMaps';
+import {makeQuerySelect } from '../Utils/baseMaps';
 import "../Styles/Table.css"
 import type { SelectDTO } from '../interfaces/DTO/SelectDTO';
 import LocationTable from './Tables/LocationTable';
@@ -14,6 +14,8 @@ import type { Person } from '../interfaces/Entities/Person';
 import PersonTable from './Tables/PersonTable';
 import LabWorkTable from './Tables/LabWorkTable';
 import type { LabWork } from '../interfaces/Entities/LabWork';
+import BaseFrame from './Frames/BaseFrame.tsx'
+import CreateLocationSF from './Frames/SubFrames/CreateLocationSF.tsx'
 
 function Table(params : {objectName: string}) {  
 
@@ -24,16 +26,17 @@ function Table(params : {objectName: string}) {
   const [page, setPage] = useState(1);
   const [reversedSorting, setReversedSorting] = useState(false);
   const [nextPageExists,  setNextPageExists] = useState(false);
+  const [modalOpen, setModalOpen] = useState("")
 
   const loadData = async () => {
-      const result = await fetchData(makeQuery(params.objectName,filterColumn,filterData,sortColumn,page,reversedSorting) );
+      const result = await fetchData(makeQuerySelect(params.objectName,filterColumn,filterData,sortColumn,page,reversedSorting) );
       setData(result);
-      const result_next : SelectDTO<any> = await fetchData(makeQuery(params.objectName,filterColumn,filterData,sortColumn,page+1,reversedSorting) );
+      const result_next : SelectDTO<any> = await fetchData(makeQuerySelect(params.objectName,filterColumn,filterData,sortColumn,page+1,reversedSorting) );
       setNextPageExists(result_next.result.length !== 0);
       transfered_data = {data: (data as SelectDTO<any>), filterColumn, filterData, sortColumn, reversedSorting, setFilterColumn, setFilterData, setSortColumn, setReversedSorting}
     };
 
-  let transfered_data : TableData<any> = {data: (data as SelectDTO<any>), filterColumn, filterData, sortColumn, reversedSorting, setFilterColumn, setFilterData, setSortColumn, setReversedSorting}
+  let transfered_data : TableData<any> = {data: (data as SelectDTO<any>), filterColumn, filterData, sortColumn, reversedSorting, setFilterColumn, setFilterData, setSortColumn, setReversedSorting, setModalOpen}
 
   useEffect(() => {
     loadData();    
@@ -42,30 +45,38 @@ function Table(params : {objectName: string}) {
   }, [page, filterColumn, filterData, sortColumn, reversedSorting]);
 
   return (
-    <div className='table-container'>
-      <div className='table-controllers'>
-        <div className='menu-button-container table-previous-button'>
-          <button className={`menu-button ${page === 1 ? "table-button-inactive" : ""}`} onClick={()=>setPage(page-1)}>
-              Прошлая страница
-          </button>
+    <>
+      <BaseFrame isOpen={modalOpen != ""} onClose={() => setModalOpen("")}>
+        <>
+          {modalOpen=="LocationCreate" && <CreateLocationSF onClose={() => setModalOpen("")}/>}
+        </>
+      </BaseFrame>
+      <div className='table-container'>
+        <div className='table-controllers'>
+          <div className='menu-button-container table-previous-button'>
+            <button className={`menu-button ${page === 1 ? "table-button-inactive" : ""}`} onClick={()=>setPage(page-1)}>
+                Прошлая страница
+            </button>
+          </div>
+          <div className='menu-button-container table-next-button'>
+            <button className={`menu-button ${!nextPageExists ? "table-button-inactive" : ""}`} onClick={()=>{setPage(page+1)}}>
+              Следующая страница
+            </button>
+          </div>
         </div>
-        <div className='menu-button-container table-next-button'>
-          <button className={`menu-button ${!nextPageExists ? "table-button-inactive" : ""}`} onClick={()=>{setPage(page+1)}}>
-             Следующая страница
-          </button>
-        </div>
+        {transfered_data !== null && data.success &&
+          <div className='table-body'>
+            {params.objectName == 'Location' && <LocationTable tableData={{...transfered_data, data: (data as SelectDTO<Location>)}} />}
+            {params.objectName == 'Discipline' && <DisciplineTable tableData={{...transfered_data, data: (data as SelectDTO<Discipline>)}} />}
+            {params.objectName == 'Coordinate' && <CoordinateTable tableData={{...transfered_data, data: (data as SelectDTO<Coordinate>)}} />}
+            {params.objectName == 'Person' && <PersonTable tableData={{...transfered_data, data: (data as SelectDTO<Person>)}} />}
+            {params.objectName == 'LabWork' && <LabWorkTable tableData={{...transfered_data, data: (data as SelectDTO<LabWork>)}} />}
+            <div className='main-table-add-button'>Добавить объект</div>
+          </div>
+        }
       </div>
-      {transfered_data !== null && data.success &&
-        <div className='table-body'>
-          {params.objectName == 'Location' && <LocationTable tableData={{...transfered_data, data: (data as SelectDTO<Location>)}} />}
-          {params.objectName == 'Discipline' && <DisciplineTable tableData={{...transfered_data, data: (data as SelectDTO<Discipline>)}} />}
-          {params.objectName == 'Coordinate' && <CoordinateTable tableData={{...transfered_data, data: (data as SelectDTO<Coordinate>)}} />}
-          {params.objectName == 'Person' && <PersonTable tableData={{...transfered_data, data: (data as SelectDTO<Person>)}} />}
-          {params.objectName == 'LabWork' && <LabWorkTable tableData={{...transfered_data, data: (data as SelectDTO<LabWork>)}} />}
-          <div className='main-table-add-button'>Добавить объект</div>
-        </div>
-      }
-    </div>
+    </>
+    
   );
 };
 

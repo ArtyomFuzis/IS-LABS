@@ -42,10 +42,14 @@ export const getSortUrl = (objectName: string, pageNum: number, reversed: boolea
   return "/get/sorted" + getBaseMapping(objectName) + pageNum + "/?reversed=" + reversed
 };
 
-export const makeQuery = (objectName : string, filterColumn: string, filterData: string, sortColumn: string, page: number, reversedSorting: boolean) => {
+export const makeQuerySelect = (objectName : string, filterColumn: string, filterData: string, sortColumn: string, page: number, reversedSorting: boolean) => {
   return getBaseUrl(objectName) + 
         ((filterColumn!=="") ? getFilterUrl(filterColumn, page, filterData) : 
         ((sortColumn!=="") ? getSortUrl(sortColumn, page, reversedSorting) : "/get/page/"+page))
 };
+
+export const makeQueryCreate = (objectName: string) => {
+  return getBaseUrl(objectName) + "/create"
+}
 
 

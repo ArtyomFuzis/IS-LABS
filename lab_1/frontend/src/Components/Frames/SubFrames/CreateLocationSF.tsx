@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import ParameterField from "../FrameComponents/ParameterField"
 import { processIsNotNull, processIsValidFloat } from "../../../Utils/validations"
 import ErrorPanel from "../FrameComponents/ErrorPanel"
+import { makeQueryCreate } from "../../../Utils/baseMaps"
+import { createObject } from "../../../Utils/apiQueries"
 
 function CreateLocationSF({ onClose }: { onClose: () => void }) {
     const [name, setName] = useState("")
@@ -19,6 +21,15 @@ function CreateLocationSF({ onClose }: { onClose: () => void }) {
         setErrorMsg(res)
     }, [name, x, y, z]);
 
+    function createQuery(){
+        let form = new URLSearchParams()
+        form.append('name', name)
+        form.append('x', x)
+        form.append('y', y)
+        form.append('z', z)
+        createObject(makeQueryCreate("Location"),form)
+    }
+
     return (
         <>
             <div className="modal-main-content">
@@ -32,7 +43,10 @@ function CreateLocationSF({ onClose }: { onClose: () => void }) {
                 <ErrorPanel errorMessages={errorMsgs} />  
             </div>
             <div className="modal-buttons">
-                
+                <button className="modal-close-button" onClick={onClose}>Закрыть</button>
+                <button className={`${errorMsgs.length != 0 && "modal-button-disbled"} modal-save-button`} onClick={createQuery}>
+                    Создать
+                </button>
             </div>
         </>
     )

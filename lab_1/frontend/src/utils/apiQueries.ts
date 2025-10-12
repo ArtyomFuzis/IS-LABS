@@ -7,3 +7,13 @@ export const fetchData = async (query: string) => {
   return response.data;
 };
 
+export const createObject = async (query: string, dataForm: URLSearchParams) => {
+  console.log(query, dataForm)
+  const response = await axios.post(API_URL+query, dataForm,{
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  });
+  return response.data;
+};
+

@@ -21,6 +21,7 @@
 .table-previous-button{
   margin-left: 0;
 }
+
 .table-button-inactive{
   opacity: 0.6;
   cursor: not-allowed;

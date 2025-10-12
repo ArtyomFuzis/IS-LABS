@@ -139,10 +139,43 @@ backdrop-filter: blur(1px);
     background-color: #690000;
     border-radius: 15px;
     margin-top: auto;
-    height: 40px;
+    height: 60px;
+    display: flex;
 }
+
 
 .modal-content{
     display: flex;
     flex-direction: column;
+}
+
+.modal-close-button{
+    border: 3px solid #993030;
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 7px;
+    border-radius: 7px;
+    width: 15%;
+    background-color: transparent;
+    color: #CEFBCE;
+}
+
+.modal-save-button{
+    border: 3px solid #993030;
+    margin-left: auto;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 7px;
+    border-radius: 7px;
+    width: 17%;
+    background-color: transparent;
+    color: #CEFBCE;
+}
+
+.modal-button-disbled{
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: #eaeaea;
+  color: #9e9e9e;
 }
