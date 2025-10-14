@@ -87,15 +87,15 @@ public class DisciplineCRUDController {
     }
 
     @GET
-     @Path("/get/filtered/{field}/{page}")
-     @Produces(MediaType.APPLICATION_JSON)
-     public SelectDTO<Discipline> getFiltered(@PathParam("page") Integer page, @PathParam("field") String field, @QueryParam("filter") @DefaultValue("") String filter) {
-        if (utilsService.getFilterableFields(Discipline.class).contains(field)) {
-            var obj = dbService.getFilteredPage(page, field, filter, Discipline.class);
-            return new SelectDTO<>(true, obj);
-        }
-        else{
-            return new SelectDTO<>(false, null);
-        }
-     }
+    @Path("/get/filtered/{field}/{page}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public SelectDTO<Discipline> getFiltered(@PathParam("page") Integer page, @PathParam("field") String field, @QueryParam("filter") @DefaultValue("") String filter) {
+    if (utilsService.getFilterableFields(Discipline.class).contains(field)) {
+        var obj = dbService.getFilteredPage(page, field, filter, Discipline.class);
+        return new SelectDTO<>(true, obj);
+    }
+    else{
+        return new SelectDTO<>(false, null);
+    }
+    }
 }

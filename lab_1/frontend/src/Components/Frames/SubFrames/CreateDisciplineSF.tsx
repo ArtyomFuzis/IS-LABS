@@ -1,46 +1,39 @@
 import { useEffect, useState } from "react"
 import ParameterField from "../FrameComponents/ParameterField"
-import { processIsNotNull, processIsValidFloat, processStringMaxLength } from "../../../Utils/validations"
+import { processIsNotNull, processIsPositive, processIsValidInt, processStringMaxLength } from "../../../Utils/validations"
 import ErrorPanel from "../FrameComponents/ErrorPanel"
 import { makeQueryCreate } from "../../../Utils/baseMaps"
 import { createObject } from "../../../Utils/apiQueries"
 
-function CreateLocationSF({ onClose }: { onClose: () => void }) {
+function CreateDisciplineSF({ onClose }: { onClose: () => void }) {
     const [name, setName] = useState("")
-    const [x, setX] = useState("")
-    const [y, setY] = useState("")
-    const [z, setZ] = useState("")
+    const [labs_count, setlabsCount] = useState("")
     const [errorMsgs, setErrorMsg] = useState<string[]>([])
 
     useEffect(() => {
         let res : string[] = []
-        processStringMaxLength(name, 702, "Имя", res)
+        processStringMaxLength(name, 400, "Имя", res)
         processIsNotNull(name, "Имя", res)
-        processIsValidFloat(x, false, "X", res)
-        processIsValidFloat(y, false, "Y", res)
-        processIsValidFloat(z, true, "Z", res)
+        processIsValidInt(labs_count, false, "Кол-во лаб", res)
+        processIsPositive(labs_count, false, "Кол-во лаб", res)
         setErrorMsg(res)
-    }, [name, x, y, z]);
+    }, [name, labs_count]);
 
     function createQuery(){
         let form = new URLSearchParams()
         form.append('name', name)
-        form.append('x', x)
-        form.append('y', y)
-        form.append('z', z)
-        createObject(makeQueryCreate("Location"),form)
+        form.append('labs_count', labs_count)
+        createObject(makeQueryCreate("Discipline"),form)
         onClose()
     }
 
     return (
         <>
             <div className="modal-main-content">
-              <div className="modal-header">Создание Location</div>
+              <div className="modal-header">Создание Coordinate</div>
                 <div className="modal-params-container">
                     <ParameterField value={name} setValue={setName} required={true} type="text" field="Имя" />
-                    <ParameterField value={x} setValue={setX} required={true} type="floatNum" field="X" />
-                    <ParameterField value={y} setValue={setY} required={true} type="floatNum" field="Y" />
-                    <ParameterField value={z} setValue={setZ} required={true} type="floatNum" field="Z" />
+                    <ParameterField value={labs_count} setValue={setlabsCount} required={true} type="intNum" field="Кол-во лаб" />
                 </div>
                 <ErrorPanel errorMessages={errorMsgs} />  
             </div>
@@ -54,4 +47,4 @@ function CreateLocationSF({ onClose }: { onClose: () => void }) {
     )
 }
 
-export default CreateLocationSF
+export default CreateDisciplineSF

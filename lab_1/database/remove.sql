@@ -6,7 +6,7 @@ BEGIN;
 DO $$
 DECLARE 
 BEGIN
-    IF check_last_deployment() THEN
+    IF check_last_deployment_exists() THEN
         DROP TABLE IF EXISTS LAB1_LABWORK;
         DROP TABLE IF EXISTS LAB1_PERSON;
         DROP TABLE IF EXISTS LAB1_DISCIPLINE;

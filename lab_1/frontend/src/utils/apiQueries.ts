@@ -11,7 +11,7 @@ export const createObject = async (query: string, dataForm: URLSearchParams) => 
   console.log(query, dataForm)
   const response = await axios.post(API_URL+query, dataForm,{
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
     }
   });
   return response.data;

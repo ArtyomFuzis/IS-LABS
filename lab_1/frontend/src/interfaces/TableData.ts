@@ -6,6 +6,5 @@ export interface TableData<T> {
     setFilterColumn: React.Dispatch<React.SetStateAction<string>>,
     setFilterData: React.Dispatch<React.SetStateAction<string>>,
     setSortColumn: React.Dispatch<React.SetStateAction<string>>, 
-    setReversedSorting: React.Dispatch<React.SetStateAction<boolean>>,
-    setModalOpen: React.Dispatch<React.SetStateAction<string>>
+    setReversedSorting: React.Dispatch<React.SetStateAction<boolean>>
 }

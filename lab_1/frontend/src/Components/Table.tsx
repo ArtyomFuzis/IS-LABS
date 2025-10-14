@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import {fetchData} from '../Utils/apiQueries'
-import {makeQuerySelect } from '../Utils/baseMaps';
+import {fetchData} from '../Utils/apiQueries.ts'
+import {makeQuerySelect } from '../Utils/baseMaps.ts';
 import "../Styles/Table.css"
 import type { SelectDTO } from '../interfaces/DTO/SelectDTO';
 import LocationTable from './Tables/LocationTable';
@@ -16,6 +16,8 @@ import LabWorkTable from './Tables/LabWorkTable';
 import type { LabWork } from '../interfaces/Entities/LabWork';
 import BaseFrame from './Frames/BaseFrame.tsx'
 import CreateLocationSF from './Frames/SubFrames/CreateLocationSF.tsx'
+import CreateCoordinateSF from './Frames/SubFrames/CreateCoordinateSF.tsx';
+import CreateDisciplineSF from './Frames/SubFrames/CreateDisciplineSF.tsx';
 
 function Table(params : {objectName: string}) {  
 
@@ -36,7 +38,7 @@ function Table(params : {objectName: string}) {
       transfered_data = {data: (data as SelectDTO<any>), filterColumn, filterData, sortColumn, reversedSorting, setFilterColumn, setFilterData, setSortColumn, setReversedSorting}
     };
 
-  let transfered_data : TableData<any> = {data: (data as SelectDTO<any>), filterColumn, filterData, sortColumn, reversedSorting, setFilterColumn, setFilterData, setSortColumn, setReversedSorting, setModalOpen}
+  let transfered_data : TableData<any> = {data: (data as SelectDTO<any>), filterColumn, filterData, sortColumn, reversedSorting, setFilterColumn, setFilterData, setSortColumn, setReversedSorting}
 
   useEffect(() => {
     loadData();    
@@ -44,11 +46,17 @@ function Table(params : {objectName: string}) {
     return () => clearInterval(interval);
   }, [page, filterColumn, filterData, sortColumn, reversedSorting]);
 
+  function modalOnClose(){
+    setModalOpen("")
+  }
+
   return (
     <>
       <BaseFrame isOpen={modalOpen != ""} onClose={() => setModalOpen("")}>
         <>
-          {modalOpen=="LocationCreate" && <CreateLocationSF onClose={() => setModalOpen("")}/>}
+          {modalOpen=="LocationCreate" && <CreateLocationSF onClose={modalOnClose}/>}
+          {modalOpen=="CoordinateCreate" && <CreateCoordinateSF onClose={modalOnClose}/>}
+          {modalOpen=="DisciplineCreate" && <CreateDisciplineSF onClose={modalOnClose}/>}
         </>
       </BaseFrame>
       <div className='table-container'>
@@ -71,7 +79,7 @@ function Table(params : {objectName: string}) {
             {params.objectName == 'Coordinate' && <CoordinateTable tableData={{...transfered_data, data: (data as SelectDTO<Coordinate>)}} />}
             {params.objectName == 'Person' && <PersonTable tableData={{...transfered_data, data: (data as SelectDTO<Person>)}} />}
             {params.objectName == 'LabWork' && <LabWorkTable tableData={{...transfered_data, data: (data as SelectDTO<LabWork>)}} />}
-            <div className='main-table-add-button'>Добавить объект</div>
+            <div className='main-table-add-button' onClick={() => setModalOpen(params.objectName+"Create")}>Добавить объект</div>
           </div>
         }
       </div>
