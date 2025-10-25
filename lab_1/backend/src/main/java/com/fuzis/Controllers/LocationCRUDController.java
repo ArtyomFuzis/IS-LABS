@@ -52,7 +52,12 @@ public class LocationCRUDController {
     public ChangeDTO createLocation(@FormParam("name") String name,
                                     @FormParam("x") Double x,
                                     @FormParam("y") Double y,
-                                    @FormParam("z") Double z) {
+                                    @FormParam("z") Double z,
+                                    @FormParam("id") Integer id) {
+        if(id != null) {
+            dbService.merge(new Location(id,name,x,y,z));
+            return new ChangeDTO(true);
+        }
         dbService.save(new Location(name,x,y,z));
         return new ChangeDTO(true);
     }

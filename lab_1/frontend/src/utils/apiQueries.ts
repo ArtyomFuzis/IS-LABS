@@ -8,7 +8,6 @@ export const fetchData = async (query: string) => {
 };
 
 export const createObject = async (query: string, dataForm: URLSearchParams) => {
-  console.log(query, dataForm)
   const response = await axios.post(API_URL+query, dataForm,{
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
@@ -16,4 +15,10 @@ export const createObject = async (query: string, dataForm: URLSearchParams) => 
   });
   return response.data;
 };
+
+export const removeObject = async (query: string) => {
+  const response = await axios.delete(API_URL+query);
+  return response.data;
+};
+
 

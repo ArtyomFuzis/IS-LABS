@@ -45,7 +45,7 @@ function ParameterField({required, type, field, value, setValue}:
     }
     return(
         <>
-        <BaseFrame isOpen={subModalOpen != ""} onClose={subModalOnClose} zindex={2000} width="60%">
+        <BaseFrame isOpen={subModalOpen != ""} onClose={subModalOnClose} zindex={2000} width="60%" height="">
             <>
                 {subModalOpen=="LocationChoose" && <ChooseSF onClose={subModalOnClose} objectName='Location' chosenRow={value} setChosenRow={setValue} required={required}/>}
                 {subModalOpen=="CoordinateChoose" && <ChooseSF onClose={subModalOnClose} objectName='Coordinate' chosenRow={value} setChosenRow={setValue} required={required}/>}

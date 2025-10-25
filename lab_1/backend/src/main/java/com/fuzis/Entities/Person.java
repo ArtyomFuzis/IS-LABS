@@ -21,7 +21,7 @@ public class Person {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Filterable 
+    @Filterable
     private Integer id;
 
     @Column(name="NAME")
@@ -63,5 +63,17 @@ public class Person {
         this.location = location;
         this.passportId = passportId;
         this.nationality = nationality;
+        this.labs = new ArrayList<>();
+    }
+
+    public Person(Integer id, String name, Color eyeColor, Color hairColor, Location location, String passportId, Country nationality){
+        this.id = id;
+        this.name = name;
+        this.eyeColor = eyeColor;
+        this.hairColor = hairColor;
+        this.location = location;
+        this.passportId = passportId;
+        this.nationality = nationality;
+        this.labs = new ArrayList<>();
     }
 }

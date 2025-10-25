@@ -60,12 +60,18 @@ public class LabWorkCRUDController {
                                     @FormParam("discipline_id") Integer discipline_id,
                                     @FormParam("minimal_point") Double minimal_point,
                                     @FormParam("maximal_point") Double maximal_point,
-                                    @FormParam("author_id") Integer author_id) {
+                                    @FormParam("author_id") Integer author_id,
+                                    @FormParam("id") Integer id
+                                    ) {
         var coordinate = dbService.get(coordinate_id, Coordinate.class);
         var difficulty = dbService.get(difficulty_id, Difficulty.class);
         var discipline = dbService.get(discipline_id, Discipline.class);
         var author = dbService.get(author_id, Person.class);
         var creation_date = creation_date_str == null ? ZonedDateTime.now() : Instant.ofEpochSecond(Long.parseLong(creation_date_str)).atZone(ZoneId.systemDefault());
+        if(id != null) {
+            dbService.merge(new LabWork(id, name, coordinate, creation_date, description, difficulty, discipline, minimal_point, maximal_point, author));
+            return new ChangeDTO(true);
+        }
         dbService.save(new LabWork(name, coordinate, creation_date, description, difficulty, discipline, minimal_point, maximal_point, author));
         return new ChangeDTO(true);
     }

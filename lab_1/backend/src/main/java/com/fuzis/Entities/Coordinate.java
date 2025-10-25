@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -38,5 +39,13 @@ public class Coordinate {
     public Coordinate(Double x, Double y) {
         this.x = x;
         this.y = y;
+        this.labs = new ArrayList<>();
+    }
+
+    public Coordinate(Integer id, Double x, Double y) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.labs = new ArrayList<>();
     }
 }

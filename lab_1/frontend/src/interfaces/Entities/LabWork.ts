@@ -7,7 +7,7 @@ export interface LabWork {
   id: number,
   name: string|null,
   coordinate: Coordinate|null,
-  creationDate: number|null,
+  creationDate: number,
   description: string|null,
   difficulty: EnumVal|null,
   discipline: Discipline|null,

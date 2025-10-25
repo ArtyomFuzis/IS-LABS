@@ -2,18 +2,45 @@ import { useEffect, useState } from "react"
 import ParameterField from "../FrameComponents/ParameterField"
 import { processIsNotNull, processStringMaxLength, processStringMinLength } from "../../../Utils/validations"
 import ErrorPanel from "../FrameComponents/ErrorPanel"
-import { makeQueryCreate } from "../../../Utils/baseMaps"
-import { createObject } from "../../../Utils/apiQueries"
+import { makeQueryCreate, makeQueryDelete } from "../../../Utils/baseMaps"
+import { createObject, removeObject } from "../../../Utils/apiQueries"
+import type { Person } from "../../../interfaces/Entities/Person"
+import BaseFrame from "../BaseFrame"
+import DeleteAlert from "./DeleteAlert"
+import ShowSF from "./ShowSF"
 
-function CreatePersonSF({ onClose }: { onClose: () => void}) {
-    const [name, setName] = useState("")
-    const [eyeColor, setEyeColor] = useState("")
-    const [hairColor, setHairColor] = useState("")
-    const [passportId, setPassportId] = useState("")
-    const [nationality, setNationality] = useState("")
-    const [location, setLocation] = useState(-1)
+function CreatePersonSF({ onClose, id, person }: { onClose: () => void, id: number, person: Person|undefined}) {
+    const [name, setName] : [any, React.Dispatch<any>] = useState("")
+    const [eyeColor, setEyeColor] : [any, React.Dispatch<any>] = useState("")
+    const [hairColor, setHairColor] : [any, React.Dispatch<any>] = useState("")
+    const [passportId, setPassportId] : [any, React.Dispatch<any>] = useState("")
+    const [nationality, setNationality] : [any, React.Dispatch<any>] = useState("")
+    const [location, setLocation] : [any, React.Dispatch<any>] = useState(-1)
     
     const [errorMsgs, setErrorMsg] = useState<string[]>([])
+
+    const [alert, setAlert] = useState(false)
+    const [modalOpen, setModalOpen] = useState("")
+    function showConnected(){
+        setModalOpen("ShowLabWork")
+    }
+    function modalOnClose(){
+        setModalOpen("")
+    }
+    useEffect(() => {
+        if(person != undefined){
+            setName(person.name)
+            setEyeColor(person.eyeColor?.id) 
+            if(person.hairColor == null) setHairColor("")
+            else setHairColor(person.hairColor?.id)
+            if(person.passportId == null) setPassportId("")
+            else setPassportId(person.passportId)
+            if(person.nationality == null) setNationality("")
+            else setNationality(person.nationality?.id)
+            if(person.location == null)setLocation(-1)
+            else setLocation(person.location?.id )
+        }
+    },[])
 
     useEffect(() => {
         let res : string[] = []
@@ -26,6 +53,7 @@ function CreatePersonSF({ onClose }: { onClose: () => void}) {
 
     function createQuery(){
         let form = new URLSearchParams()
+        if(id != -1) form.append('id', id.toString())
         form.append('name', name)
         form.append('eye_color_id', eyeColor)
         if(hairColor != "") form.append('hair_color_id', hairColor)
@@ -36,10 +64,28 @@ function CreatePersonSF({ onClose }: { onClose: () => void}) {
         onClose()
     }
 
+    function deleteQuery(){
+        removeObject(makeQueryDelete("Person", id.toString()))
+        .then(() =>onClose())
+        .catch(() => {
+            setAlert(true)
+        })
+    }
+
     return (
         <>
+            <BaseFrame isOpen={alert} onClose={() => setAlert(false)} zindex={5000} width="30%" height="35%">
+                <>
+                    <DeleteAlert onClose={() => setAlert(false)}></DeleteAlert>
+                </>
+            </BaseFrame>
+            <BaseFrame isOpen={modalOpen != ""} onClose={modalOnClose} zindex={1000} width="40%" height="">
+                <>
+                    {modalOpen=="ShowLabWork" && <ShowSF onClose={modalOnClose} objectName="LabWork" filterColumnEx="authorId" filterDataEx={id.toString()}/>}
+                </>
+            </BaseFrame>
             <div className="modal-main-content">
-              <div className="modal-header">Создание Person</div>
+              <div className="modal-header">{id == -1 ? "Создание" : "Изменение"} Person</div>
                 <div className="modal-params-container">
                     <ParameterField value={name} setValue={setName} required={true} type="text" field="Имя" />
                     <ParameterField value={eyeColor} setValue={setEyeColor} required={true} type="enumSelectcolor" field="Цвет глаз" />
@@ -52,8 +98,20 @@ function CreatePersonSF({ onClose }: { onClose: () => void}) {
             </div>
             <div className="modal-buttons">
                 <button className="modal-close-button" onClick={onClose}>Закрыть</button>
+                {
+                    person != undefined && 
+                    <button className={`modal-save-button`} onClick={showConnected}>
+                        Связанные
+                    </button>
+                }
+                {
+                    person != undefined && 
+                    <button className={`modal-save-button`} onClick={deleteQuery}>
+                        Удалить
+                    </button>
+                }
                 <button className={`${errorMsgs.length != 0 && "modal-button-disbled"} modal-save-button`} onClick={createQuery}>
-                    Создать
+                    {id == -1 ? "Создать" : "Изменить"}
                 </button>
             </div>
         </>

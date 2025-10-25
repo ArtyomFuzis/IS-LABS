@@ -13,7 +13,6 @@ import java.time.ZonedDateTime;
 @Setter
 @Getter
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Table(name="lab1_labwork")
 public class LabWork {
@@ -64,6 +63,19 @@ public class LabWork {
     private Person author;
 
     public LabWork(String name, Coordinate coordinate, ZonedDateTime creationDate, String description, Difficulty difficulty,  Discipline discipline, Double minimalPoint, Double maximalPoint, Person author) {
+        this.name = name;
+        this.coordinate = coordinate;
+        this.difficulty = difficulty;
+        this.discipline = discipline;
+        this.minimalPoint = minimalPoint;
+        this.maximalPoint = maximalPoint;
+        this.author = author;
+        this.creationDate = creationDate;
+        this.description = description;
+    }
+
+    public LabWork(Integer id, String name, Coordinate coordinate, ZonedDateTime creationDate, String description, Difficulty difficulty,  Discipline discipline, Double minimalPoint, Double maximalPoint, Person author) {
+        this.id = id;
         this.name = name;
         this.coordinate = coordinate;
         this.difficulty = difficulty;

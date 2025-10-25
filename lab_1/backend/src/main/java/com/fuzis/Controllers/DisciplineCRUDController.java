@@ -4,6 +4,7 @@ import com.fuzis.Data.ChangeDTO;
 import com.fuzis.Data.SelectDTO;
 import com.fuzis.Entities.Discipline;
 import com.fuzis.Entities.LabWork;
+import com.fuzis.Entities.Location;
 import com.fuzis.Services.DBService;
 import com.fuzis.Services.UtilityService;
 import jakarta.inject.Inject;
@@ -51,7 +52,12 @@ public class DisciplineCRUDController {
     @Path("/create/")
     @Produces(MediaType.APPLICATION_JSON)
     public ChangeDTO createDiscipline(@FormParam("name") String name,
-                                      @FormParam("labs_count") Integer labs_count) {
+                                      @FormParam("labs_count") Integer labs_count,
+                                      @FormParam("id") Integer id) {
+        if(id != null) {
+            dbService.merge(new Discipline(id,name,labs_count));
+            return new ChangeDTO(true);
+        }
         dbService.save(new Discipline(name,labs_count));
         return new ChangeDTO(true);
     }

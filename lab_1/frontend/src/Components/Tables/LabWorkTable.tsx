@@ -2,7 +2,7 @@ import type { TableData } from "../../interfaces/TableData";
 import TableHeadControl from "../TableHeadControl";
 import type { LabWork } from "../../interfaces/Entities/LabWork";
 
-function LabWorkTable(params : {tableData: TableData<LabWork>, chosenRow: number, setChosenRow: React.Dispatch<number>}) 
+function LabWorkTable(params : {tableData: TableData<LabWork>, chosenRow: number, setChosenRow: React.Dispatch<number>, showControls:boolean}) 
 {
     return (
         <table cellPadding="8" cellSpacing="0" className="main-table">
@@ -19,7 +19,7 @@ function LabWorkTable(params : {tableData: TableData<LabWork>, chosenRow: number
                 <th className="main-table-head-labels">Максимальная оценка</th>
                 <th className="main-table-head-labels">ID Автора</th>
             </tr>
-            <tr>
+            {params.showControls && <tr>
                 <TableHeadControl element="id" enabled={true} tableData={params.tableData}/>
                 <TableHeadControl element="name" enabled={true} tableData={params.tableData}/>
                 <TableHeadControl element="coordinateId" enabled={true} tableData={params.tableData}/>
@@ -30,16 +30,16 @@ function LabWorkTable(params : {tableData: TableData<LabWork>, chosenRow: number
                 <TableHeadControl element="minimalPoint" enabled={true} tableData={params.tableData}/>
                 <TableHeadControl element="maximalPoint" enabled={true} tableData={params.tableData}/>
                 <TableHeadControl element="authorId" enabled={true} tableData={params.tableData}/>
-            </tr>
+            </tr>}
         </thead>
         <tbody>
             {params.tableData.data.result.map(item => (
                 <tr key={item.id} className={`main-table-data-row ${item.id == params.chosenRow ? "main-table-data-row-selected" : ""}`} 
-                onClick={()=>params.setChosenRow(item.id)}>
+                onClick={()=>params.setChosenRow(item.id)} onDoubleClick={() => params.tableData.setModalOpen("ModifyLabWork")}>
                     <td className="main-table-elem">{item.id}</td>
                     <td className="main-table-elem">{item.name}</td>
                     <td className="main-table-elem">{item.coordinate?.id}</td>
-                    <td className="main-table-elem">{item.creationDate}</td>
+                    <td className="main-table-elem">{new Date(item.creationDate).toUTCString()}</td>
                     <td className="main-table-elem">{item.description}</td>
                     <td className="main-table-elem">{item.difficulty?.val}</td>
                     <td className="main-table-elem">{item.discipline?.id}</td>

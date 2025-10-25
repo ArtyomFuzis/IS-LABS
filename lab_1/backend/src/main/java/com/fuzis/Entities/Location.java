@@ -49,5 +49,14 @@ public class Location {
         this.y = y;
         this.z = z;
         this.name = name;
+        this.people = new ArrayList<>();
+    }
+    public Location(Integer id, String name, Double x, Double y, Double z){
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.name = name;
+        this.people = new ArrayList<>();
     }
 }

@@ -35,10 +35,10 @@ function ChooseSF({ onClose, objectName, chosenRow, setChosenRow, required }: { 
           setData(result)
           const result_next : SelectDTO<any> = await fetchData(makeQuerySelect(params.objectName,filterColumn,filterData,sortColumn,page+1,reversedSorting))
           setNextPageExists(result_next.result.length !== 0)
-          transfered_data = {data: (data as SelectDTO<any>), filterColumn, filterData, sortColumn, reversedSorting, setFilterColumn, setFilterData, setSortColumn, setReversedSorting}
+          transfered_data = {data: (data as SelectDTO<any>), filterColumn, filterData, sortColumn, reversedSorting, setFilterColumn, setFilterData, setSortColumn, setReversedSorting, modalOpen, setModalOpen}
      };
     
-    let transfered_data : TableData<any> = {data: (data as SelectDTO<any>), filterColumn, filterData, sortColumn, reversedSorting, setFilterColumn, setFilterData, setSortColumn, setReversedSorting}
+    let transfered_data : TableData<any> = {data: (data as SelectDTO<any>), filterColumn, filterData, sortColumn, reversedSorting, setFilterColumn, setFilterData, setSortColumn, setReversedSorting, modalOpen, setModalOpen}
     
     useEffect(() => {
         loadData()    
@@ -52,13 +52,18 @@ function ChooseSF({ onClose, objectName, chosenRow, setChosenRow, required }: { 
     }
     return (
         <>
-        <BaseFrame isOpen={modalOpen != ""} onClose={modalOnClose} zindex={1000} width="40%">
+        <BaseFrame isOpen={modalOpen != ""} onClose={modalOnClose} zindex={1000} width="40%" height="">
             <>
-                {modalOpen=="LocationCreate" && <CreateLocationSF onClose={modalOnClose}/>}
-                {modalOpen=="CoordinateCreate" && <CreateCoordinateSF onClose={modalOnClose}/>}
-                {modalOpen=="DisciplineCreate" && <CreateDisciplineSF onClose={modalOnClose}/>}
-                {modalOpen=="PersonCreate" && <CreatePersonSF onClose={modalOnClose}/>}
-                {modalOpen=="LabWorkCreate" && <CreateLabWorkSF onClose={modalOnClose}/>}
+                {modalOpen=="LocationCreate" && <CreateLocationSF onClose={modalOnClose} id={-1} location={undefined}/>}
+                {modalOpen=="CoordinateCreate" && <CreateCoordinateSF onClose={modalOnClose} id={-1} coordinate={undefined}/>}
+                {modalOpen=="DisciplineCreate" && <CreateDisciplineSF onClose={modalOnClose} id={-1} discipline={undefined}/>}
+                {modalOpen=="PersonCreate" && <CreatePersonSF onClose={modalOnClose} id={-1} person={undefined}/>}
+                {modalOpen=="LabWorkCreate" && <CreateLabWorkSF onClose={modalOnClose} id={-1} labWork={undefined}/>}
+                {modalOpen=="ModifyLocation" && <CreateLocationSF onClose={modalOnClose} id={chosenRow} location={getByChosen()}/>}
+                {modalOpen=="ModifyDiscipline" && <CreateDisciplineSF onClose={modalOnClose} id={chosenRow} discipline={getByChosen()}/>}
+                {modalOpen=="ModifyCoordinate" && <CreateCoordinateSF onClose={modalOnClose} id={chosenRow} coordinate={getByChosen()}/>}
+                {modalOpen=="ModifyPerson" && <CreatePersonSF onClose={modalOnClose} id={chosenRow} person={getByChosen()}/>}
+                {modalOpen=="ModifyLabWork" && <CreateLabWorkSF onClose={modalOnClose} id={chosenRow} labWork={getByChosen()}/>}
             </>
         </BaseFrame>
             <div className="modal-main-content">
@@ -79,11 +84,11 @@ function ChooseSF({ onClose, objectName, chosenRow, setChosenRow, required }: { 
                         </div>
                         {transfered_data !== null && data.success &&
                         <div className='table-body'>
-                            {params.objectName == 'Location' && <LocationTable tableData={{...transfered_data, data: (data as SelectDTO<Location>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} />}
-                            {params.objectName == 'Discipline' && <DisciplineTable tableData={{...transfered_data, data: (data as SelectDTO<Discipline>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} />}
-                            {params.objectName == 'Coordinate' && <CoordinateTable tableData={{...transfered_data, data: (data as SelectDTO<Coordinate>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} />}
-                            {params.objectName == 'Person' && <PersonTable tableData={{...transfered_data, data: (data as SelectDTO<Person>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} />}
-                            {params.objectName == 'LabWork' && <LabWorkTable tableData={{...transfered_data, data: (data as SelectDTO<LabWork>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} />}
+                            {params.objectName == 'Location' && <LocationTable tableData={{...transfered_data, data: (data as SelectDTO<Location>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} showControls={true}/>}
+                            {params.objectName == 'Discipline' && <DisciplineTable tableData={{...transfered_data, data: (data as SelectDTO<Discipline>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} showControls={true}/>}
+                            {params.objectName == 'Coordinate' && <CoordinateTable tableData={{...transfered_data, data: (data as SelectDTO<Coordinate>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} showControls={true}/>}
+                            {params.objectName == 'Person' && <PersonTable tableData={{...transfered_data, data: (data as SelectDTO<Person>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} showControls={true}/>}
+                            {params.objectName == 'LabWork' && <LabWorkTable tableData={{...transfered_data, data: (data as SelectDTO<LabWork>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} showControls={true}/>}
                             <div className='main-table-add-button' onClick={() => setModalOpen(params.objectName+"Create")}>Добавить объект</div>
                         </div>
                         }

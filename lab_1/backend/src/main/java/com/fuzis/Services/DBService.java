@@ -36,6 +36,11 @@ public class DBService implements Serializable {
         this.getEntityManager().flush();
     }
 
+    public void merge(Object obj) {
+        this.getEntityManager().merge(obj);
+        this.getEntityManager().flush();
+    }
+
     public void remove(Object obj) {
         this.getEntityManager().remove(obj);
         this.getEntityManager().flush();

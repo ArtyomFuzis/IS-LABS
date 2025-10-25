@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -39,5 +40,13 @@ public class Discipline implements Serializable {
     public Discipline(String name, Integer labsCount) {
         this.name = name;
         this.labsCount = labsCount;
+        this.labs = new ArrayList<>();
+    }
+
+    public Discipline(Integer id, String name, Integer labsCount) {
+        this.id = id;
+        this.name = name;
+        this.labsCount = labsCount;
+        this.labs = new ArrayList<>();
     }
 }

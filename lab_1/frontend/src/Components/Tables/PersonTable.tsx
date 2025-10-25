@@ -2,7 +2,7 @@ import type { TableData } from "../../interfaces/TableData";
 import TableHeadControl from "../TableHeadControl";
 import type { Person } from "../../interfaces/Entities/Person";
 
-function PersonTable(params : {tableData: TableData<Person>, chosenRow: number, setChosenRow: React.Dispatch<number>}) 
+function PersonTable(params : {tableData: TableData<Person>, chosenRow: number, setChosenRow: React.Dispatch<number>, showControls: boolean}) 
 {
     return (
         <table cellPadding="8" cellSpacing="0" className="main-table">
@@ -16,7 +16,7 @@ function PersonTable(params : {tableData: TableData<Person>, chosenRow: number, 
                 <th className="main-table-head-labels">Паспорт</th>
                 <th className="main-table-head-labels">Национальность</th>
             </tr>
-            <tr>
+            {params.showControls && <tr>
                 <TableHeadControl element="id" enabled={true} tableData={params.tableData}/>
                 <TableHeadControl element="name" enabled={true} tableData={params.tableData}/>
                 <TableHeadControl element="eyeColor" enabled={true} tableData={params.tableData}/>
@@ -24,12 +24,12 @@ function PersonTable(params : {tableData: TableData<Person>, chosenRow: number, 
                 <TableHeadControl element="locationId" enabled={true} tableData={params.tableData}/>
                 <TableHeadControl element="passport" enabled={true} tableData={params.tableData}/>
                 <TableHeadControl element="nationality" enabled={true} tableData={params.tableData}/>
-            </tr>
+            </tr>}
         </thead>
         <tbody>
             {params.tableData.data.result.map(item => (
                 <tr key={item.id} className={`main-table-data-row ${item.id == params.chosenRow ? "main-table-data-row-selected" : ""}`} 
-                onClick={()=>params.setChosenRow(item.id)}>
+                onClick={()=>params.setChosenRow(item.id)} onDoubleClick={() => params.tableData.setModalOpen("ModifyPerson")}>
                     <td className="main-table-elem">{item.id}</td>
                     <td className="main-table-elem">{item.name}</td>
                     <td className="main-table-elem">{item.eyeColor?.val}</td>

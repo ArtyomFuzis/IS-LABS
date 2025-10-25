@@ -56,3 +56,8 @@ export const makeQueryCreate = (objectName: string) => {
 export const makeQueryEnumValGet = (enumName: string) => {
   return "/getEnumVals/" + enumName
 }
+
+
+export const makeQueryDelete = (objectName: string ,id:string) => {
+  return getBaseUrl(objectName) + "/delete/" + id
+}

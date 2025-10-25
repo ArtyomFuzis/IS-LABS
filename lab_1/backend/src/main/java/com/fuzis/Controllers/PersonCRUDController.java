@@ -54,9 +54,15 @@ public class PersonCRUDController {
                                   @FormParam("hair_color_id") Integer hairColorId,
                                   @FormParam("location_id") Integer locationId,
                                   @FormParam("passport_id") String passportId,
-                                  @FormParam("nationality_id") Integer nationalityId) {
+                                  @FormParam("nationality_id") Integer nationalityId,
+                                  @FormParam("id") Integer id) {
         //if(locationId == null) return new ChangeDTO(false);
         Location location = (locationId != null) ? dbService.get(locationId, Location.class) : null;
+        if(id != null) {
+            dbService.merge(new Person(id, name,dbService.get(eyeColorId, Color.class), dbService.get(hairColorId, Color.class),
+                    location, passportId, dbService.get(nationalityId, Country.class)));
+            return new ChangeDTO(true);
+        }
         dbService.save(new Person(name,dbService.get(eyeColorId, Color.class), dbService.get(hairColorId, Color.class),
                 location, passportId, dbService.get(nationalityId, Country.class)));
         return new ChangeDTO(true);

@@ -30,7 +30,6 @@ function CreateLabWorkSF({ onClose }: { onClose: () => void}) {
     }, [name, coordinates, creationDate, description, difficulty, discipline, minimalPoint, maximumPoint, author]);
 
     function createQuery(){
-        //console.log("sussuussu")
         let form = new URLSearchParams()
         form.append('name', name)
         form.append('coordinate_id', coordinates.toString())
@@ -40,9 +39,9 @@ function CreateLabWorkSF({ onClose }: { onClose: () => void}) {
         if(discipline != -1) form.append('discipline_id', discipline.toString()) 
         form.append('minimal_point', minimalPoint)  
         if(maximumPoint != "") form.append('maximal_point', maximumPoint)
-        if(author != -1) form.append('discipline_id', discipline.toString())      
+        if(author != -1) form.append('author_id', author.toString())      
         createObject(makeQueryCreate("LabWork"),form)
-        //onClose()
+        onClose()
     }
 
     return (

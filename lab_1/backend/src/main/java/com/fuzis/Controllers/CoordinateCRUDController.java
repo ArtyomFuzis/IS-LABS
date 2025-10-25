@@ -51,7 +51,12 @@ public class CoordinateCRUDController {
     @Path("/create/")
     @Produces(MediaType.APPLICATION_JSON)
     public ChangeDTO createCoordinate(@FormParam("x") Double x,
-                                      @FormParam("y") Double y) {
+                                      @FormParam("y") Double y,
+                                      @FormParam("id") Integer id) {
+        if(id != null) {
+            dbService.merge(new Coordinate(id,x,y));
+            return new ChangeDTO(true);
+        }
         dbService.save(new Coordinate(x,y));
         return new ChangeDTO(true);
     }
