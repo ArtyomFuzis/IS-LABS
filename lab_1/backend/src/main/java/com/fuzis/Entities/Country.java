@@ -11,7 +11,7 @@ import lombok.Setter;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="LAB1_COUNTRY")
+@Table(name="lab1_country")
 public class Country {
     @Id
     @Column(name = "ID")

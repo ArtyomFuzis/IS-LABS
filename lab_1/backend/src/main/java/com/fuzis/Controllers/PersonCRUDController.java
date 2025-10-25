@@ -55,8 +55,8 @@ public class PersonCRUDController {
                                   @FormParam("location_id") Integer locationId,
                                   @FormParam("passport_id") String passportId,
                                   @FormParam("nationality_id") Integer nationalityId) {
-        if(locationId == null) return new ChangeDTO(false);
-        Location location = dbService.get(locationId, Location.class);
+        //if(locationId == null) return new ChangeDTO(false);
+        Location location = (locationId != null) ? dbService.get(locationId, Location.class) : null;
         dbService.save(new Person(name,dbService.get(eyeColorId, Color.class), dbService.get(hairColorId, Color.class),
                 location, passportId, dbService.get(nationalityId, Country.class)));
         return new ChangeDTO(true);

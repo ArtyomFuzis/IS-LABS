@@ -3,5 +3,5 @@
     hosts: deploy-servers
     tasks: 
       - name: Remove all
-        shell: "rm -rf * {{base_path}}/autodeploy"
+        shell: "cd {{base_path}}/autodeploy && rm -rf *"
       

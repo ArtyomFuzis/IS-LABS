@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="LAB1_COORDINATES")
+@Table(name="lab1_coordinate")
 public class Coordinate {
     @Id
     @Column(name = "ID")
@@ -32,7 +32,7 @@ public class Coordinate {
     private Double y;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "coordinate", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "coordinate", fetch = FetchType.LAZY)
     private List<LabWork> labs;
 
     public Coordinate(Double x, Double y) {

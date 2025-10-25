@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="LAB1_LOCATION")
+@Table(name="lab1_location")
 public class Location {
     @Id
     @Column(name = "ID")
@@ -41,7 +41,7 @@ public class Location {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
     private List<Person> people;
 
     public Location(String name, Double x, Double y, Double z){

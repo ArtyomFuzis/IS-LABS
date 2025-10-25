@@ -13,6 +13,7 @@ import java.util.List;
 
 
 @ApplicationScoped
+@Transactional
 public class DBService implements Serializable {
     private static final Logger logger = LoggerFactory.getLogger(DBService.class);
     private EntityManager entityManager;
@@ -30,29 +31,27 @@ public class DBService implements Serializable {
     }
 
 
-    @Transactional
     public void save(Object obj) {
         this.getEntityManager().persist(obj);
+        this.getEntityManager().flush();
     }
 
-    @Transactional
     public void remove(Object obj) {
         this.getEntityManager().remove(obj);
+        this.getEntityManager().flush();
     }
 
-    @Transactional
     public  <T> T get(Integer id,  Class<T> cls) {
+        if(id == null)return null;
         return this.getEntityManager().find(cls, id);
     }
 
-    @Transactional
     public <T> List<T> getAll(Class<T> cls){
         String jpql = "SELECT a FROM "+cls.getName()+" a";
         TypedQuery<T> query = this.getEntityManager().createQuery(jpql, cls);
         return query.getResultList();
     }
 
-    @Transactional
     public <T> List<T> getPage(int page, int count, Class<T> cls) {
         int offset = (page - 1) * count;
 
@@ -63,12 +62,10 @@ public class DBService implements Serializable {
                 .getResultList();
     }
 
-    @Transactional
     public <T> List<T> getPage(int page, Class<T> cls) {
         return this.getPage(page, 5, cls);
     }
 
-    @Transactional
     public <T> List<T> getFilteredPage(int page, int count, String field, String filter, Class<T> cls) {
         int offset = (page - 1) * count;
 

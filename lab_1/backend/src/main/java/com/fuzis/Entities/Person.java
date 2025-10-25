@@ -16,12 +16,12 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="LAB1_PERSON")
+@Table(name="lab1_person")
 public class Person {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Filterable
+    @Filterable 
     private Integer id;
 
     @Column(name="NAME")
@@ -53,7 +53,7 @@ public class Person {
     private Country nationality;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     private List<LabWork> labs;
 
     public Person(String name, Color eyeColor, Color hairColor, Location location, String passportId, Country nationality){

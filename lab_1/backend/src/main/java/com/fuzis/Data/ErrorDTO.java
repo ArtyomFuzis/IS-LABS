@@ -10,4 +10,5 @@ import lombok.*;
 public class ErrorDTO {
     boolean success;
     String reason;
+    String text;
 }

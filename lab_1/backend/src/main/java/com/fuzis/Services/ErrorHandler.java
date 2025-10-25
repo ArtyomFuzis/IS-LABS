@@ -18,7 +18,8 @@ public class ErrorHandler implements ExceptionMapper<ConstraintViolationExceptio
 
         ErrorDTO error = new ErrorDTO(
                 false,
-                "ConstrainViolation"
+                "ConstrainViolation",
+                exception.getErrorMessage()
         );
         return Response.status(Response.Status.BAD_REQUEST)
                 .entity(error)

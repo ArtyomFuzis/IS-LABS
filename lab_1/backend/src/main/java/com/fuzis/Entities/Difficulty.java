@@ -11,7 +11,7 @@ import lombok.Setter;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="LAB1_DIFFICULTY")
+@Table(name="lab1_difficulty")
 public class Difficulty {
     @Id
     @Column(name = "ID")

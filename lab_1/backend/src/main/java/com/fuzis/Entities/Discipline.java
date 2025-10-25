@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="LAB1_DISCIPLINE")
+@Table(name="lab1_discipline")
 public class Discipline implements Serializable {
     @Id
     @Column(name = "ID")
@@ -33,7 +33,7 @@ public class Discipline implements Serializable {
     private Integer labsCount;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "discipline", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "discipline", fetch = FetchType.LAZY)
     private List<LabWork> labs;
 
     public Discipline(String name, Integer labsCount) {

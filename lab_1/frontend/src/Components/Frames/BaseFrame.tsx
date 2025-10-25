@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import "../../Styles/Frames.css"
 
 
-function BaseFrame({ children, isOpen, onClose }: {children: ReactElement, isOpen:boolean, onClose: () => void}) {
+function BaseFrame({ children, isOpen, onClose, zindex, width}: {children: ReactElement, isOpen:boolean, onClose: () => void, zindex: number, width: string}) {
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-content" style={{zIndex: zindex, width}} onClick={(e) => e.stopPropagation()}>
         {children}
       </div>
     </div>,

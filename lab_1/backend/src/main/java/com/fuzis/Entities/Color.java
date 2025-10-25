@@ -11,7 +11,7 @@ import lombok.Setter;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="LAB1_COLOR")
+@Table(name="lab1_color")
 public class Color {
     @Id
     @Column(name = "ID")

@@ -83,3 +83,13 @@ export const processIsPositive = (num: string, equals: boolean, name: string, re
     }
     res.push(badOutput)
 }
+
+export const processStringMinLength = (text: string, min_length: number, name: string, res: string[]) => {
+    const badOutput = "Значение поля \"" + name + "\" не должно быть короче " + min_length + " символов"
+    if (text.length < min_length && text != "") res.push(badOutput)
+}
+
+export const processObjectChosen = (id: number, name: string, res: string[]) =>{
+  const badOutput = "Объект для поля \"" + name + "\" должен быть выбран"
+  if (id == -1) res.push(badOutput)
+}

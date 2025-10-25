@@ -1,11 +1,9 @@
 import type { TableData } from "../../interfaces/TableData";
-import { useState } from "react";
 import TableHeadControl from "../TableHeadControl";
 import type { Coordinate } from "../../interfaces/Entities/Coordinate";
 
-function CoordinateTable(params : {tableData: TableData<Coordinate>}) 
+function CoordinateTable(params : {tableData: TableData<Coordinate>, chosenRow: number, setChosenRow: React.Dispatch<number>}) 
 {
-    const [chosenRow, setChosenRow] = useState(-1)
     return (
         <table cellPadding="8" cellSpacing="0" className="main-table">
         <thead>
@@ -22,8 +20,8 @@ function CoordinateTable(params : {tableData: TableData<Coordinate>})
         </thead>
         <tbody>
             {params.tableData.data.result.map(item => (
-                <tr key={item.id} className={`main-table-data-row ${item.id == chosenRow ? "main-table-data-row-selected" : ""}`} 
-                onClick={()=>setChosenRow(item.id)}>
+                <tr key={item.id} className={`main-table-data-row ${item.id == params.chosenRow ? "main-table-data-row-selected" : ""}`} 
+                onClick={()=>params.setChosenRow(item.id)}>
                     <td className="main-table-elem">{item.id}</td>
                     <td className="main-table-elem">{item.x}</td>
                     <td className="main-table-elem">{item.y}</td>

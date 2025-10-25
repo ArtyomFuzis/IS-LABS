@@ -18,6 +18,8 @@ import BaseFrame from './Frames/BaseFrame.tsx'
 import CreateLocationSF from './Frames/SubFrames/CreateLocationSF.tsx'
 import CreateCoordinateSF from './Frames/SubFrames/CreateCoordinateSF.tsx';
 import CreateDisciplineSF from './Frames/SubFrames/CreateDisciplineSF.tsx';
+import CreatePersonSF from './Frames/SubFrames/CreatePersonSF.tsx';
+import CreateLabWorkSF from './Frames/SubFrames/CreateLabWorkSF.tsx';
 
 function Table(params : {objectName: string}) {  
 
@@ -29,6 +31,8 @@ function Table(params : {objectName: string}) {
   const [reversedSorting, setReversedSorting] = useState(false);
   const [nextPageExists,  setNextPageExists] = useState(false);
   const [modalOpen, setModalOpen] = useState("")
+  const [chosenRow, setChosenRow] = useState(-1)
+  
 
   const loadData = async () => {
       const result = await fetchData(makeQuerySelect(params.objectName,filterColumn,filterData,sortColumn,page,reversedSorting) );
@@ -44,19 +48,22 @@ function Table(params : {objectName: string}) {
     loadData();    
     const interval = setInterval(loadData, 10000);
     return () => clearInterval(interval);
-  }, [page, filterColumn, filterData, sortColumn, reversedSorting]);
+  }, [page, filterColumn, filterData, sortColumn, reversedSorting, modalOpen]);
 
   function modalOnClose(){
     setModalOpen("")
+    loadData()   
   }
 
   return (
     <>
-      <BaseFrame isOpen={modalOpen != ""} onClose={() => setModalOpen("")}>
+      <BaseFrame isOpen={modalOpen != ""} onClose={modalOnClose} zindex={1000} width="40%">
         <>
           {modalOpen=="LocationCreate" && <CreateLocationSF onClose={modalOnClose}/>}
           {modalOpen=="CoordinateCreate" && <CreateCoordinateSF onClose={modalOnClose}/>}
           {modalOpen=="DisciplineCreate" && <CreateDisciplineSF onClose={modalOnClose}/>}
+          {modalOpen=="PersonCreate" && <CreatePersonSF onClose={modalOnClose}/>}
+          {modalOpen=="LabWorkCreate" && <CreateLabWorkSF onClose={modalOnClose}/>}
         </>
       </BaseFrame>
       <div className='table-container'>
@@ -74,11 +81,11 @@ function Table(params : {objectName: string}) {
         </div>
         {transfered_data !== null && data.success &&
           <div className='table-body'>
-            {params.objectName == 'Location' && <LocationTable tableData={{...transfered_data, data: (data as SelectDTO<Location>)}} />}
-            {params.objectName == 'Discipline' && <DisciplineTable tableData={{...transfered_data, data: (data as SelectDTO<Discipline>)}} />}
-            {params.objectName == 'Coordinate' && <CoordinateTable tableData={{...transfered_data, data: (data as SelectDTO<Coordinate>)}} />}
-            {params.objectName == 'Person' && <PersonTable tableData={{...transfered_data, data: (data as SelectDTO<Person>)}} />}
-            {params.objectName == 'LabWork' && <LabWorkTable tableData={{...transfered_data, data: (data as SelectDTO<LabWork>)}} />}
+            {params.objectName == 'Location' && <LocationTable tableData={{...transfered_data, data: (data as SelectDTO<Location>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} />}
+            {params.objectName == 'Discipline' && <DisciplineTable tableData={{...transfered_data, data: (data as SelectDTO<Discipline>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} />}
+            {params.objectName == 'Coordinate' && <CoordinateTable tableData={{...transfered_data, data: (data as SelectDTO<Coordinate>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} />}
+            {params.objectName == 'Person' && <PersonTable tableData={{...transfered_data, data: (data as SelectDTO<Person>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} />}
+            {params.objectName == 'LabWork' && <LabWorkTable tableData={{...transfered_data, data: (data as SelectDTO<LabWork>)}} chosenRow={chosenRow} setChosenRow={setChosenRow} />}
             <div className='main-table-add-button' onClick={() => setModalOpen(params.objectName+"Create")}>Добавить объект</div>
           </div>
         }
