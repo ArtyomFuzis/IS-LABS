@@ -53,7 +53,7 @@ public class Person {
     private Country nationality;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = {}, orphanRemoval = false)
     private List<LabWork> labs;
 
     public Person(String name, Color eyeColor, Color hairColor, Location location, String passportId, Country nationality){

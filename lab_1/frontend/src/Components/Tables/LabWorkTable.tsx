@@ -39,7 +39,7 @@ function LabWorkTable(params : {tableData: TableData<LabWork>, chosenRow: number
                     <td className="main-table-elem">{item.id}</td>
                     <td className="main-table-elem">{item.name}</td>
                     <td className="main-table-elem">{item.coordinate?.id}</td>
-                    <td className="main-table-elem">{new Date(item.creationDate).toUTCString()}</td>
+                    <td className="main-table-elem">{new Date(item.creationDate+3*3600*1000).toUTCString()}</td>
                     <td className="main-table-elem">{item.description}</td>
                     <td className="main-table-elem">{item.difficulty?.val}</td>
                     <td className="main-table-elem">{item.discipline?.id}</td>

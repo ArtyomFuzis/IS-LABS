@@ -68,7 +68,7 @@ function CreateDisciplineSF({ onClose, id, discipline }: { onClose: () => void, 
                 </>
             </BaseFrame>
             <div className="modal-main-content">
-              <div className="modal-header">{id == -1 ? "Создание" : "Изменение"} Coordinate</div>
+              <div className="modal-header">{id == -1 ? "Создание" : "Изменение"} Discipline</div>
                 <div className="modal-params-container">
                     <ParameterField value={name} setValue={setName} required={true} type="text" field="Имя" />
                     <ParameterField value={labs_count} setValue={setlabsCount} required={true} type="intNum" field="Кол-во лаб" />

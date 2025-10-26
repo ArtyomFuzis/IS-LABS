@@ -13,7 +13,6 @@ import java.util.List;
 
 
 @ApplicationScoped
-@Transactional
 public class DBService implements Serializable {
     private static final Logger logger = LoggerFactory.getLogger(DBService.class);
     private EntityManager entityManager;
@@ -30,20 +29,19 @@ public class DBService implements Serializable {
         return entityManager;
     }
 
-
+    @Transactional
     public void save(Object obj) {
         this.getEntityManager().persist(obj);
-        this.getEntityManager().flush();
     }
 
+    @Transactional
     public void merge(Object obj) {
         this.getEntityManager().merge(obj);
-        this.getEntityManager().flush();
     }
 
+    @Transactional
     public void remove(Object obj) {
         this.getEntityManager().remove(obj);
-        this.getEntityManager().flush();
     }
 
     public  <T> T get(Integer id,  Class<T> cls) {

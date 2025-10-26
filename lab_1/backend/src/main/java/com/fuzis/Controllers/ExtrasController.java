@@ -25,6 +25,7 @@ public class ExtrasController {
     @Produces(MediaType.APPLICATION_JSON)
     public ChangeDTO deleteAllLabsByAuthor(@PathParam("id") Integer id) {
         var author = dbService.get(id, Person.class);
+        System.out.println("Found size: " + author.getLabs().size());
         author.getLabs().forEach(lab -> dbService.remove(lab));
         return new ChangeDTO(true);
     }
@@ -55,7 +56,7 @@ public class ExtrasController {
     @POST
     @Path("/increaseDifficulty/{id}/on/{steps}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ChangeDTO postIncreaseDifficulty(@PathParam("id") Integer id, @PathParam("id") Integer steps) {
+    public ChangeDTO postIncreaseDifficulty(@PathParam("id") Integer id, @PathParam("steps") Integer steps) {
         var lab = dbService.get(id, LabWork.class);
         var new_difficulty = dbService.get(lab.getDifficulty().getId()+steps, Difficulty.class);
         if(new_difficulty == null) {
@@ -74,7 +75,7 @@ public class ExtrasController {
     public ChangeDTO deleteLabFromDiscipline(@PathParam("id") Integer id) {
         var lab = dbService.get(id, LabWork.class);
         lab.setDiscipline(null);
-        dbService.save(lab);
+        dbService.merge(lab);
         return new ChangeDTO(true);
     }
 }

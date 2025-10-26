@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import '../Styles/App.css'
 import Table from './Table.tsx'
+import Extras from './Extras.tsx'
 
 function App() {
   const [entity, setEntity] = useState("LabWork")
@@ -51,7 +52,7 @@ function App() {
         </div>
       </div>
       {entity=="Additional" ? (
-        <div></div>
+        <Extras/>
       ) : (
         <div className='table-space'>
           <Table key={entity} objectName={entity}/>

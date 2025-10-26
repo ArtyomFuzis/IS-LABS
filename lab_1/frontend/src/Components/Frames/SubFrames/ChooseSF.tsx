@@ -50,6 +50,14 @@ function ChooseSF({ onClose, objectName, chosenRow, setChosenRow, required }: { 
         setModalOpen("")
         loadData()    
     }
+    
+    function getByChosen(){
+        let result:any = null
+        transfered_data.data.result.forEach(function(el) {
+        if (el.id == chosenRow) result = el
+        });
+        return result 
+    }
     return (
         <>
         <BaseFrame isOpen={modalOpen != ""} onClose={modalOnClose} zindex={1000} width="40%" height="">
