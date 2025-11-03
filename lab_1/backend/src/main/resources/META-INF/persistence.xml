@@ -4,15 +4,15 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
     <persistence-unit name="default" transaction-type="JTA">
-        <class>com.fuzis.Entities.Country</class>
-        <class>com.fuzis.Entities.Color</class>
-        <class>com.fuzis.Entities.Difficulty</class>
-        <class>com.fuzis.Entities.Discipline</class>
-        <class>com.fuzis.Entities.Discipline</class>
-        <class>com.fuzis.Entities.Coordinate</class>
-        <class>com.fuzis.Entities.Location</class>
-        <class>com.fuzis.Entities.Person</class>
-        <class>com.fuzis.Entities.LabWork</class>
+        <class>com.fuzis.entity.Country</class>
+        <class>com.fuzis.entity.Color</class>
+        <class>com.fuzis.entity.Difficulty</class>
+        <class>com.fuzis.entity.Discipline</class>
+        <class>com.fuzis.entity.Discipline</class>
+        <class>com.fuzis.entity.Coordinate</class>
+        <class>com.fuzis.entity.Location</class>
+        <class>com.fuzis.entity.Person</class>
+        <class>com.fuzis.entity.LabWork</class>
         <properties>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
