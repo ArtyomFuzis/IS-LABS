@@ -11,6 +11,9 @@
         file:
           path: "{{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/"
           state: directory 
+      
+      - name: Remove all old build srcs 
+        shell: "cd {{base_path}}/autodeploy/install_tmp/build_src/{{project_name}}/ && rm -rf *"
 
       - name: Copy backend src
         synchronize:
