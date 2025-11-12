@@ -1,4 +1,4 @@
-package com.fuzis.service.database;
+package com.fuzis.database;
 
 import com.fuzis.entity.Person;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -8,7 +8,7 @@ import jakarta.persistence.Persistence;
 import java.util.List;
 
 @ApplicationScoped
-public class PersonService implements IDatabaseService {
+public class PersonRepository implements IDatabaseRepository {
 
     private EntityManager entityManager;
 

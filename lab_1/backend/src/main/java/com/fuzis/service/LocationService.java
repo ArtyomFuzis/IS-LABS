@@ -1,26 +1,26 @@
 package com.fuzis.service;
 
-import com.fuzis.database.DisciplineRepository;
-import com.fuzis.database.DisciplineRepository;
-import com.fuzis.entity.Discipline;
+import com.fuzis.database.LocationRepository;
+import com.fuzis.entity.Location;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.FormParam;
 
 import java.util.Collections;
 import java.util.List;
 
-public class DisciplineService {
+@RequestScoped
+public class LocationService {
     @Inject
-    DisciplineRepository repo;
+    LocationRepository repo;
 
     @Inject
     UtilityService utils;
 
-    public List<Discipline> getAll(){
+    public List<Location> getAll(){
         return repo.getAll();
     }
 
-    public List<Discipline> getById(Integer id){
+    public List<Location> getById(Integer id){
         return Collections.singletonList(repo.get(id));
     }
 
@@ -29,27 +29,29 @@ public class DisciplineService {
     }
 
     public void create(String name,
-                       Integer labs_count,
+                       Double x,
+                       Double y,
+                       Double z,
                        Integer id){
         if(id != null) {
-            repo.merge(new Discipline(id,name,labs_count));
+            repo.merge(new Location(id,name,x,y,z));
         }
-        else repo.save(new Discipline(name,labs_count));
+        else repo.save(new Location(name,x,y,z));
     }
 
-    public List<Discipline> getPage(Integer page){
+    public List<Location> getPage(Integer page){
         return repo.getPage(page);
     }
 
-    public List<Discipline> getSorted(Integer page, String field, Boolean reversed){
-        if (utils.getFilterableFields(Discipline.class).contains(field)) {
+    public List<Location> getSorted(Integer page, String field, Boolean reversed){
+        if (utils.getFilterableFields(Location.class).contains(field)) {
             return repo.getSortedPage(page,field, reversed);
         }
         return null;
     }
 
-    public List<Discipline> getFiltered(Integer page, String field, String filter){
-        if (utils.getFilterableFields(Discipline.class).contains(field)) {
+    public List<Location> getFiltered(Integer page, String field, String filter){
+        if (utils.getFilterableFields(Location.class).contains(field)) {
             return repo.getFilteredPage(page, field, filter);
         }
         return null;

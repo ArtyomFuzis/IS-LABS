@@ -1,16 +1,17 @@
-package com.fuzis.service.database;
+package com.fuzis.database;
 
 import com.fuzis.entity.Difficulty;
 import com.fuzis.entity.LabWork;
 import com.fuzis.entity.Person;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
 import java.util.List;
 
-@ApplicationScoped
-public class ExtrasService implements IDatabaseService {
+@RequestScoped
+public class ExtrasRepository implements IDatabaseRepository {
     private EntityManager entityManager;
 
     @Override

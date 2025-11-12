@@ -1,24 +1,32 @@
 package com.fuzis.service;
 
-import com.fuzis.database.DisciplineRepository;
-import com.fuzis.entity.Discipline;
+import com.fuzis.database.LabWorkRepository;
+import com.fuzis.entity.*;
+import com.fuzis.transferdata.ChangeDTO;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.FormParam;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
-public class DisciplineService {
+
+@RequestScoped
+public class LabWorkService {
     @Inject
-    DisciplineRepository repo;
+    LabWorkRepository repo;
 
     @Inject
     UtilityService utils;
 
-    public List<Discipline> getAll(){
+    public List<LabWork> getAll(){
         return repo.getAll();
     }
 
-    public List<Discipline> getById(Integer id){
+    public List<LabWork> getById(Integer id){
         return Collections.singletonList(repo.get(id));
     }
 
@@ -27,27 +35,39 @@ public class DisciplineService {
     }
 
     public void create(String name,
-                       Integer labs_count,
+                       Integer coordinate_id,
+                       String creation_date_str,
+                       String description,
+                       Integer difficulty_id,
+                       Integer discipline_id,
+                       Double minimal_point,
+                       Double maximal_point,
+                       Integer author_id,
                        Integer id){
+        var coordinate = repo.get(coordinate_id, Coordinate.class);
+        var difficulty = repo.get(difficulty_id, Difficulty.class);
+        var discipline = repo.get(discipline_id, Discipline.class);
+        var author = repo.get(author_id, Person.class);
+        var creation_date = creation_date_str == null ? ZonedDateTime.now() : Instant.ofEpochSecond(Long.parseLong(creation_date_str)).atZone(ZoneId.systemDefault());
         if(id != null) {
-            repo.merge(new Discipline(id,name,labs_count));
+            repo.merge(new LabWork(id, name, coordinate, creation_date, description, difficulty, discipline, minimal_point, maximal_point, author));
         }
-        else repo.save(new Discipline(name,labs_count));
+        else repo.save(new LabWork(name, coordinate, creation_date, description, difficulty, discipline, minimal_point, maximal_point, author));
     }
 
-    public List<Discipline> getPage(Integer page){
+    public List<LabWork> getPage(Integer page){
         return repo.getPage(page);
     }
 
-    public List<Discipline> getSorted(Integer page, String field, Boolean reversed){
-        if (utils.getFilterableFields(Discipline.class).contains(field)) {
+    public List<LabWork> getSorted(Integer page, String field, Boolean reversed){
+        if (utils.getFilterableFields(LabWork.class).contains(field)) {
             return repo.getSortedPage(page,field, reversed);
         }
         return null;
     }
 
-    public List<Discipline> getFiltered(Integer page, String field, String filter){
-        if (utils.getFilterableFields(Discipline.class).contains(field)) {
+    public List<LabWork> getFiltered(Integer page, String field, String filter){
+        if (utils.getFilterableFields(LabWork.class).contains(field)) {
             return repo.getFilteredPage(page, field, filter);
         }
         return null;

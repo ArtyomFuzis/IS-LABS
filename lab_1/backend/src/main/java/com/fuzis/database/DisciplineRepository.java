@@ -1,6 +1,5 @@
-package com.fuzis.service.database;
+package com.fuzis.database;
 
-import com.fuzis.entity.Coordinate;
 import com.fuzis.entity.Discipline;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
@@ -9,7 +8,7 @@ import jakarta.persistence.Persistence;
 import java.util.List;
 
 @ApplicationScoped
-public class DisciplineService implements IDatabaseService {
+public class DisciplineRepository implements IDatabaseRepository {
 
     private EntityManager entityManager;
 

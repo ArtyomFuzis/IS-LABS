@@ -1,11 +1,11 @@
 package com.fuzis.controller;
 
-import com.fuzis.service.database.EnumsService;
+import com.fuzis.database.EnumsRepository;
+import com.fuzis.service.EnumsService;
 import com.fuzis.transferdata.SelectDTO;
 import com.fuzis.entity.Color;
 import com.fuzis.entity.Country;
 import com.fuzis.entity.Difficulty;
-import com.fuzis.service.database.IDatabaseService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,26 +17,26 @@ import lombok.extern.slf4j.Slf4j;
 public class EnumsController
 {
     @Inject
-    EnumsService dbService;
+    EnumsService service;
 
     @GET
     @Path("/color")
     @Produces(MediaType.APPLICATION_JSON)
     public SelectDTO<Color> getColorVals() {
-        return new SelectDTO<>(true, dbService.getColorVals());
+        return new SelectDTO<>(true, service.getColorVals());
     }
 
     @GET
     @Path("/country")
     @Produces(MediaType.APPLICATION_JSON)
     public SelectDTO<Country> getCountryVals() {
-        return new SelectDTO<>(true, dbService.getCountryVals());
+        return new SelectDTO<>(true, service.getCountryVals());
     }
 
     @GET
     @Path("/difficulty")
     @Produces(MediaType.APPLICATION_JSON)
     public SelectDTO<Difficulty> getDifficultyVals() {
-        return new SelectDTO<>(true, dbService.getDifficultyVals());
+        return new SelectDTO<>(true, service.getDifficultyVals());
     }
 }

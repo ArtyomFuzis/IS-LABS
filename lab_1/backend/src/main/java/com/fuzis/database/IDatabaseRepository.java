@@ -1,8 +1,6 @@
-package com.fuzis.service.database;
+package com.fuzis.database;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -13,8 +11,8 @@ import java.util.List;
 
 
 
-public interface IDatabaseService extends Serializable {
-    Logger logger = LoggerFactory.getLogger(IDatabaseService.class);
+public interface IDatabaseRepository extends Serializable {
+    Logger logger = LoggerFactory.getLogger(IDatabaseRepository.class);
 
     EntityManager getEntityManager();
 

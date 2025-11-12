@@ -1,4 +1,4 @@
-package com.fuzis.service.database;
+package com.fuzis.database;
 
 import com.fuzis.entity.Color;
 import com.fuzis.entity.Country;
@@ -10,7 +10,7 @@ import jakarta.persistence.Persistence;
 import java.util.List;
 
 @ApplicationScoped
-public class EnumsService implements IDatabaseService {
+public class EnumsRepository implements IDatabaseRepository {
     private EntityManager entityManager;
 
     @Override
