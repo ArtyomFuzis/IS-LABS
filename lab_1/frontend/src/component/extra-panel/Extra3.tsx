@@ -7,7 +7,8 @@ function Extras3() {
 
   function createQuery(){
     extra3().then((res) => {
-        setlastState("Ответ: " + res.result)
+        if(res.result == "") setlastState("Пустой ответ")
+        else setlastState("Ответ: " + res.result)
     }).catch((ret) => {
         setlastState("Ошибка: " + ret.response.data)
     })

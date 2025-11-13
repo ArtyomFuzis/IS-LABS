@@ -35,6 +35,7 @@ function CreateDisciplineSF({ onClose, id, discipline }: { onClose: () => void, 
         processIsNotNull(name, "Имя", res)
         processIsValidInt(labs_count, false, "Кол-во лаб", res)
         processIsPositive(labs_count, false, "Кол-во лаб", res)
+        processStringMaxLength(labs_count, 9, "Кол-во лаб", res)
         setErrorMsg(res)
     }, [name, labs_count]);
 

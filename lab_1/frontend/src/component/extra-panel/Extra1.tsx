@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ParameterField from "../frame/frame-component/ParameterField";
-import { processIsValidInt } from "../../util/validations";
+import { processIsPositive, processIsValidInt } from "../../util/validations";
 import { extra1 } from "../../util/apiQueries";
 import ErrorPanel from "../frame/frame-component/ErrorPanel";
 
@@ -12,6 +12,7 @@ function Extras1() {
   useEffect(() => {
     let res : string[] = []
     processIsValidInt(x, false, "authorID", res)
+    processIsPositive(x, false, "authorID", res)
     setErrorMsg(res)
   }, [x]);
 
@@ -19,7 +20,7 @@ function Extras1() {
     extra1(x).then(() => {
         setlastState("Операция выполнена успешно!!!")
     }).catch((ret) => {
-        setlastState("Ошибка: " + ret.response.data)
+        setlastState("Ошибка: нет автора с таким ID")
     })
   }
   return (
@@ -32,7 +33,7 @@ function Extras1() {
         <div>
             {lastState}
         </div>
-        <ErrorPanel errorMessages={errorMsgs} />  
+        {(x !="") && <ErrorPanel errorMessages={errorMsgs} /> } 
         <button className={`${errorMsgs.length != 0 && "modal-button-disbled"} modal-save-button`} onClick={(createQuery)}>
             Выполнить
         </button>

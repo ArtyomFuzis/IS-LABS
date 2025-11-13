@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import ParameterField from "../frame-component/ParameterField"
-import { processIsValidFloat, processIsLowerThan, processIsBiggerThan } from "../../../util/validations"
+import { processIsValidFloat, processIsLowerThan, processIsBiggerThan, processStringMaxLength } from "../../../util/validations"
 import ErrorPanel from "../frame-component/ErrorPanel"
 import { makeQueryCreate, makeQueryDelete } from "../../../util/baseMaps"
 import { createObject, removeObject } from "../../../util/apiQueries"
@@ -35,6 +35,8 @@ function CreateCoordinateSF({ onClose, id, coordinate }: { onClose: () => void, 
         processIsLowerThan(x, 292, true, "X", res)
         processIsValidFloat(y, false, "Y", res)
         processIsBiggerThan(y, -244, true,"Y", res)
+        processStringMaxLength(x, 9, "X", res)
+        processStringMaxLength(y, 9, "Y", res)
         setErrorMsg(res)
     }, [x, y]);
 

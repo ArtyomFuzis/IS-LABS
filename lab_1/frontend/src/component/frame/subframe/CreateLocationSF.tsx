@@ -42,6 +42,9 @@ function CreateLocationSF({ onClose, id, location }: { onClose: () => void, id: 
         processIsValidFloat(x, false, "X", res)
         processIsValidFloat(y, false, "Y", res)
         processIsValidFloat(z, true, "Z", res)
+        processStringMaxLength(x, 9, "X", res)
+        processStringMaxLength(y, 9, "Y", res)
+        processStringMaxLength(z, 9, "Z", res)
         setErrorMsg(res)
     }, [name, x, y, z]);
 

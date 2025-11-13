@@ -25,7 +25,9 @@ function Extras4() {
           setlastState("Операция не была выполнена усепешно, проверьте, что steps не выходит за допустимые границы!!!")
         }
     }).catch((ret) => {
-        setlastState("Ошибка: " + ret.response.data)
+        if(ret.response.data.includes("because \"lab\" is null")) setlastState("Ошибка: labWork по данному id не найдена")
+        else if(ret.response.data.includes("because the return value of")) setlastState("Ошибка: в данном LabWork не указана сложность")
+        else setlastState("Ошибка: " + ret.response.data)
     })
   }
   return (
@@ -39,7 +41,7 @@ function Extras4() {
         <div>
             {lastState}
         </div>
-        <ErrorPanel errorMessages={errorMsgs} />  
+        {(id!="" || steps != "") && <ErrorPanel errorMessages={errorMsgs} />  }
         <button className={`${errorMsgs.length != 0 && "modal-button-disbled"} modal-save-button`} onClick={(createQuery)}>
             Выполнить
         </button>

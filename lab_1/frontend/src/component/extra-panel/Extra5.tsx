@@ -19,7 +19,8 @@ function Extras5() {
     extra5(x).then(() => {
         setlastState("Операция выполнена успешно!!!")
     }).catch((ret) => {
-        setlastState("Ошибка: " + ret.response.data)
+        if(ret.response.data.includes("because \"lab\" is null")) setlastState("Ошибка: labWork по данному id не найдена")
+        else setlastState("Ошибка: " + ret.response.data)
     })
   }
   return (
@@ -32,7 +33,7 @@ function Extras5() {
         <div>
             {lastState}
         </div>
-        <ErrorPanel errorMessages={errorMsgs} />  
+        {(x!="") && <ErrorPanel errorMessages={errorMsgs} />  }
         <button className={`${errorMsgs.length != 0 && "modal-button-disbled"} modal-save-button`} onClick={(createQuery)}>
             Выполнить
         </button>

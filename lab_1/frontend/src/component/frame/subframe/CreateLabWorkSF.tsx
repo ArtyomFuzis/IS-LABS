@@ -51,7 +51,9 @@ function CreateLabWorkSF({ onClose, id, labWork }: { onClose: () => void, id: nu
         setErrorMsg(res)
         processIsNotNull(description, "Описание", res)
         processIsValidFloat(minimalPoint, false, "Минимальная оценка", res)
+        processStringMaxLength(minimalPoint, 9, "Минимальная оценка", res)
         processIsValidFloat(maximumPoint, true, "Максимальная оценка", res)
+        processStringMaxLength(maximumPoint, 9, "Максимальная оценка", res)
         processIsBiggerThan(minimalPoint, 0, false, "Минимальная оценка",res)
         processIsBiggerThan(maximumPoint, 0, false, "Максимальная оценка",res)
     }, [name, coordinates, creationDate, description, difficulty, discipline, minimalPoint, maximumPoint, author]);

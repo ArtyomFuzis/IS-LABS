@@ -2,26 +2,22 @@ package com.fuzis.database;
 
 import com.fuzis.entity.LabWork;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.PersistenceContext;
 
 import java.util.List;
 
 @ApplicationScoped
 public class LabWorkRepository implements IDatabaseRepository {
 
-    private EntityManager entityManager;
+    @Inject
+    private EntityMangerCreator entityManagerCreator;
 
     @Override
     public EntityManager getEntityManager() {
-        if (entityManager == null) {
-            try {
-                entityManager = Persistence.createEntityManagerFactory("default").createEntityManager();
-            } catch (Exception e) {
-                logger.error("There is an error creating persistence context: {}", String.valueOf(e));
-            }
-        }
-        return entityManager;
+        return entityManagerCreator.getEntityManager();
     }
 
     public LabWork get(Integer id){
