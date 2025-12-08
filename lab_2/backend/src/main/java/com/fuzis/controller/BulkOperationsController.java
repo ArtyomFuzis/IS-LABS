@@ -32,17 +32,26 @@ public class BulkOperationsController {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(yamlContent.getBytes());
             yamlImportService.importYaml(inputStream);
 
-            return Response.ok(createResponse("success", "YAML successfully imported"))
+            return Response.ok(createResponse("success", "YAML successfully imported in transaction"))
                     .build();
 
+        } catch (jakarta.validation.ConstraintViolationException e) {
+            // Ошибки валидации (constraint violations)
+            StringBuilder violations = new StringBuilder();
+            e.getConstraintViolations().forEach(v ->
+                    violations.append(v.getPropertyPath()).append(": ").append(v.getMessage()).append("; "));
+
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(createResponse("error", "Validation errors: " + violations))
+                    .build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(createResponse("error", "Validation error: " + e.getMessage()))
                     .build();
         } catch (Exception e) {
-            e.printStackTrace(); // Для отладки
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity(createResponse("error", "Failed to import YAML: " + e.getMessage()))
+                    .entity(createResponse("error", "Failed to import YAML: " +
+                            getRootCauseMessage(e)))
                     .build();
         }
     }
@@ -59,5 +68,13 @@ public class BulkOperationsController {
                 .replace("\n", "\\n")
                 .replace("\r", "\\r")
                 .replace("\t", "\\t");
+    }
+
+    private String getRootCauseMessage(Throwable e) {
+        Throwable cause = e;
+        while (cause.getCause() != null && cause.getCause() != cause) {
+            cause = cause.getCause();
+        }
+        return cause.getMessage();
     }
 }

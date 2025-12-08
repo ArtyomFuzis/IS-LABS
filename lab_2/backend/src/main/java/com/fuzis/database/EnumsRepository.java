@@ -73,4 +73,8 @@ public class EnumsRepository implements IDatabaseRepository {
         this.getEntityManager().persist(difficulty);
     }
 
+    public void flush() {
+        this.getEntityManager().flush();
+    }
+
 }

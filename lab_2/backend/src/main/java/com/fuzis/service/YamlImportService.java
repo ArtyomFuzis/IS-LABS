@@ -2,12 +2,16 @@ package com.fuzis.service;
 
 import com.fuzis.database.*;
 import com.fuzis.entity.*;
+import com.fuzis.service.ValidationService;
 import com.fuzis.transferdata.inner.YamlParseResult;
 import com.fuzis.util.YamlParserBean;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional.TxType;
 
 import java.io.InputStream;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +20,9 @@ public class YamlImportService {
 
     @Inject
     private YamlParserBean yamlParser;
+
+    @Inject
+    private ValidationService validationService;
 
     @Inject
     private EnumsRepository enumsRepository;
@@ -39,37 +46,54 @@ public class YamlImportService {
         return yamlParser.parseYaml(yamlStream);
     }
 
+    @Transactional(value = TxType.REQUIRED, rollbackOn = Exception.class)
     public void importYaml(InputStream yamlStream) {
         YamlParseResult result = parseYaml(yamlStream);
 
-        // Сохраняем в правильном порядке с учетом зависимостей
-        saveAllColors(result);
-        saveAllCountries(result);
-        saveAllDifficulties(result);
-        saveAllCoordinates(result);
-        saveAllLocations(result);
-        saveAllPeople(result);
-        saveAllDisciplines(result);
-        saveAllLabWorks(result);
+        try {
+            // Комплексная валидация всего результата
+            if (!validationService.validateYamlResult(result)) {
+                throw new IllegalArgumentException("YAML validation failed");
+            }
+
+            // Сохраняем в правильном порядке с учетом зависимостей
+            // Вся операция выполняется в одной транзакции
+            saveAllColors(result);
+            saveAllCountries(result);
+            saveAllDifficulties(result);
+            saveAllCoordinates(result);
+            saveAllLocations(result);
+            saveAllPeople(result);
+            saveAllDisciplines(result);
+            saveAllLabWorks(result);
+
+            // Принудительно флашим изменения для проверки constraint violations
+            flushAllRepositories();
+
+        } catch (Exception e) {
+            // Транзакция автоматически откатится благодаря rollbackOn = Exception.class
+            throw new RuntimeException("Failed to import YAML: " + e.getMessage(), e);
+        }
     }
 
     private void saveAllColors(YamlParseResult result) {
-        // Карта для отслеживания замен transient объектов на persistent
         Map<Color, Color> colorReplacements = new HashMap<>();
 
         for (Color color : result.getColors()) {
+            // Валидация через ValidationService
+            if (!validationService.validateColor(color)) {
+                throw new IllegalArgumentException("Color validation failed");
+            }
+
             Color existing = enumsRepository.findExistingColor(color.getVal());
             if (existing == null) {
                 enumsRepository.persistColor(color);
             } else {
-                // Запоминаем замену
                 colorReplacements.put(color, existing);
-                // Заменяем ссылку в referenceMap
                 replaceReference(result.getReferenceMap(), color, existing);
             }
         }
 
-        // Обновляем ссылки в Person объектах
         updateColorReferencesInPeople(result, colorReplacements);
     }
 
@@ -90,6 +114,11 @@ public class YamlImportService {
         Map<Country, Country> countryReplacements = new HashMap<>();
 
         for (Country country : result.getCountries()) {
+            // Валидация через ValidationService
+            if (!validationService.validateCountry(country)) {
+                throw new IllegalArgumentException("Country validation failed");
+            }
+
             Country existing = enumsRepository.findExistingCountry(country.getVal());
             if (existing == null) {
                 enumsRepository.persistCountry(country);
@@ -116,6 +145,11 @@ public class YamlImportService {
         Map<Difficulty, Difficulty> difficultyReplacements = new HashMap<>();
 
         for (Difficulty difficulty : result.getDifficulties()) {
+            // Валидация через ValidationService
+            if (!validationService.validateDifficulty(difficulty)) {
+                throw new IllegalArgumentException("Difficulty validation failed");
+            }
+
             Difficulty existing = enumsRepository.findExistingDifficulty(difficulty.getVal());
             if (existing == null) {
                 enumsRepository.persistDifficulty(difficulty);
@@ -140,30 +174,70 @@ public class YamlImportService {
 
     private void saveAllCoordinates(YamlParseResult result) {
         for (Coordinate coordinate : result.getCoordinates()) {
+            // Валидация через ValidationService
+            if (!validationService.validateCoordinate(coordinate)) {
+                throw new IllegalArgumentException("Coordinate validation failed");
+            }
+
             coordinateRepository.save(coordinate);
         }
     }
 
     private void saveAllLocations(YamlParseResult result) {
         for (Location location : result.getLocations()) {
+            // Валидация через ValidationService
+            if (!validationService.validateLocation(location)) {
+                throw new IllegalArgumentException("Location validation failed");
+            }
+
             locationRepository.save(location);
         }
     }
 
     private void saveAllPeople(YamlParseResult result) {
         for (Person person : result.getPeople()) {
+            // Валидация через ValidationService
+            if (!validationService.validatePerson(person)) {
+                throw new IllegalArgumentException("Person validation failed");
+            }
+
+            // Валидация зависимостей через ValidationService
+            if (!validationService.validatePersonDependencies(person)) {
+                throw new IllegalArgumentException("Person dependencies validation failed");
+            }
+
             personRepository.save(person);
         }
     }
 
     private void saveAllDisciplines(YamlParseResult result) {
         for (Discipline discipline : result.getDisciplines()) {
+            // Валидация через ValidationService
+            if (!validationService.validateDiscipline(discipline)) {
+                throw new IllegalArgumentException("Discipline validation failed");
+            }
+
             disciplineRepository.save(discipline);
         }
     }
 
     private void saveAllLabWorks(YamlParseResult result) {
         for (LabWork labWork : result.getLabWorks()) {
+            // Валидация через ValidationService
+            if (!validationService.validateLabWork(labWork)) {
+                throw new IllegalArgumentException("LabWork validation failed");
+            }
+
+            // Валидация зависимостей через ValidationService
+            if (!validationService.validateLabWorkDependencies(labWork)) {
+                throw new IllegalArgumentException("LabWork dependencies validation failed");
+            }
+
+            // Устанавливаем дату создания, если не задана
+            if (labWork.getCreationDate() == null) {
+                labWork.setCreationDate(ZonedDateTime.now());
+            }
+
             labWorkRepository.save(labWork);
         }
     }
@@ -175,5 +249,15 @@ public class YamlImportService {
         referenceMap.entrySet().stream()
                 .filter(entry -> entry.getValue() == oldEntity)
                 .forEach(entry -> entry.setValue(newEntity));
+    }
+
+    private void flushAllRepositories() {
+        // Принудительно флашим EntityManager для проверки constraint violations
+        enumsRepository.flush();
+        coordinateRepository.flush();
+        locationRepository.flush();
+        personRepository.flush();
+        disciplineRepository.flush();
+        labWorkRepository.flush();
     }
 }

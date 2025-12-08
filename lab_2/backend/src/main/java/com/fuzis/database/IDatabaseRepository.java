@@ -31,6 +31,10 @@ public interface IDatabaseRepository extends Serializable {
         this.getEntityManager().persist(obj);
     }
 
+    default void flush() {
+        this.getEntityManager().flush();
+    }
+
     @Transactional
     default void remove(Object obj) {
         this.getEntityManager().remove(obj);
