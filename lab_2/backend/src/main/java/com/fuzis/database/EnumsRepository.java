@@ -8,6 +8,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -61,14 +62,17 @@ public class EnumsRepository implements IDatabaseRepository {
                 .orElse(null);
     }
 
+    @Transactional
     public void persistColor(Color color) {
         this.getEntityManager().persist(color);
     }
 
+    @Transactional
     public void persistCountry(Country country) {
         this.getEntityManager().persist(country);
     }
 
+    @Transactional
     public void persistDifficulty(Difficulty difficulty) {
         this.getEntityManager().persist(difficulty);
     }
