@@ -1,0 +1,31 @@
+---
+  - type: Coordinate
+    identifier: "@coord1" #строковая метка, что можно использовать для того, чтобы ссылаться именно на этот объект (настоящий id должен быть подставлен позже базой данных)
+    x: 5.0
+    y: 1.0
+
+  - type: Location
+    x: -15.0
+    y: 55
+    identifier: "@locabc" #строковая метка обязательно начинается с @, обычная строка гарантированно не начинается с @
+    name: "TestLoc" # поле z не задано, оно должно быть null, если null даже не позволительно, то отловим поже с помощью констрейнтов в бизнес-логике или БД 
+
+  - type: Person 
+    name: TestPerson
+    hairColor: 'RED' #Color как и Country как и Difficulty - enum, их можно задавать по значению или по id 
+    location: "@locabc"
+    passportId: "ghnsfdiugbisbgisgbis"
+  
+  - type: Person
+    name: TestPerson2
+    hairColor: 1
+    identifier: "@MyPerson"
+    location: #необходимо позволять объявлять объекты непосредственно при объявлении свзяанного, но при этом все равно можно объявить identifier для повторного испоьзования
+      x: -22.0 #type указывать тут необязательно, тут он и так очевиден
+      y: 56
+      identifier: "@locabc2" 
+      name: "TestLoc2"
+
+	 
+     
+	 

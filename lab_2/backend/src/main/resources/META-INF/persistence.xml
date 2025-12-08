@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+    <persistence-unit name="default" transaction-type="JTA">
+        <class>com.fuzis.entity.Country</class>
+        <class>com.fuzis.entity.Color</class>
+        <class>com.fuzis.entity.Difficulty</class>
+        <class>com.fuzis.entity.Discipline</class>
+        <class>com.fuzis.entity.Discipline</class>
+        <class>com.fuzis.entity.Coordinate</class>
+        <class>com.fuzis.entity.Location</class>
+        <class>com.fuzis.entity.Person</class>
+        <class>com.fuzis.entity.LabWork</class>
+        <properties>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://pg:5432/studs"/>
+            <property name="hibernate.connection.username" value="s365395"/>
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="hibernate.jpa.compliance.query" value="false"/>
+        </properties>
+    </persistence-unit>
+</persistence>
+
