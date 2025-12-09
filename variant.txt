@@ -1,0 +1,51 @@
+public class LabWork {
+    private Integer id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    private String name; //Поле не может быть null, Строка не может быть пустой
+    private Coordinates coordinates; //Поле не может быть null
+    private java.time.LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private String description; //Поле не может быть null
+    private Difficulty difficulty; //Поле может быть null
+    private Discipline discipline; //Поле может быть null
+    private Double minimalPoint; //Поле не может быть null, Значение поля должно быть больше 0
+    private float maximumPoint; //Значение поля должно быть больше 0
+    private Person author; //Поле может быть null
+}
+public class Coordinates {
+    private double x; //Максимальное значение поля: 292
+    private int y; //Значение поля должно быть больше -244
+}
+public class Discipline {
+    private String name; //Поле не может быть null, Строка не может быть пустой
+    private Integer labsCount; //Поле не может быть null
+}
+public class Person {
+    private String name; //Поле не может быть null, Строка не может быть пустой
+    private Color eyeColor; //Поле не может быть null
+    private Color hairColor; //Поле может быть null
+    private Location location; //Поле может быть null
+    private String passportID; //Строка не может быть пустой, Длина строки не должна быть больше 50, Длина строки должна быть не меньше 5, Поле может быть null
+    private Country nationality; //Поле может быть null
+}
+public class Location {
+    private Double x; //Поле не может быть null
+    private Double y; //Поле не может быть null
+    private int z;
+    private String name; //Длина строки не должна быть больше 702, Поле не может быть null
+}
+public enum Difficulty {
+    VERY_EASY,
+    EASY,
+    VERY_HARD;
+}
+public enum Color {
+    RED,
+    BLACK,
+    BLUE,
+    BROWN;
+}
+public enum Country {
+    CHINA,
+    INDIA,
+    ITALY,
+    SOUTH_KOREA;
+}

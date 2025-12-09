@@ -1,6 +1,7 @@
 package com.fuzis.controller;
 
 import com.fuzis.service.YamlImportService;
+import com.fuzis.exception.ValidationException;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
@@ -10,6 +11,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.io.ByteArrayInputStream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("/operations/bulk")
 public class BulkOperationsController {
@@ -33,6 +36,15 @@ public class BulkOperationsController {
             yamlImportService.importYaml(inputStream);
 
             return Response.ok(createResponse("success", "YAML successfully imported in transaction"))
+                    .build();
+
+        } catch (ValidationException e) {
+            // Обработка кастомных ошибок валидации
+            List<String> errorMessages = e.getErrorMessages();
+            String errorMessage = "Validation errors: " + String.join("; ", errorMessages);
+
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(createResponse("error", errorMessage))
                     .build();
 
         } catch (jakarta.validation.ConstraintViolationException e) {

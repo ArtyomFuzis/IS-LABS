@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
@@ -39,4 +40,25 @@ public class LabWorkRepository implements IDatabaseRepository {
     public List<LabWork> getSortedPage(int page, String field, boolean reversed){
         return this.getSortedPage(page, field, reversed, LabWork.class);
     }
+
+    public LabWork findByName(String name) {
+        if (name == null) return null;
+
+        TypedQuery<LabWork> query = getEntityManager().createQuery(
+                "SELECT l FROM LabWork l WHERE l.name = :name", LabWork.class);
+        query.setParameter("name", name);
+
+        return query.getResultStream().findFirst().orElse(null);
+    }
+
+    public long countByDisciplineId(Integer disciplineId) {
+        if (disciplineId == null) return 0;
+
+        TypedQuery<Long> query = getEntityManager().createQuery(
+                "SELECT COUNT(l) FROM LabWork l WHERE l.discipline.id = :disciplineId", Long.class);
+        query.setParameter("disciplineId", disciplineId);
+
+        return query.getSingleResult();
+    }
+
 }
