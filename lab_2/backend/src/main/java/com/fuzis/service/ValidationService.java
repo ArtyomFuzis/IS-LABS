@@ -2,10 +2,10 @@ package com.fuzis.service;
 
 import com.fuzis.database.*;
 import com.fuzis.entity.*;
-import com.fuzis.exception.ValidationException;
 import com.fuzis.transferdata.inner.YamlParseResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import com.fuzis.exception.ValidationException;
 
 import java.util.*;
 
@@ -21,42 +21,47 @@ public class ValidationService {
     @Inject
     private CoordinateRepository coordinateRepository;
 
-    // === Методы для валидации отдельных сущностей ===
-
-    // Для Color, Country, Difficulty, Location, Person - пустые методы (без валидации)
     public void validateColor(Color color) {
-        // Без валидации
+        
     }
 
     public void validateCountry(Country country) {
-        // Без валидации
+        
     }
 
     public void validateDifficulty(Difficulty difficulty) {
-        // Без валидации
+        
     }
 
     public void validateCoordinate(Coordinate coordinate) {
-        // Без валидации
+        List<ValidationException.ValidationError> errors = new ArrayList<>();
+        validateCoordinateUnique(coordinate, errors);
+
+        if (!errors.isEmpty()) {
+            throw new ValidationException(errors);
+        }
     }
 
     public void validateLocation(Location location) {
-        // Без валидации
+        
     }
 
     public void validatePerson(Person person) {
-        // Без валидации
+        
     }
 
     public void validateDiscipline(Discipline discipline) {
-        // Без валидации (уникальность проверяется в групповой валидации)
+        List<ValidationException.ValidationError> errors = new ArrayList<>();
+        validateDisciplineUnique(discipline, errors);
+        if (!errors.isEmpty()) {
+            throw new ValidationException(errors);
+        }
     }
 
     public void validateLabWork(LabWork labWork) {
-        // Только проверка баллов
         List<ValidationException.ValidationError> errors = new ArrayList<>();
         validateLabWorkPoints(labWork, errors);
-
+        validateLabWorkUnique(labWork, errors);
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
@@ -91,16 +96,20 @@ public class ValidationService {
         }
     }
 
-    // === Методы валидации зависимостей ===
-
     public void validatePersonDependencies(Person person) {
-        // Без валидации
+        
     }
 
     public void validateLabWorkDependencies(LabWork labWork) {
         List<ValidationException.ValidationError> errors = new ArrayList<>();
+        validateDisciplineLabWorkLimit(labWork, errors);
+        validateGeographicConsistency(labWork, errors);
+        if (!errors.isEmpty()) {
+            throw new ValidationException(errors);
+        }
+    }
 
-        // Проверка ограничения по количеству LabWork на дисциплину
+    private void validateDisciplineLabWorkLimit(LabWork labWork, List<ValidationException.ValidationError> errors) {
         if (labWork.getDiscipline() != null && labWork.getDiscipline().getId() != null) {
             long labWorkCount = countLabWorksByDisciplineId(labWork.getDiscipline().getId());
             if (labWorkCount >= 7) {
@@ -109,38 +118,119 @@ public class ValidationService {
                                 labWork.getDiscipline().getName(), labWorkCount)));
             }
         }
+    }
 
-        if (!errors.isEmpty()) {
-            throw new ValidationException(errors);
+    private void validateGeographicConsistency(LabWork labWork, List<ValidationException.ValidationError> errors) {
+        Person author = labWork.getAuthor();
+        if (author == null) {
+            
+            return;
+        }
+        Location authorLocation = author.getLocation();
+        if (authorLocation == null) {
+            
+            return;
+        }
+
+        Coordinate labWorkCoordinate = labWork.getCoordinate();
+        if (labWorkCoordinate == null) {
+            
+            return;
+        }
+        
+        double distance = calculateDistance(
+                authorLocation.getX(), authorLocation.getY(),
+                labWorkCoordinate.getX(), labWorkCoordinate.getY()
+        );
+        
+        if (distance > 1000.0) {
+            errors.add(new ValidationException.ValidationError("GEOGRAPHIC_CONSISTENCY",
+                    String.format("Distance between author's location (%.2f, %.2f) " +
+                                    "and LabWork coordinate (%.2f, %.2f) is %.2f, which exceeds 1000",
+                            authorLocation.getX(), authorLocation.getY(),
+                            labWorkCoordinate.getX(), labWorkCoordinate.getY(),
+                            distance)));
         }
     }
 
-    // === Методы для комплексной валидации ===
+    private double calculateDistance(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+    }
 
     public void validateYamlResult(YamlParseResult result) {
         List<ValidationException.ValidationError> allErrors = new ArrayList<>();
 
-        // Проверка уникальности имен дисциплин в YAML и БД
         allErrors.addAll(validateUniqueDisciplineNames(result));
-
-        // Проверка уникальности имен LabWork в YAML и БД
         allErrors.addAll(validateUniqueLabWorkNames(result));
-
-        // Проверка уникальности координат в YAML и БД
         allErrors.addAll(validateUniqueCoordinates(result));
-
-        // Проверка баллов LabWork
         allErrors.addAll(validateLabWorkPointsInResult(result));
-
-        // Проверка ограничения по количеству LabWork на дисциплину
         allErrors.addAll(validateDisciplineLabWorkLimits(result));
-
+        allErrors.addAll(validateGeographicConsistencyInResult(result));
         if (!allErrors.isEmpty()) {
             throw new ValidationException(allErrors);
         }
     }
 
-    // === Вспомогательные методы для групповой валидации ===
+    private List<ValidationException.ValidationError> validateGeographicConsistencyInResult(YamlParseResult result) {
+        List<ValidationException.ValidationError> errors = new ArrayList<>();
+
+        for (LabWork labWork : result.getLabWorks()) {
+            
+            List<ValidationException.ValidationError> labWorkErrors = new ArrayList<>();
+            validateGeographicConsistency(labWork, labWorkErrors);
+
+            if (!labWorkErrors.isEmpty()) {
+                
+                for (ValidationException.ValidationError error : labWorkErrors) {
+                    errors.add(new ValidationException.ValidationError(
+                            error.getErrorCode(),
+                            String.format("LabWork '%s': %s",
+                                    labWork.getName() != null ? labWork.getName() : "Unnamed",
+                                    error.getMessage())
+                    ));
+                }
+            }
+        }
+
+        return errors;
+    }
+
+    
+
+    private void validateDisciplineUnique(Discipline discipline, List<ValidationException.ValidationError> errors) {
+        if (discipline.getName() == null) return;
+
+        Discipline existing = findDisciplineByName(discipline.getName());
+        if (existing != null && !Objects.equals(existing.getId(), discipline.getId())) {
+            errors.add(new ValidationException.ValidationError("DISCIPLINE_NAME_DUPLICATE_DB",
+                    "Discipline name already exists in database: '" + discipline.getName() + "'"));
+        }
+    }
+
+    private void validateLabWorkUnique(LabWork labWork, List<ValidationException.ValidationError> errors) {
+        if (labWork.getName() == null) return;
+
+        LabWork existing = findLabWorkByName(labWork.getName());
+        if (existing != null && !Objects.equals(existing.getId(), labWork.getId())) {
+            errors.add(new ValidationException.ValidationError("LABWORK_NAME_DUPLICATE_DB",
+                    "LabWork name already exists in database: '" + labWork.getName() + "'"));
+        }
+    }
+
+    private void validateCoordinateUnique(Coordinate coordinate, List<ValidationException.ValidationError> errors) {
+        Double x = coordinate.getX();
+        Double y = coordinate.getY();
+
+        if (x == null || y == null) return;
+
+        Coordinate existing = findCoordinateByXAndY(x, y);
+        if (existing != null && !Objects.equals(existing.getId(), coordinate.getId())) {
+            errors.add(new ValidationException.ValidationError("COORDINATE_DUPLICATE_DB",
+                    String.format("Coordinate already exists in database: (%.2f, %.2f)", x, y)));
+        }
+    }
+
+    
 
     private List<ValidationException.ValidationError> validateUniqueDisciplineNames(YamlParseResult result) {
         List<ValidationException.ValidationError> errors = new ArrayList<>();
@@ -151,7 +241,6 @@ public class ValidationService {
 
             if (name == null) continue;
 
-            // Проверка уникальности в рамках YAML
             if (seenNames.contains(name)) {
                 errors.add(new ValidationException.ValidationError("DISCIPLINE_NAME_DUPLICATE_YAML",
                         "Discipline name must be unique: '" + name + "' appears multiple times in YAML"));
@@ -159,7 +248,6 @@ public class ValidationService {
                 seenNames.add(name);
             }
 
-            // Проверка уникальности в БД
             Discipline existing = findDisciplineByName(name);
             if (existing != null) {
                 errors.add(new ValidationException.ValidationError("DISCIPLINE_NAME_DUPLICATE_DB",
@@ -179,7 +267,6 @@ public class ValidationService {
 
             if (name == null) continue;
 
-            // Проверка уникальности в рамках YAML
             if (seenNames.contains(name)) {
                 errors.add(new ValidationException.ValidationError("LABWORK_NAME_DUPLICATE_YAML",
                         "LabWork name must be unique: '" + name + "' appears multiple times in YAML"));
@@ -187,7 +274,6 @@ public class ValidationService {
                 seenNames.add(name);
             }
 
-            // Проверка уникальности в БД
             LabWork existing = findLabWorkByName(name);
             if (existing != null) {
                 errors.add(new ValidationException.ValidationError("LABWORK_NAME_DUPLICATE_DB",
@@ -210,7 +296,6 @@ public class ValidationService {
 
             String coordKey = String.format("(%.2f, %.2f)", x, y);
 
-            // Проверка уникальности в рамках YAML
             if (seenCoordinates.contains(coordKey)) {
                 errors.add(new ValidationException.ValidationError("COORDINATE_DUPLICATE_YAML",
                         "Coordinate must be unique: " + coordKey + " appears multiple times in YAML"));
@@ -218,7 +303,6 @@ public class ValidationService {
                 seenCoordinates.add(coordKey);
             }
 
-            // Проверка уникальности в БД
             Coordinate existing = findCoordinateByXAndY(x, y);
             if (existing != null) {
                 errors.add(new ValidationException.ValidationError("COORDINATE_DUPLICATE_DB",
@@ -246,7 +330,7 @@ public class ValidationService {
     private List<ValidationException.ValidationError> validateDisciplineLabWorkLimits(YamlParseResult result) {
         List<ValidationException.ValidationError> errors = new ArrayList<>();
 
-        // Группируем LabWork по дисциплинам в YAML
+        
         Map<Discipline, Integer> yamlLabWorkCountByDiscipline = new HashMap<>();
         for (LabWork labWork : result.getLabWorks()) {
             if (labWork.getDiscipline() != null) {
@@ -255,12 +339,11 @@ public class ValidationService {
             }
         }
 
-        // Для каждой дисциплины проверяем лимит
         for (Map.Entry<Discipline, Integer> entry : yamlLabWorkCountByDiscipline.entrySet()) {
             Discipline discipline = entry.getKey();
             Integer yamlCount = entry.getValue();
 
-            // Если у дисциплины есть ID, проверяем сколько LabWork уже в БД
+            
             if (discipline.getId() != null) {
                 long dbCount = countLabWorksByDisciplineId(discipline.getId());
                 long totalCount = dbCount + yamlCount;
@@ -277,7 +360,7 @@ public class ValidationService {
         return errors;
     }
 
-    // === Утилитарные методы для использования в других сервисах ===
+    
 
     public void validateForCreate(Object entity) {
         if (entity instanceof Color) {
@@ -303,11 +386,11 @@ public class ValidationService {
     }
 
     public void validateForUpdate(Object entity) {
-        // Для update валидация такая же, как для create
+        
         validateForCreate(entity);
     }
 
-    // === Вспомогательные методы для поиска в БД ===
+    
 
     private Discipline findDisciplineByName(String name) {
         if (name == null) return null;

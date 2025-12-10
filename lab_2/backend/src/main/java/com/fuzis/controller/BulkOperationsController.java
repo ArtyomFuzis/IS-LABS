@@ -39,7 +39,6 @@ public class BulkOperationsController {
                     .build();
 
         } catch (ValidationException e) {
-            // Обработка кастомных ошибок валидации
             List<String> errorMessages = e.getErrorMessages();
             String errorMessage = "Validation errors: " + String.join("; ", errorMessages);
 
@@ -48,7 +47,6 @@ public class BulkOperationsController {
                     .build();
 
         } catch (jakarta.validation.ConstraintViolationException e) {
-            // Ошибки валидации (constraint violations)
             StringBuilder violations = new StringBuilder();
             e.getConstraintViolations().forEach(v ->
                     violations.append(v.getPropertyPath()).append(": ").append(v.getMessage()).append("; "));

@@ -3,6 +3,7 @@ package com.fuzis.service;
 import com.fuzis.database.LabWorkRepository;
 import com.fuzis.entity.*;
 import com.fuzis.transferdata.ChangeDTO;
+import com.fuzis.util.Locks;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.FormParam;
@@ -21,6 +22,12 @@ public class LabWorkService {
 
     @Inject
     UtilityService utils;
+
+    @Inject
+    ValidationService validation;
+
+    @Inject
+    Locks locks;
 
     public List<LabWork> getAll(){
         return repo.getAll();
@@ -49,10 +56,18 @@ public class LabWorkService {
         var discipline = repo.get(discipline_id, Discipline.class);
         var author = repo.get(author_id, Person.class);
         var creation_date = creation_date_str == null ? ZonedDateTime.now() : Instant.ofEpochSecond(Long.parseLong(creation_date_str)).atZone(ZoneId.systemDefault());
-        if(id != null) {
-            repo.merge(new LabWork(id, name, coordinate, creation_date, description, difficulty, discipline, minimal_point, maximal_point, author));
+        LabWork new_obj;
+        synchronized (locks.getLock_insert_update()) {
+            if (id != null) {
+                new_obj = (new LabWork(id, name, coordinate, creation_date, description, difficulty, discipline, minimal_point, maximal_point, author));
+                validation.validateForUpdate(new_obj);
+                repo.merge(new_obj);
+            } else {
+                new_obj = (new LabWork(name, coordinate, creation_date, description, difficulty, discipline, minimal_point, maximal_point, author));
+                validation.validateForCreate(new_obj);
+                repo.save(new_obj);
+            }
         }
-        else repo.save(new LabWork(name, coordinate, creation_date, description, difficulty, discipline, minimal_point, maximal_point, author));
     }
 
     public List<LabWork> getPage(Integer page){

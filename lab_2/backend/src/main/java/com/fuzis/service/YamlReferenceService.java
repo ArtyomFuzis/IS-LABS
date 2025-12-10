@@ -36,28 +36,24 @@ public class YamlReferenceService {
 
         if (person == null) return;
 
-        // Разрешаем hairColor
         if (data.containsKey("hairColor")) {
             Object hairColorRef = data.get("hairColor");
             Color hairColor = resolveColorReference(hairColorRef, result);
             person.setHairColor(hairColor);
         }
 
-        // Разрешаем eyeColor
         if (data.containsKey("eyeColor")) {
             Object eyeColorRef = data.get("eyeColor");
             Color eyeColor = resolveColorReference(eyeColorRef, result);
             person.setEyeColor(eyeColor);
         }
 
-        // Разрешаем location
         if (data.containsKey("location")) {
             Object locationRef = data.get("location");
             Location location = resolveLocationReference(locationRef, result);
             person.setLocation(location);
         }
-
-        // Разрешаем nationality
+        
         if (data.containsKey("nationality")) {
             Object nationalityRef = data.get("nationality");
             Country nationality = resolveCountryReference(nationalityRef, result);
@@ -69,17 +65,16 @@ public class YamlReferenceService {
         if (ref instanceof String) {
             String refStr = (String) ref;
             if (refStr.startsWith("@")) {
-                // Это ссылка на временный идентификатор
+                
                 Object entity = result.getReferenceMap().get(refStr);
                 if (entity instanceof Color) {
                     return (Color) entity;
                 }
             } else {
-                // Это строковое значение - создаем новый Color
+                
                 Color color = new Color();
                 color.setVal(refStr);
 
-                // Проверяем, нет ли уже такого Color в result.getColors()
                 Color existingInResult = result.getColors().stream()
                         .filter(c -> refStr.equals(c.getVal()))
                         .findFirst()
@@ -89,16 +84,19 @@ public class YamlReferenceService {
                     return existingInResult;
                 }
 
-                // Добавляем в result.getColors() для последующей обработки
                 result.getColors().add(color);
                 return color;
             }
         } else if (ref instanceof Integer) {
-            // Это ID существующего Color - делегируем репозиторию
+            
             Integer id = (Integer) ref;
-            return referenceRepository.findColorById(id);
+            Color color = referenceRepository.findColorById(id);
+            if (color == null) {
+                throw new IllegalArgumentException("Color with id " + id + " not found");
+            }
+            return color;
         } else if (ref instanceof Map) {
-            // Встроенный объект Color
+            
             Map<String, Object> colorData = (Map<String, Object>) ref;
             Color color = new Color();
             color.setVal(colorData.get("val").toString());
@@ -108,127 +106,44 @@ public class YamlReferenceService {
                 result.getReferenceMap().put(identifier, color);
             }
 
-            // Добавляем в result.getColors()
             result.getColors().add(color);
             return color;
         }
         return null;
     }
 
-    private Country resolveCountryReference(Object ref, YamlParseResult result) {
-        if (ref instanceof String) {
-            String refStr = (String) ref;
-            if (refStr.startsWith("@")) {
-                Object entity = result.getReferenceMap().get(refStr);
-                if (entity instanceof Country) {
-                    return (Country) entity;
-                }
-            } else {
-                // Это строковое значение
-                Country country = new Country();
-                country.setVal(refStr);
-
-                // Проверяем, нет ли уже такого Country в result.getCountries()
-                Country existingInResult = result.getCountries().stream()
-                        .filter(c -> refStr.equals(c.getVal()))
-                        .findFirst()
-                        .orElse(null);
-
-                if (existingInResult != null) {
-                    return existingInResult;
-                }
-
-                result.getCountries().add(country);
-                return country;
-            }
-        } else if (ref instanceof Integer) {
-            Integer id = (Integer) ref;
-            return referenceRepository.findCountryById(id);
-        } else if (ref instanceof Map) {
-            Map<String, Object> countryData = (Map<String, Object>) ref;
-            Country country = new Country();
-            country.setVal(countryData.get("val").toString());
-
-            String identifier = (String) countryData.get("identifier");
-            if (identifier != null && identifier.startsWith("@")) {
-                result.getReferenceMap().put(identifier, country);
-            }
-
-            result.getCountries().add(country);
-            return country;
-        }
-        return null;
-    }
-
-    private Difficulty resolveDifficultyReference(Object ref, YamlParseResult result) {
-        if (ref instanceof String) {
-            String refStr = (String) ref;
-            if (refStr.startsWith("@")) {
-                Object entity = result.getReferenceMap().get(refStr);
-                if (entity instanceof Difficulty) {
-                    return (Difficulty) entity;
-                }
-            } else {
-                Difficulty difficulty = new Difficulty();
-                difficulty.setVal(refStr);
-
-                // Проверяем, нет ли уже такого Difficulty в result.getDifficulties()
-                Difficulty existingInResult = result.getDifficulties().stream()
-                        .filter(d -> refStr.equals(d.getVal()))
-                        .findFirst()
-                        .orElse(null);
-
-                if (existingInResult != null) {
-                    return existingInResult;
-                }
-
-                result.getDifficulties().add(difficulty);
-                return difficulty;
-            }
-        } else if (ref instanceof Integer) {
-            Integer id = (Integer) ref;
-            return referenceRepository.findDifficultyById(id);
-        } else if (ref instanceof Map) {
-            Map<String, Object> difficultyData = (Map<String, Object>) ref;
-            Difficulty difficulty = new Difficulty();
-            difficulty.setVal(difficultyData.get("val").toString());
-
-            String identifier = (String) difficultyData.get("identifier");
-            if (identifier != null && identifier.startsWith("@")) {
-                result.getReferenceMap().put(identifier, difficulty);
-            }
-
-            result.getDifficulties().add(difficulty);
-            return difficulty;
-        }
-        return null;
-    }
-
-
     private Location resolveLocationReference(Object ref, YamlParseResult result) {
         if (ref instanceof String) {
             String refStr = (String) ref;
             if (refStr.startsWith("@")) {
-                // Это ссылка на временный идентификатор
+                
                 Object entity = result.getReferenceMap().get(refStr);
                 if (entity instanceof Location) {
                     return (Location) entity;
                 }
             }
+        } else if (ref instanceof Integer) {
+            
+            Integer id = (Integer) ref;
+            Location location = referenceRepository.findLocationById(id);
+            if (location == null) {
+                throw new IllegalArgumentException("Location with id " + id + " not found");
+            }
+            return location;
         } else if (ref instanceof Map) {
-            // Встроенный объект Location
+            
             Map<String, Object> locationData = (Map<String, Object>) ref;
             String identifier = (String) locationData.get("identifier");
 
             if (identifier != null && identifier.startsWith("@")) {
-                // Проверяем, не создан ли уже объект с таким identifier
+                
                 Object existingEntity = result.getReferenceMap().get(identifier);
                 if (existingEntity instanceof Location) {
                     return (Location) existingEntity;
                 }
             }
 
-            // Создаем новую Location из данных
+            
             Location location = new Location();
             location.setName((String) locationData.get("name"));
             location.setX(convertToDouble(locationData.get("x")));
@@ -249,9 +164,46 @@ public class YamlReferenceService {
         return null;
     }
 
+    private Country resolveCountryReference(Object ref, YamlParseResult result) {
+        if (ref instanceof String) {
+            String refStr = (String) ref;
+            if (refStr.startsWith("@")) {
+                Object entity = result.getReferenceMap().get(refStr);
+                if (entity instanceof Country) {
+                    return (Country) entity;
+                }
+            } else {
+                
+                Country country = new Country();
+                country.setVal(refStr);
+                return country;
+            }
+        } else if (ref instanceof Integer) {
+            
+            Integer id = (Integer) ref;
+            Country country = referenceRepository.findCountryById(id);
+            if (country == null) {
+                throw new IllegalArgumentException("Country with id " + id + " not found");
+            }
+            return country;
+        } else if (ref instanceof Map) {
+            
+            Map<String, Object> countryData = (Map<String, Object>) ref;
+            Country country = new Country();
+            country.setVal(countryData.get("val").toString());
+
+            String identifier = (String) countryData.get("identifier");
+            if (identifier != null && identifier.startsWith("@")) {
+                result.getReferenceMap().put(identifier, country);
+            }
+
+            return country;
+        }
+        return null;
+    }
 
     private void resolveLabWorkReferences(Map<String, Object> data, YamlParseResult result) {
-        // Аналогичная логика для LabWork
+        
         String name = (String) data.get("name");
         LabWork labWork = result.getLabWorks().stream()
                 .filter(l -> name.equals(l.getName()))
@@ -260,28 +212,28 @@ public class YamlReferenceService {
 
         if (labWork == null) return;
 
-        // Разрешаем coordinate
+        
         if (data.containsKey("coordinate")) {
             Object coordinateRef = data.get("coordinate");
             Coordinate coordinate = resolveCoordinateReference(coordinateRef, result);
             labWork.setCoordinate(coordinate);
         }
 
-        // Разрешаем difficulty
+        
         if (data.containsKey("difficulty")) {
             Object difficultyRef = data.get("difficulty");
             Difficulty difficulty = resolveDifficultyReference(difficultyRef, result);
             labWork.setDifficulty(difficulty);
         }
 
-        // Разрешаем discipline
+        
         if (data.containsKey("discipline")) {
             Object disciplineRef = data.get("discipline");
             Discipline discipline = resolveDisciplineReference(disciplineRef, result);
             labWork.setDiscipline(discipline);
         }
 
-        // Разрешаем author
+        
         if (data.containsKey("author")) {
             Object authorRef = data.get("author");
             Person author = resolvePersonReference(authorRef, result);
@@ -298,8 +250,16 @@ public class YamlReferenceService {
                     return (Coordinate) entity;
                 }
             }
+        } else if (ref instanceof Integer) {
+            
+            Integer id = (Integer) ref;
+            Coordinate coordinate = referenceRepository.findCoordinateById(id);
+            if (coordinate == null) {
+                throw new IllegalArgumentException("Coordinate with id " + id + " not found");
+            }
+            return coordinate;
         } else if (ref instanceof Map) {
-            // Встроенный объект Coordinate
+            
             Map<String, Object> coordData = (Map<String, Object>) ref;
             String identifier = (String) coordData.get("identifier");
 
@@ -325,6 +285,30 @@ public class YamlReferenceService {
         return null;
     }
 
+    private Difficulty resolveDifficultyReference(Object ref, YamlParseResult result) {
+        if (ref instanceof String) {
+            String refStr = (String) ref;
+            if (refStr.startsWith("@")) {
+                Object entity = result.getReferenceMap().get(refStr);
+                if (entity instanceof Difficulty) {
+                    return (Difficulty) entity;
+                }
+            } else {
+                Difficulty difficulty = new Difficulty();
+                difficulty.setVal(refStr);
+                return difficulty;
+            }
+        } else if (ref instanceof Integer) {
+            Integer id = (Integer) ref;
+            Difficulty difficulty = referenceRepository.findDifficultyById(id);
+            if (difficulty == null) {
+                throw new IllegalArgumentException("Difficulty with id " + id + " not found");
+            }
+            return difficulty;
+        }
+        return null;
+    }
+
     private Discipline resolveDisciplineReference(Object ref, YamlParseResult result) {
         if (ref instanceof String) {
             String refStr = (String) ref;
@@ -334,8 +318,14 @@ public class YamlReferenceService {
                     return (Discipline) entity;
                 }
             }
+        } else if (ref instanceof Integer) {
+            Integer id = (Integer) ref;
+            Discipline discipline = referenceRepository.findDisciplineById(id);
+            if (discipline == null) {
+                throw new IllegalArgumentException("Discipline with id " + id + " not found");
+            }
+            return discipline;
         } else if (ref instanceof Map) {
-            // Встроенный объект Discipline
             Map<String, Object> discData = (Map<String, Object>) ref;
             String identifier = (String) discData.get("identifier");
 
@@ -373,8 +363,14 @@ public class YamlReferenceService {
                     return (Person) entity;
                 }
             }
+        } else if (ref instanceof Integer) {
+            Integer id = (Integer) ref;
+            Person person = referenceRepository.findPersonById(id);
+            if (person == null) {
+                throw new IllegalArgumentException("Person with id " + id + " not found");
+            }
+            return person;
         } else if (ref instanceof Map) {
-            // Встроенный объект Person (редкий случай)
             Map<String, Object> personData = (Map<String, Object>) ref;
             String identifier = (String) personData.get("identifier");
 
@@ -400,8 +396,7 @@ public class YamlReferenceService {
         Person person = new Person();
         person.setName((String) data.get("name"));
         person.setPassportId((String) data.get("passportId"));
-
-        // Рекурсивно разрешаем ссылки для встроенного Person
+        
         if (data.containsKey("hairColor")) {
             Object hairColorRef = data.get("hairColor");
             Color hairColor = resolveColorReference(hairColorRef, result);

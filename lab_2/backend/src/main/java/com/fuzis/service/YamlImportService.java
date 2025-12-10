@@ -2,8 +2,8 @@ package com.fuzis.service;
 
 import com.fuzis.database.*;
 import com.fuzis.entity.*;
-import com.fuzis.service.ValidationService;
 import com.fuzis.transferdata.inner.YamlParseResult;
+import com.fuzis.util.Locks;
 import com.fuzis.util.YamlParserBean;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -42,29 +42,30 @@ public class YamlImportService {
     @Inject
     private DisciplineRepository disciplineRepository;
 
+    @Inject
+    private Locks locks;
+
     public YamlParseResult parseYaml(InputStream yamlStream) {
         return yamlParser.parseYaml(yamlStream);
     }
 
     @Transactional(value = TxType.REQUIRED, rollbackOn = Exception.class)
-    public void importYaml(InputStream yamlStream) {
+    public synchronized void importYaml(InputStream yamlStream) {
         YamlParseResult result = parseYaml(yamlStream);
+        synchronized (locks.getLock_insert_update()) {
+            validationService.validateYamlResult(result);
 
-        // Валидация всего результата (бросает ValidationException при ошибках)
-        validationService.validateYamlResult(result);
+            saveAllColors(result);
+            saveAllCountries(result);
+            saveAllDifficulties(result);
+            saveAllCoordinates(result);
+            saveAllLocations(result);
+            saveAllPeople(result);
+            saveAllDisciplines(result);
+            saveAllLabWorks(result);
 
-        // Сохраняем в правильном порядке с учетом зависимостей
-        saveAllColors(result);
-        saveAllCountries(result);
-        saveAllDifficulties(result);
-        saveAllCoordinates(result);
-        saveAllLocations(result);
-        saveAllPeople(result);
-        saveAllDisciplines(result);
-        saveAllLabWorks(result);
-
-        // Принудительно флашим изменения для проверки constraint violations
-        flushAllRepositories();
+            flushAllRepositories();
+        }
     }
 
     private void saveAllColors(YamlParseResult result) {
@@ -174,7 +175,7 @@ public class YamlImportService {
 
     private void saveAllLabWorks(YamlParseResult result) {
         for (LabWork labWork : result.getLabWorks()) {
-            // Устанавливаем дату создания, если не задана
+            
             if (labWork.getCreationDate() == null) {
                 labWork.setCreationDate(ZonedDateTime.now());
             }

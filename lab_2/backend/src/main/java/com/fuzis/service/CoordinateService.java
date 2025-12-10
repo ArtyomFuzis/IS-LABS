@@ -2,6 +2,7 @@ package com.fuzis.service;
 
 import com.fuzis.database.CoordinateRepository;
 import com.fuzis.entity.Coordinate;
+import com.fuzis.util.Locks;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -16,6 +17,12 @@ public class CoordinateService {
 
     @Inject
     UtilityService utils;
+
+    @Inject
+    ValidationService  validation;
+
+    @Inject
+    Locks locks;
 
     public List<Coordinate> getAll(){
         return repo.getAll();
@@ -32,10 +39,18 @@ public class CoordinateService {
     public void create(Double x,
                        Double y,
                        Integer id){
-        if(id != null) {
-            repo.merge(new Coordinate(id,x,y));
+        Coordinate coordinate;
+        synchronized (locks.getLock_insert_update()) {
+            if (id != null) {
+                coordinate = new Coordinate(id, x, y);
+                validation.validateForUpdate(coordinate);
+                repo.merge(coordinate);
+            } else {
+                coordinate = new Coordinate(x, y);
+                validation.validateForCreate(coordinate);
+                repo.save(coordinate);
+            }
         }
-        else repo.save(new Coordinate(x,y));
     }
 
     public List<Coordinate> getPage(Integer page){

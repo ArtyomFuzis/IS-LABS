@@ -2,6 +2,7 @@ package com.fuzis.service;
 
 import com.fuzis.database.LocationRepository;
 import com.fuzis.entity.Location;
+import com.fuzis.util.Locks;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
@@ -15,6 +16,12 @@ public class LocationService {
 
     @Inject
     UtilityService utils;
+
+    @Inject
+    ValidationService validation;
+
+    @Inject
+    Locks locks;
 
     public List<Location> getAll(){
         return repo.getAll();
@@ -33,10 +40,18 @@ public class LocationService {
                        Double y,
                        Double z,
                        Integer id){
-        if(id != null) {
-            repo.merge(new Location(id,name,x,y,z));
+        Location location;
+        synchronized (locks.getLock_insert_update()) {
+            if (id != null) {
+                location = new Location(id, name, x, y, z);
+                validation.validateForUpdate(location);
+                repo.merge(location);
+            } else {
+                location = new Location(name, x, y, z);
+                validation.validateForCreate(location);
+                repo.save(location);
+            }
         }
-        else repo.save(new Location(name,x,y,z));
     }
 
     public List<Location> getPage(Integer page){
