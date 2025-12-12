@@ -2,9 +2,9 @@ package com.fuzis.service;
 
 import com.fuzis.database.LocationRepository;
 import com.fuzis.entity.Location;
-import com.fuzis.util.Locks;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,9 +20,6 @@ public class LocationService {
     @Inject
     ValidationService validation;
 
-    @Inject
-    Locks locks;
-
     public List<Location> getAll(){
         return repo.getAll();
     }
@@ -31,26 +28,27 @@ public class LocationService {
         return Collections.singletonList(repo.get(id));
     }
 
+    @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = Exception.class)
     public void deleteById(Integer id){
         repo.remove(repo.get(id));
     }
 
+    @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = Exception.class)
     public void create(String name,
                        Double x,
                        Double y,
                        Double z,
                        Integer id){
         Location location;
-        synchronized (locks.getLock_insert_update()) {
-            if (id != null) {
-                location = new Location(id, name, x, y, z);
-                validation.validateForUpdate(location);
-                repo.merge(location);
-            } else {
-                location = new Location(name, x, y, z);
-                validation.validateForCreate(location);
-                repo.save(location);
-            }
+
+        if (id != null) {
+            location = new Location(id, name, x, y, z);
+            validation.validateForUpdate(location);
+            repo.merge(location);
+        } else {
+            location = new Location(name, x, y, z);
+            validation.validateForCreate(location);
+            repo.save(location);
         }
     }
 

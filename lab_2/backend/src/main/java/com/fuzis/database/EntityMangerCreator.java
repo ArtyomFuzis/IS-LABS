@@ -1,12 +1,13 @@
 package com.fuzis.database;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
 
 import static com.fuzis.database.IDatabaseRepository.logger;
 
-@ApplicationScoped
+@RequestScoped
 public class EntityMangerCreator {
     private EntityManager entityManager;
 

@@ -2,9 +2,9 @@ package com.fuzis.service;
 
 import com.fuzis.database.CoordinateRepository;
 import com.fuzis.entity.Coordinate;
-import com.fuzis.util.Locks;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 
 import java.util.Collections;
@@ -21,8 +21,6 @@ public class CoordinateService {
     @Inject
     ValidationService  validation;
 
-    @Inject
-    Locks locks;
 
     public List<Coordinate> getAll(){
         return repo.getAll();
@@ -32,25 +30,27 @@ public class CoordinateService {
         return Collections.singletonList(repo.get(id));
     }
 
+    @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = Exception.class)
     public void deleteById(Integer id){
         repo.remove(repo.get(id));
+        repo.flush();
     }
 
+    @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = Exception.class)
     public void create(Double x,
                        Double y,
                        Integer id){
         Coordinate coordinate;
-        synchronized (locks.getLock_insert_update()) {
-            if (id != null) {
-                coordinate = new Coordinate(id, x, y);
-                validation.validateForUpdate(coordinate);
-                repo.merge(coordinate);
-            } else {
-                coordinate = new Coordinate(x, y);
-                validation.validateForCreate(coordinate);
-                repo.save(coordinate);
-            }
+        if (id != null) {
+            coordinate = new Coordinate(id, x, y);
+            validation.validateForUpdate(coordinate);
+            repo.merge(coordinate);
+        } else {
+            coordinate = new Coordinate(x, y);
+            validation.validateForCreate(coordinate);
+            repo.save(coordinate);
         }
+        repo.flush();
     }
 
     public List<Coordinate> getPage(Integer page){

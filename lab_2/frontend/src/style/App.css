@@ -110,15 +110,14 @@ button{
   display: flex;
 }
 
-.menu-extras{
+.menu-extras {
   display: flex;
   height: 80px;
-  width: 25%;
-  /*border-bottom-left-radius:  20px;*/
+  width: 35%; /* Увеличиваем ширину для двух кнопок */
   border-bottom-right-radius: 20px; 
   background-color: #005400;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around; /* Равномерное распределение */
   border-top: #690000 2px solid;
   border-left: #690000 2px solid;
 }
@@ -133,4 +132,13 @@ button{
 
 body{
   background-color: #104010;
+}
+
+
+
+/* Уменьшаем ширину кнопок в menu-extras */
+.menu-extras .menu-button-container {
+  width: 100px; /* Уменьшаем ширину кнопок */
+  margin-left: 10px;
+  margin-right: 10px;
 }

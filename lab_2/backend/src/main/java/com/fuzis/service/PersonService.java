@@ -5,9 +5,9 @@ import com.fuzis.entity.Color;
 import com.fuzis.entity.Country;
 import com.fuzis.entity.Location;
 import com.fuzis.entity.Person;
-import com.fuzis.util.Locks;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,9 +24,6 @@ public class PersonService {
     @Inject
     ValidationService validation;
 
-    @Inject
-    Locks locks;
-
     public List<Person> getAll(){
         return repo.getAll();
     }
@@ -35,10 +32,12 @@ public class PersonService {
         return Collections.singletonList(repo.get(id));
     }
 
+    @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = Exception.class)
     public void deleteById(Integer id){
         repo.remove(repo.get(id));
     }
 
+    @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = Exception.class)
     public void create(String name,
                        Integer eyeColorId,
                        Integer hairColorId,
@@ -48,19 +47,18 @@ public class PersonService {
                        Integer id){
         Location location = (locationId != null) ? repo.get(locationId, Location.class) : null;
         Person person;
-        synchronized (locks.getLock_insert_update()) {
-            if (id != null) {
-                person = (new Person(id, name, repo.get(eyeColorId, Color.class), repo.get(hairColorId, Color.class),
-                        location, passportId, repo.get(nationalityId, Country.class)));
-                validation.validateForUpdate(person);
-                repo.merge(person);
-            } else {
-                person = (new Person(name, repo.get(eyeColorId, Color.class), repo.get(hairColorId, Color.class),
-                        location, passportId, repo.get(nationalityId, Country.class)));
-                validation.validateForCreate(person);
-                repo.save(person);
-            }
+        if (id != null) {
+            person = (new Person(id, name, repo.get(eyeColorId, Color.class), repo.get(hairColorId, Color.class),
+                    location, passportId, repo.get(nationalityId, Country.class)));
+            validation.validateForUpdate(person);
+            repo.merge(person);
+        } else {
+            person = (new Person(name, repo.get(eyeColorId, Color.class), repo.get(hairColorId, Color.class),
+                    location, passportId, repo.get(nationalityId, Country.class)));
+            validation.validateForCreate(person);
+            repo.save(person);
         }
+
     }
 
     public List<Person> getPage(Integer page){

@@ -46,5 +46,14 @@ export const extra5 = async (id: string) => {
   return response.data;
 };
 
+export const bulkImport = async (fileContent: string) => {
+  const response = await axios.post(API_URL + '/operations/bulk', fileContent, {
+    headers: {
+      'Content-Type': 'text/plain'
+    }
+  });
+  return response.data;
+};
+
 
 

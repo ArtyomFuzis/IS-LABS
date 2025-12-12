@@ -43,16 +43,17 @@ public class YamlImportService {
     private DisciplineRepository disciplineRepository;
 
     @Inject
-    private Locks locks;
+    Locks locks;
 
     public YamlParseResult parseYaml(InputStream yamlStream) {
         return yamlParser.parseYaml(yamlStream);
     }
 
     @Transactional(value = TxType.REQUIRED, rollbackOn = Exception.class)
-    public synchronized void importYaml(InputStream yamlStream) {
+    public void importYaml(InputStream yamlStream) {
         YamlParseResult result = parseYaml(yamlStream);
         synchronized (locks.getLock_insert_update()) {
+
             validationService.validateYamlResult(result);
 
             saveAllColors(result);

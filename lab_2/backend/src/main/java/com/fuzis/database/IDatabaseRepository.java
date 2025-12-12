@@ -16,17 +16,14 @@ public interface IDatabaseRepository extends Serializable {
 
     EntityManager getEntityManager();
 
-    @Transactional
     default void save(Object obj) {
         this.getEntityManager().persist(obj);
     }
 
-    @Transactional
     default void merge(Object obj) {
         this.getEntityManager().merge(obj);
     }
 
-    @Transactional
     default void persist(Object obj) {
         this.getEntityManager().persist(obj);
     }
@@ -35,7 +32,6 @@ public interface IDatabaseRepository extends Serializable {
         this.getEntityManager().flush();
     }
 
-    @Transactional
     default void remove(Object obj) {
         this.getEntityManager().remove(obj);
     }

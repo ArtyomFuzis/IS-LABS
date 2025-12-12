@@ -185,3 +185,16 @@
     color: #005400;
     font-size: 0.8em;
 }
+
+.import-success {
+  text-align: center;
+  padding: 20px;
+}
+
+.import-error {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #993030;
+  border-radius: 5px;
+  background-color: rgba(105, 0, 0, 0.3);
+}

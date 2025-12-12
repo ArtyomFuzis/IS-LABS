@@ -2,9 +2,12 @@ import { useState } from 'react'
 import '../style/App.css'
 import Table from './Table.tsx'
 import Extras from './Extras.tsx'
+import BaseFrame from './frame/BaseFrame'
+import ImportModal from './frame/ImportModal'
 
 function App() {
   const [entity, setEntity] = useState("LabWork")
+  const [importModalOpen, setImportModalOpen] = useState(false)
   
 
   return (
@@ -49,8 +52,28 @@ function App() {
               Доп. функции
             </button>
           </div>
+          <div className='menu-button-container'>
+            <button 
+              className='menu-button' 
+              onClick={() => setImportModalOpen(true)}
+            >
+              Импорт
+            </button>
+          </div>
         </div>
       </div>
+      
+      {/* Модальное окно импорта */}
+      <BaseFrame 
+        isOpen={importModalOpen} 
+        onClose={() => setImportModalOpen(false)} 
+        zindex={1000} 
+        width="40%" 
+        height="40%"
+      >
+        <ImportModal onClose={() => setImportModalOpen(false)} />
+      </BaseFrame>
+      
       {entity=="Additional" ? (
         <Extras/>
       ) : (

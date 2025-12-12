@@ -1,0 +1,29 @@
+---
+  - type: Coordinate
+    identifier: "@coord1" #строковая метка, что можно использовать для того, чтобы ссылаться именно на этот объект (настоящий id должен быть подставлен позже базой данных)
+    x: 71.0
+    y: 1.0
+
+  - type: Location
+    x: -15.0
+    y: 55
+    identifier: "@locabc" #строковая метка обязательно начинается с @, обычная строка гарантированно не начинается с @
+    name: "TestLoc" 
+
+  - type: Person 
+    name: TestPerson
+    eyeColor: 1
+    hairColor: 'BLUE' 
+    location: "@locabc"
+    passportId: "bhsdfbihjkasb"
+  
+  - type: Person
+    name: TestPerson2
+    hairColor: 1
+    eyeColor: 1
+    identifier: "@MyPerson"
+    location: 
+      x: -22.0 
+      y: 56
+      identifier: "@locabc2" 
+      name: "TestLoc2"

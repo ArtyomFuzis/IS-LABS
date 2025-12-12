@@ -20,6 +20,7 @@
             <property name="hibernate.connection.username" value="s365395"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
             <property name="hibernate.jpa.compliance.query" value="false"/>
+            <property name="hibernate.connection.isolation" value="8"/>
         </properties>
     </persistence-unit>
 </persistence>
