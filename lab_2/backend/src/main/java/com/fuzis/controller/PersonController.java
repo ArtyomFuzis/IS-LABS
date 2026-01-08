@@ -1,17 +1,15 @@
 package com.fuzis.controller;
 
-import com.fuzis.database.PersonRepository;
 import com.fuzis.service.PersonService;
 import com.fuzis.transferdata.ChangeDTO;
 import com.fuzis.transferdata.SelectDTO;
 import com.fuzis.entity.*;
-import com.fuzis.service.UtilityService;
+import com.fuzis.util.Utils;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -22,7 +20,7 @@ public class PersonController {
     PersonService service;
 
     @Inject
-    UtilityService utilsService;
+    Utils utilsService;
 
     @GET
     @Path("/")
@@ -56,8 +54,8 @@ public class PersonController {
                                   @FormParam("passport_id") String passportId,
                                   @FormParam("nationality_id") Integer nationalityId,
                                   @FormParam("id") Integer id) {
-        service.create(name,eyeColorId,hairColorId,locationId,passportId,nationalityId,id);
-        return new ChangeDTO(true);
+        Integer res = service.create(name,eyeColorId,hairColorId,locationId,passportId,nationalityId,id);
+        return new ChangeDTO(true, res);
     }
 
     @GET

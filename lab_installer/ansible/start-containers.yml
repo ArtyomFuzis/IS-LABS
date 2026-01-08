@@ -37,5 +37,5 @@
           seconds: "{{wait_from_startup}}"
       
       - name: Check if wildfly alive
-        shell: "ps -eww | grep  {{base_path}}/autodeploy/wildfly/jboss-modules.jar | grep -v grep"
+        shell: "ps aux | grep  {{base_path}}/autodeploy/wildfly/jboss-modules.jar | grep -v grep"
       

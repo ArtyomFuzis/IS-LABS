@@ -1,18 +1,15 @@
 package com.fuzis.controller;
 
-import com.fuzis.database.CoordinateRepository;
 import com.fuzis.service.CoordinateService;
 import com.fuzis.transferdata.ChangeDTO;
 import com.fuzis.transferdata.SelectDTO;
 import com.fuzis.entity.Coordinate;
-import com.fuzis.entity.LabWork;
-import com.fuzis.service.UtilityService;
+import com.fuzis.util.Utils;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -22,7 +19,7 @@ public class CoordinateController {
     CoordinateService service;
 
     @Inject
-    UtilityService utilsService;
+    Utils utilsService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -51,8 +48,8 @@ public class CoordinateController {
     public ChangeDTO createCoordinate(@FormParam("x") Double x,
                                       @FormParam("y") Double y,
                                       @FormParam("id") Integer id) {
-        service.create(x,y,id);
-        return new ChangeDTO(true);
+        Integer res = service.create(x,y,id);
+        return new ChangeDTO(true, res);
     }
 
     @GET

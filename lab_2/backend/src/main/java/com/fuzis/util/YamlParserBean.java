@@ -1,17 +1,18 @@
 package com.fuzis.util;
 
 import com.fuzis.entity.*;
-import com.fuzis.transferdata.inner.YamlParseResult;
+import com.fuzis.exception.YamlSyntaxException;
 import com.fuzis.service.YamlReferenceService;
+import com.fuzis.transferdata.inner.YamlParseResult;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.error.YAMLException;
 
 import java.io.InputStream;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @ApplicationScoped
 public class YamlParserBean {
@@ -20,134 +21,250 @@ public class YamlParserBean {
     private YamlReferenceService yamlReferenceService;
 
     public YamlParseResult parseYaml(InputStream yamlStream) {
-        LoaderOptions loaderOptions = new LoaderOptions();
-        Yaml yaml = new Yaml(new Constructor(List.class, loaderOptions));
-        List<Map<String, Object>> yamlData = yaml.load(yamlStream);
+        try {
+            LoaderOptions loaderOptions = new LoaderOptions();
+            Yaml yaml = new Yaml(new Constructor(List.class, loaderOptions));
+            List<Map<String, Object>> yamlData = yaml.load(yamlStream);
 
-        YamlParseResult result = new YamlParseResult();
-
-        // Первый проход: создаем все объекты без разрешения ссылок
-        for (Map<String, Object> item : yamlData) {
-            String type = (String) item.get("type");
-            String identifier = (String) item.get("identifier");
-
-            Object entity = createEntity(type, item, result);
-
-            if (identifier != null) {
-                result.getReferenceMap().put(identifier, entity);
+            if (yamlData == null) {
+                throw new YamlSyntaxException("YAML file is empty or invalid");
             }
+
+            // Создаем результат парсинга
+            YamlParseResult result = new YamlParseResult();
+            result.setReferenceMap(new HashMap<>());
+            result.setColors(new ArrayList<>());
+            result.setCountries(new ArrayList<>());
+            result.setDifficulties(new ArrayList<>());
+            result.setCoordinates(new ArrayList<>());
+            result.setLocations(new ArrayList<>());
+            result.setPeople(new ArrayList<>());
+            result.setDisciplines(new ArrayList<>());
+            result.setLabWorks(new ArrayList<>());
+
+            // Сначала создаем все базовые объекты
+            for (Map<String, Object> item : yamlData) {
+                String type = (String) item.get("type");
+                if (type != null) {
+                    createObjectFromItem(item, type, result);
+                }
+            }
+
+            // Затем разрешаем ссылки между объектами
+            yamlReferenceService.resolveReferences(yamlData, result);
+
+            return result;
+
+        } catch (YAMLException e) {
+            throw new YamlSyntaxException("Invalid YAML syntax: " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new YamlSyntaxException("Error parsing YAML: " + e.getMessage(), e);
+        }
+    }
+
+    private void createObjectFromItem(Map<String, Object> item, String type, YamlParseResult result) {
+        switch (type) {
+            case "Color":
+                createColor(item, result);
+                break;
+            case "Country":
+                createCountry(item, result);
+                break;
+            case "Difficulty":
+                createDifficulty(item, result);
+                break;
+            case "Coordinate":
+                createCoordinate(item, result);
+                break;
+            case "Location":
+                createLocation(item, result);
+                break;
+            case "Person":
+                createPerson(item, result);
+                break;
+            case "Discipline":
+                createDiscipline(item, result);
+                break;
+            case "LabWork":
+                createLabWork(item, result);
+                break;
+            default:
+                throw new YamlSyntaxException("Unknown type in YAML: " + type);
+        }
+    }
+
+    private void createColor(Map<String, Object> item, YamlParseResult result) {
+        Color color = new Color();
+
+        // Если color задан как строка (например, "BLUE")
+        if (item.get("val") != null) {
+            color.setVal(item.get("val").toString());
+        } else if (item.get("value") != null) {
+            color.setVal(item.get("value").toString());
+        } else if (item.get("name") != null) {
+            color.setVal(item.get("name").toString());
         }
 
-        // Второй проход: разрешаем ссылки
-        yamlReferenceService.resolveReferences(yamlData, result);
+        if (color.getVal() != null) {
+            result.getColors().add(color);
 
-        return result;
+            // Если есть identifier, добавляем в referenceMap
+            String identifier = (String) item.get("identifier");
+            if (identifier != null && identifier.startsWith("@")) {
+                result.getReferenceMap().put(identifier, color);
+            }
+        }
     }
 
-    private Object createEntity(String type, Map<String, Object> data, YamlParseResult result) {
-        return switch (type) {
-            case "Coordinate" -> createCoordinate(data, result);
-            case "Location" -> createLocation(data, result);
-            case "Person" -> createPerson(data, result);
-            case "Color" -> createColor(data, result);
-            case "Country" -> createCountry(data, result);
-            case "Difficulty" -> createDifficulty(data, result);
-            case "Discipline" -> createDiscipline(data, result);
-            case "LabWork" -> createLabWork(data, result);
-            default -> throw new IllegalArgumentException("Unknown entity type: " + type);
-        };
+    private void createCountry(Map<String, Object> item, YamlParseResult result) {
+        Country country = new Country();
+
+        if (item.get("val") != null) {
+            country.setVal(item.get("val").toString());
+        } else if (item.get("value") != null) {
+            country.setVal(item.get("value").toString());
+        } else if (item.get("name") != null) {
+            country.setVal(item.get("name").toString());
+        }
+
+        if (country.getVal() != null) {
+            result.getCountries().add(country);
+
+            String identifier = (String) item.get("identifier");
+            if (identifier != null && identifier.startsWith("@")) {
+                result.getReferenceMap().put(identifier, country);
+            }
+        }
     }
 
-    private Coordinate createCoordinate(Map<String, Object> data, YamlParseResult result) {
+    private void createDifficulty(Map<String, Object> item, YamlParseResult result) {
+        Difficulty difficulty = new Difficulty();
+
+        if (item.get("val") != null) {
+            difficulty.setVal(item.get("val").toString());
+        } else if (item.get("value") != null) {
+            difficulty.setVal(item.get("value").toString());
+        } else if (item.get("name") != null) {
+            difficulty.setVal(item.get("name").toString());
+        }
+
+        if (difficulty.getVal() != null) {
+            result.getDifficulties().add(difficulty);
+
+            String identifier = (String) item.get("identifier");
+            if (identifier != null && identifier.startsWith("@")) {
+                result.getReferenceMap().put(identifier, difficulty);
+            }
+        }
+    }
+
+    private void createCoordinate(Map<String, Object> item, YamlParseResult result) {
         Coordinate coordinate = new Coordinate();
-        coordinate.setX(convertToDouble(data.get("x")));
-        coordinate.setY(convertToDouble(data.get("y")));
 
-        result.getCoordinates().add(coordinate);
-        return coordinate;
+        if (item.get("x") != null) {
+            coordinate.setX(convertToDouble(item.get("x")));
+        }
+
+        if (item.get("y") != null) {
+            coordinate.setY(convertToDouble(item.get("y")));
+        }
+
+        if (coordinate.getX() != null && coordinate.getY() != null) {
+            result.getCoordinates().add(coordinate);
+
+            String identifier = (String) item.get("identifier");
+            if (identifier != null && identifier.startsWith("@")) {
+                result.getReferenceMap().put(identifier, coordinate);
+            }
+        }
     }
 
-    private Location createLocation(Map<String, Object> data, YamlParseResult result) {
+    private void createLocation(Map<String, Object> item, YamlParseResult result) {
         Location location = new Location();
-        location.setName((String) data.get("name"));
-        location.setX(convertToDouble(data.get("x")));
-        location.setY(convertToDouble(data.get("y")));
 
-        if (data.containsKey("z")) {
-            location.setZ(convertToDouble(data.get("z")));
+        location.setName((String) item.get("name"));
+
+        if (item.get("x") != null) {
+            location.setX(convertToDouble(item.get("x")));
+        }
+
+        if (item.get("y") != null) {
+            location.setY(convertToDouble(item.get("y")));
+        }
+
+        if (item.get("z") != null) {
+            location.setZ(convertToDouble(item.get("z")));
         }
 
         result.getLocations().add(location);
-        return location;
-    }
 
-    private Person createPerson(Map<String, Object> data, YamlParseResult result) {
-        Person person = new Person();
-        person.setName((String) data.get("name"));
-        person.setPassportId((String) data.get("passportId"));
-
-        // Поля-ссылки будут установлены позже в YamlReferenceService
-        result.getPeople().add(person);
-        return person;
-    }
-
-    private Color createColor(Map<String, Object> data, YamlParseResult result) {
-        Color color = new Color();
-        color.setVal(data.get("val") != null ?
-                data.get("val").toString() :
-                resolveEnumValue(data, "Color"));
-
-        result.getColors().add(color);
-        return color;
-    }
-
-    private Country createCountry(Map<String, Object> data, YamlParseResult result) {
-        Country country = new Country();
-        country.setVal(data.get("val") != null ?
-                data.get("val").toString() :
-                resolveEnumValue(data, "Country"));
-
-        result.getCountries().add(country);
-        return country;
-    }
-
-    private Difficulty createDifficulty(Map<String, Object> data, YamlParseResult result) {
-        Difficulty difficulty = new Difficulty();
-        difficulty.setVal(data.get("val") != null ?
-                data.get("val").toString() :
-                resolveEnumValue(data, "Difficulty"));
-
-        result.getDifficulties().add(difficulty);
-        return difficulty;
-    }
-
-    private Discipline createDiscipline(Map<String, Object> data, YamlParseResult result) {
-        Discipline discipline = new Discipline();
-        discipline.setName((String) data.get("name"));
-
-        if (data.containsKey("labsCount")) {
-            discipline.setLabsCount(convertToInteger(data.get("labsCount")));
+        String identifier = (String) item.get("identifier");
+        if (identifier != null && identifier.startsWith("@")) {
+            result.getReferenceMap().put(identifier, location);
         }
+    }
+
+    private void createPerson(Map<String, Object> item, YamlParseResult result) {
+        Person person = new Person();
+
+        person.setName((String) item.get("name"));
+        person.setPassportId((String) item.get("passportId"));
+
+        // Обработка полей, которые могут быть ссылками или значениями
+        // Они будут обработаны в YamlReferenceService
+
+        result.getPeople().add(person);
+
+        String identifier = (String) item.get("identifier");
+        if (identifier != null && identifier.startsWith("@")) {
+            result.getReferenceMap().put(identifier, person);
+        }
+    }
+
+    private void createDiscipline(Map<String, Object> item, YamlParseResult result) {
+        Discipline discipline = new Discipline();
+
+        discipline.setName((String) item.get("name"));
+
+        if (item.get("labsCount") != null) {
+            discipline.setLabsCount(convertToInteger(item.get("labsCount")));
+        }
+
 
         result.getDisciplines().add(discipline);
-        return discipline;
+
+        String identifier = (String) item.get("identifier");
+        if (identifier != null && identifier.startsWith("@")) {
+            result.getReferenceMap().put(identifier, discipline);
+        }
     }
 
-    private LabWork createLabWork(Map<String, Object> data, YamlParseResult result) {
+    private void createLabWork(Map<String, Object> item, YamlParseResult result) {
         LabWork labWork = new LabWork();
-        labWork.setName((String) data.get("name"));
-        labWork.setDescription((String) data.get("description"));
 
-        if (data.containsKey("minimalPoint")) {
-            labWork.setMinimalPoint(convertToDouble(data.get("minimalPoint")));
+        labWork.setName((String) item.get("name"));
+
+        if (item.get("description") != null) {
+            labWork.setDescription((String) item.get("description"));
         }
 
-        if (data.containsKey("maximalPoint")) {
-            labWork.setMaximalPoint(convertToDouble(data.get("maximalPoint")));
+        if (item.get("minimalPoint") != null) {
+            labWork.setMinimalPoint(convertToDouble(item.get("minimalPoint")));
         }
+
+        if (item.get("maximumPoint") != null) {
+            labWork.setMaximalPoint(convertToDouble(item.get("maximumPoint")));
+        }
+
+        // Обработка полей, которые могут быть ссылками
+        // Они будут обработаны в YamlReferenceService
 
         result.getLabWorks().add(labWork);
-        return labWork;
+
+        String identifier = (String) item.get("identifier");
+        if (identifier != null && identifier.startsWith("@")) {
+            result.getReferenceMap().put(identifier, labWork);
+        }
     }
 
     private Double convertToDouble(Object value) {
@@ -160,15 +277,5 @@ public class YamlParserBean {
         if (value == null) return null;
         if (value instanceof Number) return ((Number) value).intValue();
         return Integer.parseInt(value.toString());
-    }
-
-    private String resolveEnumValue(Map<String, Object> data, String type) {
-        Object value = data.get("id") != null ? data.get("id") : data.get("val");
-        if (value instanceof Integer) {
-            // Если задан ID, делегируем поиск в базе данных YamlReferenceRepository
-            // через YamlReferenceService
-            return yamlReferenceService.resolveEnumValueById(type, (Integer) value);
-        }
-        return value != null ? value.toString() : null;
     }
 }

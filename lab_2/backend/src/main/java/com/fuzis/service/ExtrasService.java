@@ -4,6 +4,7 @@ import com.fuzis.database.ExtrasRepository;
 import com.fuzis.entity.LabWork;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ public class ExtrasService
     @Inject
     ExtrasRepository repo;
 
+    @Transactional
     public void deleteAllLabsByAuthorId(Integer id){
         var author = repo.getPerson(id);
         System.out.println("Found size: " + author.getLabs().size());
@@ -39,6 +41,7 @@ public class ExtrasService
                 .stream().toList();
     }
 
+    @Transactional
     public boolean postIncreaseDifficulty(Integer id, Integer steps){
         var lab = repo.getLabWork(id);
         var new_difficulty = repo.getDifficulty(lab.getDifficulty().getId()+steps);
@@ -52,6 +55,7 @@ public class ExtrasService
         }
     }
 
+    @Transactional
     public void deleteLabFromDiscipline(Integer id){
         var lab = repo.getLabWork(id);
         lab.setDiscipline(null);

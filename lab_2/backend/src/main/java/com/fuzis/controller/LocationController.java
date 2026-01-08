@@ -1,11 +1,10 @@
 package com.fuzis.controller;
 
-import com.fuzis.database.LocationRepository;
 import com.fuzis.service.LocationService;
 import com.fuzis.transferdata.ChangeDTO;
 import com.fuzis.transferdata.SelectDTO;
 import com.fuzis.entity.*;
-import com.fuzis.service.UtilityService;
+import com.fuzis.util.Utils;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -21,7 +20,7 @@ public class LocationController {
     LocationService service;
 
     @Inject
-    UtilityService utilsService;
+    Utils utilsService;
 
     @GET
     @Path("/")
@@ -53,8 +52,8 @@ public class LocationController {
                                     @FormParam("y") Double y,
                                     @FormParam("z") Double z,
                                     @FormParam("id") Integer id) {
-        service.create(name,x,y,z,id);
-        return new ChangeDTO(true);
+        Integer res = service.create(name,x,y,z,id);
+        return new ChangeDTO(true, res);
     }
 
     @GET

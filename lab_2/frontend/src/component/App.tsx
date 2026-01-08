@@ -68,8 +68,8 @@ function App() {
         isOpen={importModalOpen} 
         onClose={() => setImportModalOpen(false)} 
         zindex={1000} 
-        width="40%" 
-        height="40%"
+        width="65%" 
+        height="80%"
       >
         <ImportModal onClose={() => setImportModalOpen(false)} />
       </BaseFrame>

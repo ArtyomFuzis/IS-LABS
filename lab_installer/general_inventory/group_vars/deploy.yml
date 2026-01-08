@@ -3,9 +3,9 @@
   nginx_main_server_port: 8019
   #tomcat_server_port: 8020
   wildfly_http_server_port: 8020
-  wildfly_management_http_server_port: 8021
-  wildfly_https_server_port: 8022
-  wildfly_management_https_server_port: 8023
+  wildfly_management_http_server_port: 8022
+  wildfly_https_server_port: 8023
+  wildfly_management_https_server_port: 8024
 
   # Менять не рекомендуется.  
   java_home: "/usr/local/openjdk17" # Путь жабы на гелиосе

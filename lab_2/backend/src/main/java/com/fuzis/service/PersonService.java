@@ -5,6 +5,7 @@ import com.fuzis.entity.Color;
 import com.fuzis.entity.Country;
 import com.fuzis.entity.Location;
 import com.fuzis.entity.Person;
+import com.fuzis.util.Utils;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -19,7 +20,7 @@ public class PersonService {
     PersonRepository repo;
 
     @Inject
-    UtilityService utils;
+    Utils utils;
 
     @Inject
     ValidationService validation;
@@ -38,7 +39,7 @@ public class PersonService {
     }
 
     @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = Exception.class)
-    public void create(String name,
+    public Integer create(String name,
                        Integer eyeColorId,
                        Integer hairColorId,
                        Integer locationId,
@@ -50,14 +51,15 @@ public class PersonService {
         if (id != null) {
             person = (new Person(id, name, repo.get(eyeColorId, Color.class), repo.get(hairColorId, Color.class),
                     location, passportId, repo.get(nationalityId, Country.class)));
-            validation.validateForUpdate(person);
+            validation.validatePerson(person);
             repo.merge(person);
         } else {
             person = (new Person(name, repo.get(eyeColorId, Color.class), repo.get(hairColorId, Color.class),
                     location, passportId, repo.get(nationalityId, Country.class)));
-            validation.validateForCreate(person);
+            validation.validatePerson(person);
             repo.save(person);
         }
+        return person.getId();
 
     }
 

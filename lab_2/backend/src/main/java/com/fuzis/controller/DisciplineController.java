@@ -1,19 +1,15 @@
 package com.fuzis.controller;
 
-import com.fuzis.database.DisciplineRepository;
-import com.fuzis.entity.Coordinate;
 import com.fuzis.service.DisciplineService;
 import com.fuzis.transferdata.ChangeDTO;
 import com.fuzis.transferdata.SelectDTO;
 import com.fuzis.entity.Discipline;
-import com.fuzis.entity.LabWork;
-import com.fuzis.service.UtilityService;
+import com.fuzis.util.Utils;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -24,7 +20,7 @@ public class DisciplineController {
     DisciplineService service;
 
     @Inject
-    UtilityService utilsService;
+    Utils utilsService;
 
     @GET
     @Path("/")
@@ -54,8 +50,8 @@ public class DisciplineController {
     public ChangeDTO createDiscipline(@FormParam("name") String name,
                                       @FormParam("labs_count") Integer labs_count,
                                       @FormParam("id") Integer id) {
-        service.create(name,labs_count,id);
-        return new ChangeDTO(true);
+        Integer res = service.create(name,labs_count,id);
+        return new ChangeDTO(true, res);
     }
 
     @GET

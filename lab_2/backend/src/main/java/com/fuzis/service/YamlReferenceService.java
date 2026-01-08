@@ -53,7 +53,7 @@ public class YamlReferenceService {
             Location location = resolveLocationReference(locationRef, result);
             person.setLocation(location);
         }
-        
+
         if (data.containsKey("nationality")) {
             Object nationalityRef = data.get("nationality");
             Country nationality = resolveCountryReference(nationalityRef, result);
@@ -65,13 +65,11 @@ public class YamlReferenceService {
         if (ref instanceof String) {
             String refStr = (String) ref;
             if (refStr.startsWith("@")) {
-                
                 Object entity = result.getReferenceMap().get(refStr);
                 if (entity instanceof Color) {
                     return (Color) entity;
                 }
             } else {
-                
                 Color color = new Color();
                 color.setVal(refStr);
 
@@ -88,7 +86,6 @@ public class YamlReferenceService {
                 return color;
             }
         } else if (ref instanceof Integer) {
-            
             Integer id = (Integer) ref;
             Color color = referenceRepository.findColorById(id);
             if (color == null) {
@@ -96,7 +93,6 @@ public class YamlReferenceService {
             }
             return color;
         } else if (ref instanceof Map) {
-            
             Map<String, Object> colorData = (Map<String, Object>) ref;
             Color color = new Color();
             color.setVal(colorData.get("val").toString());
@@ -116,14 +112,12 @@ public class YamlReferenceService {
         if (ref instanceof String) {
             String refStr = (String) ref;
             if (refStr.startsWith("@")) {
-                
                 Object entity = result.getReferenceMap().get(refStr);
                 if (entity instanceof Location) {
                     return (Location) entity;
                 }
             }
         } else if (ref instanceof Integer) {
-            
             Integer id = (Integer) ref;
             Location location = referenceRepository.findLocationById(id);
             if (location == null) {
@@ -131,19 +125,16 @@ public class YamlReferenceService {
             }
             return location;
         } else if (ref instanceof Map) {
-            
             Map<String, Object> locationData = (Map<String, Object>) ref;
             String identifier = (String) locationData.get("identifier");
 
             if (identifier != null && identifier.startsWith("@")) {
-                
                 Object existingEntity = result.getReferenceMap().get(identifier);
                 if (existingEntity instanceof Location) {
                     return (Location) existingEntity;
                 }
             }
 
-            
             Location location = new Location();
             location.setName((String) locationData.get("name"));
             location.setX(convertToDouble(locationData.get("x")));
@@ -173,13 +164,11 @@ public class YamlReferenceService {
                     return (Country) entity;
                 }
             } else {
-                
                 Country country = new Country();
                 country.setVal(refStr);
                 return country;
             }
         } else if (ref instanceof Integer) {
-            
             Integer id = (Integer) ref;
             Country country = referenceRepository.findCountryById(id);
             if (country == null) {
@@ -187,7 +176,6 @@ public class YamlReferenceService {
             }
             return country;
         } else if (ref instanceof Map) {
-            
             Map<String, Object> countryData = (Map<String, Object>) ref;
             Country country = new Country();
             country.setVal(countryData.get("val").toString());
@@ -203,7 +191,6 @@ public class YamlReferenceService {
     }
 
     private void resolveLabWorkReferences(Map<String, Object> data, YamlParseResult result) {
-        
         String name = (String) data.get("name");
         LabWork labWork = result.getLabWorks().stream()
                 .filter(l -> name.equals(l.getName()))
@@ -212,28 +199,24 @@ public class YamlReferenceService {
 
         if (labWork == null) return;
 
-        
         if (data.containsKey("coordinate")) {
             Object coordinateRef = data.get("coordinate");
             Coordinate coordinate = resolveCoordinateReference(coordinateRef, result);
             labWork.setCoordinate(coordinate);
         }
 
-        
         if (data.containsKey("difficulty")) {
             Object difficultyRef = data.get("difficulty");
             Difficulty difficulty = resolveDifficultyReference(difficultyRef, result);
             labWork.setDifficulty(difficulty);
         }
 
-        
         if (data.containsKey("discipline")) {
             Object disciplineRef = data.get("discipline");
             Discipline discipline = resolveDisciplineReference(disciplineRef, result);
             labWork.setDiscipline(discipline);
         }
 
-        
         if (data.containsKey("author")) {
             Object authorRef = data.get("author");
             Person author = resolvePersonReference(authorRef, result);
@@ -251,7 +234,6 @@ public class YamlReferenceService {
                 }
             }
         } else if (ref instanceof Integer) {
-            
             Integer id = (Integer) ref;
             Coordinate coordinate = referenceRepository.findCoordinateById(id);
             if (coordinate == null) {
@@ -259,7 +241,6 @@ public class YamlReferenceService {
             }
             return coordinate;
         } else if (ref instanceof Map) {
-            
             Map<String, Object> coordData = (Map<String, Object>) ref;
             String identifier = (String) coordData.get("identifier");
 
@@ -396,7 +377,7 @@ public class YamlReferenceService {
         Person person = new Person();
         person.setName((String) data.get("name"));
         person.setPassportId((String) data.get("passportId"));
-        
+
         if (data.containsKey("hairColor")) {
             Object hairColorRef = data.get("hairColor");
             Color hairColor = resolveColorReference(hairColorRef, result);

@@ -2,6 +2,7 @@ package com.fuzis.service;
 
 import com.fuzis.database.LocationRepository;
 import com.fuzis.entity.Location;
+import com.fuzis.util.Utils;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -15,7 +16,7 @@ public class LocationService {
     LocationRepository repo;
 
     @Inject
-    UtilityService utils;
+    Utils utils;
 
     @Inject
     ValidationService validation;
@@ -34,7 +35,7 @@ public class LocationService {
     }
 
     @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = Exception.class)
-    public void create(String name,
+    public Integer create(String name,
                        Double x,
                        Double y,
                        Double z,
@@ -43,13 +44,14 @@ public class LocationService {
 
         if (id != null) {
             location = new Location(id, name, x, y, z);
-            validation.validateForUpdate(location);
+            validation.validateLocation(location);
             repo.merge(location);
         } else {
             location = new Location(name, x, y, z);
-            validation.validateForCreate(location);
+            validation.validateLocation(location);
             repo.save(location);
         }
+        return location.getId();
     }
 
     public List<Location> getPage(Integer page){

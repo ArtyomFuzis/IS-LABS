@@ -1,20 +1,15 @@
 package com.fuzis.controller;
 
-import com.fuzis.database.LabWorkRepository;
 import com.fuzis.service.LabWorkService;
 import com.fuzis.transferdata.ChangeDTO;
 import com.fuzis.transferdata.SelectDTO;
 import com.fuzis.entity.*;
-import com.fuzis.service.UtilityService;
+import com.fuzis.util.Utils;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -25,7 +20,7 @@ public class LabWorkController {
     LabWorkService service;
 
     @Inject
-    UtilityService utilsService;
+    Utils utilsService;
 
     @GET
     @Path("/")
@@ -63,8 +58,8 @@ public class LabWorkController {
                                     @FormParam("author_id") Integer author_id,
                                     @FormParam("id") Integer id
                                     ) {
-        service.create(name,coordinate_id,creation_date_str,description,difficulty_id,discipline_id,minimal_point,maximal_point,author_id,id);
-        return new ChangeDTO(true);
+        Integer res = service.create(name,coordinate_id,creation_date_str,description,difficulty_id,discipline_id,minimal_point,maximal_point,author_id,id);
+        return new ChangeDTO(true, res);
     }
 
     @GET

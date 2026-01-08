@@ -2,8 +2,8 @@ package com.fuzis.service;
 
 import com.fuzis.database.DisciplineRepository;
 import com.fuzis.entity.Discipline;
+import com.fuzis.util.Utils;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
@@ -19,7 +19,7 @@ public class DisciplineService {
     ValidationService validation;
 
     @Inject
-    UtilityService utils;
+    Utils utils;
 
     public List<Discipline> getAll(){
         return repo.getAll();
@@ -35,19 +35,20 @@ public class DisciplineService {
     }
 
     @Transactional
-    public void create(String name,
+    public Integer create(String name,
                        Integer labs_count,
                        Integer id){
         Discipline discipline;
         if (id != null) {
             discipline = (new Discipline(id, name, labs_count));
-            validation.validateForUpdate(discipline);
+            validation.validateDiscipline(discipline);
             repo.merge(discipline);
         } else {
             discipline = (new Discipline(name, labs_count));
-            validation.validateForCreate(discipline);
+            validation.validateDiscipline(discipline);
             repo.save(discipline);
         }
+        return discipline.getId();
     }
 
     public List<Discipline> getPage(Integer page){

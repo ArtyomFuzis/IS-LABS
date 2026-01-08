@@ -2,10 +2,10 @@ package com.fuzis.service;
 
 import com.fuzis.database.LabWorkRepository;
 import com.fuzis.entity.*;
-import com.fuzis.transferdata.ChangeDTO;
+import com.fuzis.util.Utils;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.FormParam;
+import jakarta.transaction.Transactional;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -20,7 +20,7 @@ public class LabWorkService {
     LabWorkRepository repo;
 
     @Inject
-    UtilityService utils;
+    Utils utils;
 
     @Inject
     ValidationService validation;
@@ -33,11 +33,13 @@ public class LabWorkService {
         return Collections.singletonList(repo.get(id));
     }
 
+    @Transactional
     public void deleteById(Integer id){
         repo.remove(repo.get(id));
     }
 
-    public void create(String name,
+    @Transactional
+    public Integer create(String name,
                        Integer coordinate_id,
                        String creation_date_str,
                        String description,
@@ -55,13 +57,14 @@ public class LabWorkService {
         LabWork new_obj;
         if (id != null) {
             new_obj = (new LabWork(id, name, coordinate, creation_date, description, difficulty, discipline, minimal_point, maximal_point, author));
-            validation.validateForUpdate(new_obj);
+            validation.validateLabWork(new_obj);
             repo.merge(new_obj);
         } else {
             new_obj = (new LabWork(name, coordinate, creation_date, description, difficulty, discipline, minimal_point, maximal_point, author));
-            validation.validateForCreate(new_obj);
+            validation.validateLabWork(new_obj);
             repo.save(new_obj);
         }
+        return new_obj.getId();
     }
 
     public List<LabWork> getPage(Integer page){
