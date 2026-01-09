@@ -30,7 +30,7 @@ public class YamlParserBean {
                 throw new YamlSyntaxException("YAML file is empty or invalid");
             }
 
-            // Создаем результат парсинга
+
             YamlParseResult result = new YamlParseResult();
             result.setReferenceMap(new HashMap<>());
             result.setColors(new ArrayList<>());
@@ -42,7 +42,7 @@ public class YamlParserBean {
             result.setDisciplines(new ArrayList<>());
             result.setLabWorks(new ArrayList<>());
 
-            // Сначала создаем все базовые объекты
+
             for (Map<String, Object> item : yamlData) {
                 String type = (String) item.get("type");
                 if (type != null) {
@@ -50,7 +50,7 @@ public class YamlParserBean {
                 }
             }
 
-            // Затем разрешаем ссылки между объектами
+
             yamlReferenceService.resolveReferences(yamlData, result);
 
             return result;
@@ -96,7 +96,7 @@ public class YamlParserBean {
     private void createColor(Map<String, Object> item, YamlParseResult result) {
         Color color = new Color();
 
-        // Если color задан как строка (например, "BLUE")
+
         if (item.get("val") != null) {
             color.setVal(item.get("val").toString());
         } else if (item.get("value") != null) {
@@ -108,7 +108,7 @@ public class YamlParserBean {
         if (color.getVal() != null) {
             result.getColors().add(color);
 
-            // Если есть identifier, добавляем в referenceMap
+
             String identifier = (String) item.get("identifier");
             if (identifier != null && identifier.startsWith("@")) {
                 result.getReferenceMap().put(identifier, color);
@@ -210,8 +210,6 @@ public class YamlParserBean {
         person.setName((String) item.get("name"));
         person.setPassportId((String) item.get("passportId"));
 
-        // Обработка полей, которые могут быть ссылками или значениями
-        // Они будут обработаны в YamlReferenceService
 
         result.getPeople().add(person);
 
@@ -256,8 +254,6 @@ public class YamlParserBean {
             labWork.setMaximalPoint(convertToDouble(item.get("maximumPoint")));
         }
 
-        // Обработка полей, которые могут быть ссылками
-        // Они будут обработаны в YamlReferenceService
 
         result.getLabWorks().add(labWork);
 

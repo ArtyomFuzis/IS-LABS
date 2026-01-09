@@ -29,10 +29,7 @@ public class YamlReferenceService {
 
     private void resolvePersonReferences(Map<String, Object> data, YamlParseResult result) {
         String name = (String) data.get("name");
-        Person person = result.getPeople().stream()
-                .filter(p -> name.equals(p.getName()))
-                .findFirst()
-                .orElse(null);
+        Person person = result.getPeople().stream().filter(p -> name.equals(p.getName())).findFirst().orElse(null);
 
         if (person == null) return;
 
@@ -73,10 +70,7 @@ public class YamlReferenceService {
                 Color color = new Color();
                 color.setVal(refStr);
 
-                Color existingInResult = result.getColors().stream()
-                        .filter(c -> refStr.equals(c.getVal()))
-                        .findFirst()
-                        .orElse(null);
+                Color existingInResult = result.getColors().stream().filter(c -> refStr.equals(c.getVal())).findFirst().orElse(null);
 
                 if (existingInResult != null) {
                     return existingInResult;
@@ -192,10 +186,7 @@ public class YamlReferenceService {
 
     private void resolveLabWorkReferences(Map<String, Object> data, YamlParseResult result) {
         String name = (String) data.get("name");
-        LabWork labWork = result.getLabWorks().stream()
-                .filter(l -> name.equals(l.getName()))
-                .findFirst()
-                .orElse(null);
+        LabWork labWork = result.getLabWorks().stream().filter(l -> name.equals(l.getName())).findFirst().orElse(null);
 
         if (labWork == null) return;
 

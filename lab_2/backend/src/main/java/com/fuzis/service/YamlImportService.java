@@ -58,14 +58,14 @@ public class YamlImportService {
         try {
             YamlParseResult result = parseYaml(yamlStream);
 
-            // Подсчет общего количества объектов для импорта
+
             int totalObjects = calculateTotalObjects(result);
             history.setImportedObjects(totalObjects);
 
-            // Проверка уникальности в рамках YAML файла
+
             validateYamlUniqueness(result);
 
-            // Валидация и сохранение каждого объекта
+
             log.warn("it started 123");
             saveAllColors(result);
             saveAllCountries(result);
@@ -77,31 +77,31 @@ public class YamlImportService {
             saveAllLabWorks(result);
             log.warn("it finished 123");
 
-            // Успешный импорт
+
             history.setStatus("SUCCESS");
 
         } catch (YamlSyntaxException e) {
-            // Ошибка синтаксиса YAML
+
             history.setStatus("SYNTAX_ERROR");
             history.setImportedObjects(0);
             history.setErrorMessage(e.getMessage());
             throw e;
 
         } catch (ValidationException e) {
-            // Ошибка валидации
+
             history.setStatus("VALIDATION_ERROR");
             history.setImportedObjects(0);
             history.setErrorMessage(e.getMessage());
             throw e;
 
         } catch (Exception e) {
-            // Другие ошибки
+
             history.setStatus("ERROR");
             history.setImportedObjects(0);
             history.setErrorMessage(e.getMessage());
             throw e;
         } finally {
-            // Всегда сохраняем историю, даже при ошибках
+
             importHistoryRepository.save(history);
         }
     }
@@ -120,7 +120,7 @@ public class YamlImportService {
     }
 
     private void validateYamlUniqueness(YamlParseResult result) {
-        // Проверка уникальности имен дисциплин в YAML
+
         Set<String> disciplineNames = new HashSet<>();
         for (Discipline discipline : result.getDisciplines()) {
             if (discipline.getName() != null) {
@@ -131,7 +131,7 @@ public class YamlImportService {
             }
         }
 
-        // Проверка уникальности имен LabWork в YAML
+
         Set<String> labWorkNames = new HashSet<>();
         for (LabWork labWork : result.getLabWorks()) {
             if (labWork.getName() != null) {
@@ -142,7 +142,7 @@ public class YamlImportService {
             }
         }
 
-        // Проверка уникальности координат в YAML
+
         Set<String> coordinates = new HashSet<>();
         for (Coordinate coordinate : result.getCoordinates()) {
             if (coordinate.getX() != null && coordinate.getY() != null) {
@@ -154,7 +154,7 @@ public class YamlImportService {
             }
         }
 
-        // Проверка уникальности passportId в YAML
+
         Set<String> passportIds = new HashSet<>();
         for (Person person : result.getPeople()) {
             if (person.getPassportId() != null) {
@@ -280,12 +280,12 @@ public class YamlImportService {
 
     private void saveAllLabWorks(YamlParseResult result) {
         for (LabWork labWork : result.getLabWorks()) {
-            // Установка даты создания, если не указана
+
             if (labWork.getCreationDate() == null) {
                 labWork.setCreationDate(ZonedDateTime.now());
             }
 
-            // Валидация LabWork и его зависимостей
+
             validationService.validateLabWork(labWork);
 
             labWorkRepository.save(labWork);
@@ -298,7 +298,7 @@ public class YamlImportService {
         referenceMap.entrySet().stream().filter(entry -> entry.getValue() == oldEntity).forEach(entry -> entry.setValue(newEntity));
     }
 
-    // Метод для получения истории импорта
+
     public List<YamlImportHistory> getImportHistory(int limit) {
         return importHistoryRepository.findRecentImports(limit);
     }

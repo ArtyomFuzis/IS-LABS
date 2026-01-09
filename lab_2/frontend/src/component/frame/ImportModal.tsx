@@ -82,30 +82,34 @@ function ImportModal({ onClose }: { onClose: () => void }) {
               const errorText = result.text || '';
               setErrorDetails(errorText);
               
+              // Определяем обобщенное сообщение об ошибке
+              let errorMessage = 'неизвестная ошибка';
+              
               switch (result.reason) {
                 case 'ValidationError':
+                  errorMessage = 'ошибка валидации';
+                  break;
                 case 'YamlSyntaxError':
-                  // Для ValidationError и YamlSyntaxError показываем текст ошибки
-                  setError(errorText || 'Ошибка валидации данных');
+                  errorMessage = 'ошибка синтаксиса';
                   break;
                 case 'ConstraintViolation':
-                  // Для ConstraintViolation показываем общее сообщение
-                  setError('Ошибка вторичной валидации');
+                  errorMessage = 'ошибка вторичной валидации';
                   break;
                 case 'UnknownException':
                   // Если это UnknownException, но не TransactionRequiredException
                   if (result.text && result.text.includes('TransactionRequiredException')) {
-                    setError('Ошибка вторичной валидации');
+                    errorMessage = 'ошибка вторичной валидации';
                   } else {
-                    setError('Неизвестная ошибка сервера');
+                    errorMessage = 'неизвестная ошибка';
                   }
                   break;
                 default:
-                  // Для других типов ошибок показываем текст или reason
-                  setError(errorText || result.reason || 'Неизвестная ошибка');
+                  errorMessage = 'неизвестная ошибка';
               }
+              
+              setError(errorMessage);
             } else {
-              setError('Неизвестный формат ошибки');
+              setError('неизвестная ошибка');
               setErrorDetails(null);
             }
           }
@@ -116,23 +120,28 @@ function ImportModal({ onClose }: { onClose: () => void }) {
             const errorText = data.text || data.message || '';
             setErrorDetails(errorText);
             
-            if (data.reason === 'ValidationError' || data.reason === 'YamlSyntaxError') {
-              setError(errorText || 'Ошибка обработки файла');
+            // Определяем обобщенное сообщение об ошибке
+            let errorMessage = 'неизвестная ошибка';
+            
+            if (data.reason === 'ValidationError') {
+              errorMessage = 'ошибка валидации';
+            } else if (data.reason === 'YamlSyntaxError') {
+              errorMessage = 'ошибка синтаксиса';
             } else if (data.reason === 'ConstraintViolation') {
-              setError('Ошибка вторичной валидации');
+              errorMessage = 'ошибка вторичной валидации';
             } else if (data.reason?.startsWith('UnknownException')) {
               if (data.text?.includes('TransactionRequiredException')) {
-                setError('Ошибка вторичной валидации');
+                errorMessage = 'ошибка вторичной валидации';
               } else {
-                setError('Неизвестная ошибка сервера');
+                errorMessage = 'неизвестная ошибка';
               }
-            } else {
-              setError(data.message || 'Ошибка импорта файла');
             }
+            
+            setError(errorMessage);
           } else {
             const errorText = err.message || '';
             setErrorDetails(errorText);
-            setError(err.message || 'Ошибка импорта файла');
+            setError('неизвестная ошибка');
           }
         } finally {
           setLoading(false);
@@ -145,7 +154,7 @@ function ImportModal({ onClose }: { onClose: () => void }) {
     } catch (err: any) {
       const errorText = err.message || '';
       setErrorDetails(errorText);
-      setError(err.message || 'Ошибка чтения файла');
+      setError('неизвестная ошибка');
       setLoading(false);
     }
   };
@@ -251,19 +260,7 @@ function ImportModal({ onClose }: { onClose: () => void }) {
               
               {error && (
                 <div className="import-error" style={{ marginTop: '20px' }}>
-                  <div style={{ color: '#FF5555', marginBottom: '10px' }}>
-                    Ошибка импорта
-                  </div>
-                  <div style={{
-                    padding: '10px',
-                    background: '#300000',
-                    border: '1px solid #993030',
-                    borderRadius: '3px',
-                    wordBreak: 'break-all',
-                    fontSize: '14px',
-                    textAlign: 'left',
-                    marginBottom: '10px'
-                  }}>
+                  <div style={{ color: '#FF5555', marginBottom: '10px', textTransform: 'capitalize' }}>
                     {error}
                   </div>
                   <button
@@ -274,7 +271,8 @@ function ImportModal({ onClose }: { onClose: () => void }) {
                       color: '#CEFBCE',
                       padding: '5px 10px',
                       borderRadius: '3px',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      marginBottom: showDetails ? '10px' : '0'
                     }}
                   >
                     {showDetails ? 'Скрыть подробности' : 'Показать подробности'}
@@ -283,7 +281,7 @@ function ImportModal({ onClose }: { onClose: () => void }) {
                     <div style={{
                       marginTop: '10px',
                       padding: '10px',
-                      background: '#690000',
+                      background: '#300000',
                       border: '1px solid #993030',
                       borderRadius: '3px',
                       wordBreak: 'break-all',
