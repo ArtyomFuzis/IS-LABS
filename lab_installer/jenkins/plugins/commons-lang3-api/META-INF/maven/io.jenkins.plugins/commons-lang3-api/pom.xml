@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.jenkins.plugins</groupId>
   <artifactId>commons-lang3-api</artifactId>
-  <version>3.18.0-98.v3a_674c06072d</version>
+  <version>3.20.0-109.ve43756e2d2b_4</version>
   <packaging>hpi</packaging>
   <name>commons-lang3 v3.x Jenkins API Plugin</name>
   <description>The Jenkins Plugins Parent POM Project</description>
@@ -19,7 +19,7 @@
   <scm child.scm.connection.inherit.append.path="false" child.scm.developerConnection.inherit.append.path="false" child.scm.url.inherit.append.path="false">
     <connection>scm:git:https://github.com/jenkinsci/commons-lang3-api-plugin</connection>
     <developerConnection>scm:git:https://github.com/jenkinsci/commons-lang3-api-plugin</developerConnection>
-    <tag>3a674c06072d8009fe769a048732116bc552eb3c</tag>
+    <tag>e43756e2d2b46e0b0b9b84fcd285687ec06721df</tag>
     <url>https://github.com/jenkinsci/commons-lang3-api-plugin</url>
   </scm>
   <distributionManagement>
@@ -36,7 +36,7 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.18.0</version>
+      <version>3.20.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -63,7 +63,7 @@
       <plugin>
         <groupId>org.jenkins-ci.tools</groupId>
         <artifactId>maven-hpi-plugin</artifactId>
-        <version>3.66</version>
+        <version>3.1762.vd3ff902a_5b_c4</version>
         <extensions>true</extensions>
       </plugin>
     </plugins>

@@ -1,5 +1,5 @@
 [deploy-servers]
-helios_cs_ifmo ansible_host=helios.cs.ifmo.ru ansible_port=2222
+helios_cs_ifmo ansible_host=155.212.168.176 ansible_port=22
 #test_server ansible_host=host.docker.internal ansible_port=23 ansible_user=user ansible_ssh_pass=user ansible_become=yes ansible_become_pass=user
 
 [deploy-helper]

@@ -1,8 +1,8 @@
 services:
-  jenkins:
+  jenkins_lab:
     build:
       context: ./jenkins_image
-    container_name: jenkins
+    container_name: jenkins_lab
     restart: unless-stopped
     volumes:
       - ../:/host_dirs:ro
@@ -11,7 +11,7 @@ services:
       - //var/run/docker.sock:/var/run/docker.sock
       - ./jenkins:/var/jenkins_home
     ports:
-      - 8080:8080
+      - 8086:8080
       - 50000:50000
     extra_hosts:
       - "host.docker.internal:host-gateway"
