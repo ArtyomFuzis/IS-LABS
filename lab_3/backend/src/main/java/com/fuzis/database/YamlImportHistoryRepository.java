@@ -55,6 +55,11 @@ public class YamlImportHistoryRepository implements IDatabaseRepository {
         return query.getResultList();
     }
 
+    public YamlImportHistory findById(Integer id) {
+        EntityManager em = getEntityManager();
+        return em.find(YamlImportHistory.class, id);
+    }
+
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void save(YamlImportHistory history) {
         EntityManager em = getEntityManager();

@@ -1,12 +1,9 @@
 package com.fuzis.service;
 
-import com.fuzis.database.EntityMangerCreator;
-import com.fuzis.util.JtaConfiguration;
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.PersistenceUnit;
 import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.hibernate.stat.Statistics;
@@ -25,12 +22,12 @@ public class CacheStatisticsService {
     @Getter
     private boolean loggingEnabled = false;
 
-    @Inject
-    private JtaConfiguration jtaConfiguration;
+    @PersistenceUnit(unitName = "postgres")
+    private EntityManagerFactory entityManagerFactory;
 
     @PostConstruct
     public void init() {
-        SessionFactory sessionFactory = jtaConfiguration.createEntityManagerFactory().unwrap(SessionFactory.class);
+        SessionFactory sessionFactory = entityManagerFactory.unwrap(SessionFactory.class);
         this.statistics = sessionFactory.getStatistics();
         statistics.setStatisticsEnabled(true);
         logger.info("Cache statistics service initialized");

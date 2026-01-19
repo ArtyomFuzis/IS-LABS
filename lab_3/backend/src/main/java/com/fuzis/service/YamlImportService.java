@@ -9,10 +9,17 @@ import com.fuzis.transferdata.inner.YamlParseResult;
 import com.fuzis.util.YamlParserBean;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Status;
+import jakarta.transaction.Synchronization;
+import jakarta.transaction.TransactionSynchronizationRegistry;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.net.ConnectException;
 import java.time.ZonedDateTime;
 import java.util.*;
 
@@ -48,25 +55,45 @@ public class YamlImportService {
     @Inject
     private YamlImportHistoryRepository importHistoryRepository;
 
+    @Inject
+    private MinioService minioService;
+
+    @Inject
+    private YamlImportHistoryRepository historyRepository;
+
     public YamlParseResult parseYaml(InputStream yamlStream) {
         return yamlParser.parseYaml(yamlStream);
     }
 
     @Transactional
-    public void importYaml(InputStream yamlStream) {
+    public void importYaml(InputStream yamlStream, long size) throws Exception {
+
         YamlImportHistory history = new YamlImportHistory();
         history.setTime(ZonedDateTime.now());
 
-        try {
-            YamlParseResult result = parseYaml(yamlStream);
+        String generatedName = "import-" + UUID.randomUUID() + ".yml";
+        history.setOriginalFilename(generatedName);
 
+        String minioFilename = null;
+
+        try {
+            byte[] data = yamlStream.readAllBytes();
+
+            minioFilename = minioService.uploadFile(
+                    new ByteArrayInputStream(data),
+                    generatedName,
+                    size
+            );
+            history.setFilename(minioFilename);
+
+            YamlParseResult result = parseYaml(
+                    new ByteArrayInputStream(data)
+            );
 
             int totalObjects = calculateTotalObjects(result);
             history.setImportedObjects(totalObjects);
 
-
             validateYamlUniqueness(result);
-
 
             saveAllColors(result);
             saveAllCountries(result);
@@ -77,34 +104,77 @@ public class YamlImportService {
             saveAllDisciplines(result);
             saveAllLabWorks(result);
 
-
-            history.setStatus("SUCCESS");
+            registerTransactionCallbacks(history, minioFilename);
 
         } catch (YamlSyntaxException e) {
-
+            rollbackMinio(minioFilename);
             history.setStatus("SYNTAX_ERROR");
             history.setImportedObjects(0);
             history.setErrorMessage(e.getMessage());
+            importHistoryRepository.save(history);
             throw e;
 
         } catch (ValidationException e) {
-
+            rollbackMinio(minioFilename);
             history.setStatus("VALIDATION_ERROR");
             history.setImportedObjects(0);
             history.setErrorMessage(e.getMessage());
+            importHistoryRepository.save(history);
             throw e;
 
-        } catch (Exception e) {
-
+        } catch (ConnectException e) {
+            history.setStatus("MINIO_ERROR");
+            history.setImportedObjects(0);
+            history.setErrorMessage(e.getMessage());
+            importHistoryRepository.save(history);
+            throw e;
+        }
+        catch (Exception e) {
             history.setStatus("ERROR");
             history.setImportedObjects(0);
             history.setErrorMessage(e.getMessage());
-            throw e;
-        } finally {
-
             importHistoryRepository.save(history);
+            rollbackMinio(minioFilename);
+            throw new RuntimeException(e);
         }
     }
+
+    @Inject
+    TransactionSynchronizationRegistry tsr;
+
+    private void registerTransactionCallbacks(YamlImportHistory history, String minioFilename) {
+
+        tsr.registerInterposedSynchronization(new Synchronization() {
+
+            @Override
+            public void afterCompletion(int status) {
+                if (status == Status.STATUS_COMMITTED) {
+                    history.setStatus("SUCCESS");
+                    history.setImportedObjects(0);
+                } else {
+                    history.setStatus("TRANSACTION_ERROR");
+                    rollbackMinio(minioFilename);
+                }
+                importHistoryRepository.save(history);
+            }
+
+            @Override
+            public void beforeCompletion() {
+            }
+        });
+    }
+
+    private void rollbackMinio(String filename) {
+        if (filename == null) return;
+
+        try {
+            minioService.deleteFile(filename);
+            log.warn("MinIO rollback: file {} deleted", filename);
+        } catch (Exception ex) {
+            log.error("Failed to rollback MinIO file {}", filename, ex);
+        }
+    }
+
 
     private int calculateTotalObjects(YamlParseResult result) {
         int count = 0;
@@ -301,5 +371,40 @@ public class YamlImportService {
 
     public List<YamlImportHistory> getImportHistory(int limit) {
         return importHistoryRepository.findRecentImports(limit);
+    }
+
+    public FileDownloadResult downloadImportedFile(Integer historyId) {
+        YamlImportHistory history = importHistoryRepository.get(historyId);
+
+        if (history == null) {
+            throw new NotFoundException("Import history, id: " + historyId + " not found");
+        }
+
+        String filename = history.getFilename();
+        if (filename == null || filename.isBlank()) {
+            throw new NotFoundException("No file created");
+        }
+
+        try {
+            InputStream fileStream = minioService.downloadFile(filename);
+
+            String downloadFilename = history.getOriginalFilename();
+            return new FileDownloadResult(fileStream, downloadFilename);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to load file: " + e.getMessage(), e);
+        }
+    }
+
+    @Getter
+    public static class FileDownloadResult {
+        private final InputStream inputStream;
+        private final String filename;
+
+        public FileDownloadResult(InputStream inputStream, String filename) {
+            this.inputStream = inputStream;
+            this.filename = filename;
+        }
+
     }
 }

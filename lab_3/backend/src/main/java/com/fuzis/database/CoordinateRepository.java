@@ -48,6 +48,7 @@ public class CoordinateRepository implements IDatabaseRepository {
                 "SELECT c FROM Coordinate c WHERE c.x = :x AND c.y = :y", Coordinate.class);
         query.setParameter("x", x);
         query.setParameter("y", y);
+        query.setHint("org.hibernate.cacheable", true);
 
         return query.getResultStream().findFirst().orElse(null);
     }

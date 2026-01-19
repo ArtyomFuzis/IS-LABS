@@ -81,7 +81,9 @@ CREATE TABLE LAB1_YAML_IMPORT_HISTORY(
     time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
     status varchar(255) NOT NULL,
     imported_objects INTEGER NOT NULL DEFAULT 0,
-    error_message TEXT
+    error_message TEXT,
+    filename varchar(512),
+    original_filename varchar(512)
 );
 CALL end_deployment();
 COMMIT;

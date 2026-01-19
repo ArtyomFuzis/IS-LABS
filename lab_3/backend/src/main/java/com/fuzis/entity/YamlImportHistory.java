@@ -5,9 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Cache;
-
 import java.time.ZonedDateTime;
 
 @Entity
@@ -16,8 +13,6 @@ import java.time.ZonedDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL, region = "entity")
 public class YamlImportHistory {
 
     @Id
@@ -36,15 +31,22 @@ public class YamlImportHistory {
     @Column(name = "error_message")
     private String errorMessage;
 
+    @Column(name = "filename")
+    private String filename;  // Имя файла в MinIO
+
+    @Column(name = "original_filename")
+    private String originalFilename;
 
     public YamlImportHistory(String status, Integer importedObjects) {
         this.status = status;
         this.importedObjects = importedObjects;
+        this.time = ZonedDateTime.now();
     }
 
     public YamlImportHistory(String status, Integer importedObjects, String errorMessage) {
         this.status = status;
         this.importedObjects = importedObjects;
         this.errorMessage = errorMessage;
+        this.time = ZonedDateTime.now();
     }
 }
